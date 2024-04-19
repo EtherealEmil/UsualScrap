@@ -47,3 +47,8 @@ Added placeholder audio clips to stop the log spam and lag about it, sorry about
 - Added the walking cane
 - A whole bunch of random fixes
 </details>
+
+<details>
+<summary>Version 1.3.6</summary>
+Added a github I think? New textures, fixes, nothing major.
+</details>
