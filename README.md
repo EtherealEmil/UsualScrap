@@ -2,7 +2,7 @@
 <details>
 <summary>HandLamp</summary>
 
-![alt text](HandlampPreview.png)
+![](SEEME/HandlampPreview.png)
 Costs 25 credits, Weighs 5
 
 PROS - 
@@ -18,7 +18,7 @@ CONS -
 <details>
 <summary>Bandages</summary>
 
-![alt text](BandagesPreview.png)
+![](SEEME/BandagesPreview.png)
 Costs 25 credits, Weighs 1
 
 Bandages are a consumable with 5 charges that heal 8 health each.
@@ -29,7 +29,7 @@ Unlike the medkit, Bandages heal you instantly and are a cheaper short-term opti
 <details>
 <summary>Medkit</summary>
 
-![alt text](MedkitPreview.png)
+![](SEEME/MedkitPreview.png)
 Costs 150 credits, Weighs 5
 
 The medkit gradually heals the holder using a hidden health pool that depletes while healing.
@@ -42,8 +42,7 @@ Unlike the bandages, the medkit's base health pool can heal 6 times the health o
 <details>
 <summary>Explosive Tank (dangerous scrap item)</summary>
 
-![alt text](ExplosiveTankPreview.png)
-
+![](SEEME/ExplosiveTankPreview.png)
 Once the explosive tank is picked up, an internal timer begins counting down until it reaches 0 and the tank will then explode. The only way to stop the timer is by bringing the tank inside the ship.
 
 - Hitting the tank with a melee weapon will cause it to explode immediately.
@@ -56,8 +55,7 @@ Once the explosive tank is picked up, an internal timer begins counting down unt
 <details>
 <summary>Walking Cane (Useful scrap item)</summary>
 
-![alt text](WalkingCanePreview.png)
-
+![](SEEME/WalkingCanePreview.png)
 Increases your move speed when held.
 
 - Currently spawns on dine very rarely.
@@ -82,26 +80,16 @@ Massive thanks to everyone working on BepInEx
 
 ---
 
-## Issues
-These issues will be fixed in the future when I have time but I've only just started modding, therefore I'm still figuring things out. I will list interactions and remaining mod issues below so you can decide what mods to include or avoid if you decide to use this mod. I should use github but uh...............
+## Please tell me any issues or balance changes you'd like to see on my new github page.
+General issues have been moved to github but i will continue to list mod capatibility interactions and issues below for easy viewing on r2modman.
 <details>
-<summary>Interactions</summary>
+<summary>Mod Interactions</summary>
 
 - Mods that affect flashlights may affect the handlamp.
 
 </details>
 <details>
-<summary>Issues</summary>
-
-- In vanilla, it can be difficult to tell if healing items are actually working so until I sit down and add an animation or effect I'd recommend downloading a mod that displays your health as a number or bar that updates dynamically.
-
-- Handlamp has the normal flashlight light when pocketed. Will change this eventually.
-
-- Item values don't seem to be generating in the bounds I have set so I have to figure that out now.
-
-</details>
-<details>
-<summary>Mod Compat Issues</summary>
+<summary>Mod Compatability Issues</summary>
 
 - "FlashlightExtendedRange" Makes the handlamp insanely bright when it's turned on.
 
