@@ -1,3 +1,4 @@
+## Versions 1.3.7 and above work for v50 but most likely don't work for previous game versions anymore.
 ## Purchasable Equipment Details
 <details>
 <summary>HandLamp</summary>
@@ -18,7 +19,7 @@ CONS -
 <details>
 <summary>Bandages</summary>
 
-![](SEEME/BandagesPreview.png)
+ [(https://imgur.com/1Oh0UdA)]
 Costs 25 credits, Weighs 1
 
 Bandages are a consumable with 5 charges that heal 8 health each.
@@ -65,7 +66,6 @@ Increases your move speed when held.
 
 ## Basic Scrap Items
 
-
 ## Dependencies
 1. LethalLib 
 2. BepInExPack
@@ -81,7 +81,7 @@ Massive thanks to everyone working on BepInEx
 ---
 
 ## Please tell me any issues or balance changes you'd like to see on my new github page.
-General issues have been moved to github but i will continue to list mod capatibility interactions and issues below for easy viewing on r2modman.
+General issues have been moved to github but i will continue to list mod capatibility interactions and issues below for easy viewing on r2modman. 
 <details>
 <summary>Mod Interactions</summary>
 

@@ -10,7 +10,7 @@ How does this website work?
 
 <details>
 <summary>Version 1.2.0</summary>
-Figured out the website and made some name changes to avoid possible conflicts with other mods.
+Figured out how this website works and made some name changes to avoid conflicts with other mods.
 </details>
 
 <details>
@@ -20,7 +20,7 @@ Small code tweaks, starting work on a couple new items, and found some wonky mod
 
 <details>
 <summary>Version 1.3.1</summary>
-Small code and text tweaks, added bandages and the medkit, WORKING on a defibrillator and giving the crowbar a use for doors.
+Small code tweaks, added bandages and the medkit, started work on a defibrillator and giving the crowbar a unique function.
 </details>
 
 <details>
@@ -30,7 +30,7 @@ fixed some homepage text.
 
 <details>
 <summary>Version 1.3.3</summary>
-fixed/updated some more homepage text. Got excited to post 1.3.1 and forgot to fix some info, my apologies.
+fixed/updated some more homepage text.
 </details>
 
 <details>
@@ -50,5 +50,15 @@ Added placeholder audio clips to stop the log spam and lag about it, sorry about
 
 <details>
 <summary>Version 1.3.6</summary>
-Added a github I think? New textures, fixes, nothing major.
+Added a github? New textures, fixes, nothing major.
+</details>
+
+<details>
+<summary>Version 1.3.7</summary>
+Fixed for v50
+</details>
+
+<details>
+<summary>Version 1.3.8</summary>
+Fixed the scrap values not being the correct value in-game, nerfed the walking cane speed, added effects to using the medkit and bandages, fixed bandages not giving enough uses, fixed medkit logic, probably fixed some other stuff.
 </details>
