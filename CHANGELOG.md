@@ -62,3 +62,8 @@ Fixed for v50
 <summary>Version 1.3.8</summary>
 Fixed the scrap values not being the correct value in-game, nerfed the walking cane speed, added effects to using the medkit and bandages, fixed bandages not giving enough uses, fixed medkit logic, probably fixed some other stuff.
 </details>
+
+<details>
+<summary>Version 1.3.9</summary>
+Buffed the handlamp, buffed the walking cane slightly, and the walking cane now properly spawns on titan, dine, and rend. The 4.0.0 update may take a bit longer as I have quite a few items I'm creating that will require more attention and testing to work properly.
+</details>

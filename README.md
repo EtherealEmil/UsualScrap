@@ -1,5 +1,5 @@
 ## Versions 1.3.7 and above work for v50 but most likely don't work for previous game versions anymore.
-## Purchasable Equipment Details
+## Available Equipment
 <details>
 <summary>HandLamp</summary>
 
@@ -7,22 +7,22 @@
 Costs 25 credits, Weighs 5
 
 PROS - 
-- Makes light in a radius around the holder that reaches about as far as a BB flashlight can reach in one direction.
-- Its battery capacity is comparable to a pro flashlight.
+- The lamp lights up the area around the holder in a radius that is larger than a baby flashlight's light reaches but not as large as a pro-flashlight reaches in one direction.
+- The lamp has a noticably larger battery capacity than the pro-flashlight.
 - One-handed.
 
 CONS - 
-- The light doesn't reach as far as the pro flashlight.
-- Its light can be blindingly bright if you are caught in fog or smoke.
+- The light produced by the lamp isn't as clear at long ranges as the pro-flashlight.
+- The lamp's light is very bright if used in fog, gas, smoke, dust storms, etc..
 </details>
 
 <details>
 <summary>Bandages</summary>
 
- [(https://imgur.com/1Oh0UdA)]
+![](SEEME/BandagesPreview.png)
 Costs 25 credits, Weighs 1
 
-Bandages are a consumable with 5 charges that heal 8 health each.
+Bandages are a consumable item with 5 charges that heal 8 health each.
 
 Unlike the medkit, Bandages heal you instantly and are a cheaper short-term option.
 </details>
@@ -33,9 +33,9 @@ Unlike the medkit, Bandages heal you instantly and are a cheaper short-term opti
 ![](SEEME/MedkitPreview.png)
 Costs 150 credits, Weighs 5
 
-The medkit gradually heals the holder using a hidden health pool that depletes while healing.
+The medkit gradually heals the holder using a hidden health pool that is depleted to heal.
 
-Unlike the bandages, the medkit's base health pool can heal 6 times the health one bandage item can heal if given enough time. Additionally, its health pool can be refilled by bringing it into the ship. In the future, I plan to add a feature that will allow players to use the medkit on their teammates without having to drop it for them.
+Unlike the bandages, the medkit's base health pool can heal 6 times the health one bandage item can heal if given enough time. Additionally, its health pool can be refilled by bringing it into the ship. In the near future, I plan to add a feature that will allow players to use the medkit on their teammates without having to drop it for them.
 </details>
 
 ## Unique Scrap Items
@@ -59,7 +59,7 @@ Once the explosive tank is picked up, an internal timer begins counting down unt
 ![](SEEME/WalkingCanePreview.png)
 Increases your move speed when held.
 
-- Currently spawns on dine very rarely.
+- Spawns on Rend, Dine, and Titan rarely.
 
 </details>
 
@@ -81,7 +81,7 @@ Massive thanks to everyone working on BepInEx
 ---
 
 ## Please tell me any issues or balance changes you'd like to see on my new github page.
-General issues have been moved to github but i will continue to list mod capatibility interactions and issues below for easy viewing on r2modman. 
+General issues have been moved to github but I will continue to list mod capatibility interactions and issues below for easy viewing on r2modman. Also, there are pictures of the items on github if you'd like to see what they look like.
 <details>
 <summary>Mod Interactions</summary>
 
@@ -91,9 +91,9 @@ General issues have been moved to github but i will continue to list mod capatib
 <details>
 <summary>Mod Compatability Issues</summary>
 
-- "FlashlightExtendedRange" Makes the handlamp insanely bright when it's turned on.
+- "FlashlightExtendedRange" Makes the handlamp insanely bright when turned on.
 
-- "Diversity" will make the handlamp brighter, I don't think it's too bad but it isn't the brightness I intended.
+- "Diversity" will make the handlamp brighter; it wasn't too bad the last time I tested it, but it wasn't the brightness I intended.
 
 </details>
 
