@@ -1,4 +1,3 @@
-## Versions 1.3.7 and above work for v50 but most likely don't work for previous game versions anymore.
 ## Available Equipment
 <details>
 <summary>HandLamp</summary>
@@ -63,13 +62,22 @@ Increases your move speed when held.
 
 </details>
 
+<summary>Candy Jar</summary>
+	
+Unique use coming soon
+
+- Spawns on Rend, Dine, and Titan rarely.
+
+</details>
+
+
 
 ## Basic Scrap Items
 
 ## Dependencies
 1. LethalLib 
 2. BepInExPack
-
+3. V50 of Lethal Company for versions above 1.3.7
 ---
 
 Massive thanks to Malcolm on YouTube for their LC modding guides and examples.

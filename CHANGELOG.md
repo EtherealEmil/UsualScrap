@@ -67,3 +67,7 @@ Fixed the scrap values not being the correct value in-game, nerfed the walking c
 <summary>Version 1.3.9</summary>
 Buffed the handlamp, buffed the walking cane slightly, and the walking cane now properly spawns on titan, dine, and rend. The 4.0.0 update may take a bit longer as I have quite a few items I'm creating that will require more attention and testing to work properly.
 </details>
+
+<details>
+<summary>Version 1.4.0</summary>
+Cleaned up a ton of beginner code, first try syncing the explosive tank's explosion (If you're reading this please report issues on github, multiplayer issues are difficult to test solo), fixed the models and cleaned up their textures, fixed some of the items floating when spawning the first time, more stuff probably. The items I planned to add are on hold to see if this implementation of the explosive tank works, If everything seems to be working I will add them next update.</details>
