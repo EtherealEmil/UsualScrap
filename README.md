@@ -30,11 +30,25 @@ Unlike the medkit, Bandages heal you instantly and are a cheaper short-term opti
 <summary>Medkit</summary>
 
 ![](SEEME/MedkitPreview.png)
-Costs 150 credits, Weighs 5
+Costs 150 credits, Weighs 4
 
 The medkit gradually heals the holder using a hidden health pool that is depleted to heal.
 
 Unlike the bandages, the medkit's base health pool can heal 6 times the health one bandage item can heal if given enough time. Additionally, its health pool can be refilled by bringing it into the ship. In the near future, I plan to add a feature that will allow players to use the medkit on their teammates without having to drop it for them.
+</details>
+
+<details>
+<summary>Toolbox</summary>
+
+
+Costs 225 credits, Weighs 6
+
+The can be used to dismantle landmines and turrets and will produce a piece of scrap when done successfully.
+
+- To dismantle a trap look at it and HOLD the use button for 1 second while continuing to look at it (Surrounding geometry and elevation may make it hard to detect that your looking at a trap).
+- Landmines can be dismantle at any time and give a cheap piece of scrap.
+- Turrets can only be dismantled while it is disabled and give a slightly higher value piece of scrap.
+- Some UI or effects to show that it's working will be added sooner or later.
 </details>
 
 ## Unique Scrap Items
@@ -53,6 +67,16 @@ Once the explosive tank is picked up, an internal timer begins counting down unt
 </details>
 
 <details>
+<summary>Radioactive Mineral Cell (dangerous scrap item)</summary>
+
+
+The radioactive mineral cell infinitely produces a sickly green light in a radius around it. When picked up, the holder will regularly take damage due to the cell's uncontained radioactivity.
+
+- Spawns on any moon rarely.
+
+</details>
+
+<details>
 <summary>Walking Cane (Useful scrap item)</summary>
 
 ![](SEEME/WalkingCanePreview.png)
@@ -62,6 +86,16 @@ Increases your move speed when held.
 
 </details>
 
+<details>
+<summary>Gift Wrap</summary>
+	
+Gift wrap can be used to wrap any grabbable object into a gift box.
+
+- uncommon spawn on any planet
+
+</details>
+
+<details>
 <summary>Candy Jar</summary>
 	
 Unique use coming soon
