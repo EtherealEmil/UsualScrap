@@ -1,4 +1,4 @@
-I will leave this up mod up so anyone can continue to use it because it works fine. That being said, I am working on a new mod that will include most of what's in this and is much better organized so I can comfortably create new stuff. I could also really use that starting something new boost because my interest is waning. Thanks for reading this, i'll link the new mod when it's out.
+I will leave this up mod up so anyone can continue to use it because it works fine. That being said, I am working on a new mod that will include most of what's in this and is much better organized so I can comfortably create new stuff. I could also really use that starting something new boost because my motivation had left. Thanks for reading this, i'll link the new mod when it's out.
 
 ## Available Equipment
 <details>
