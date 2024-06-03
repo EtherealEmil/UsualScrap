@@ -75,3 +75,38 @@ Cleaned up a ton of beginner code, first try syncing the explosive tank's explos
 <details>
 <summary>Version 1.4.1</summary>
 New batch of items including: the toolbox, radioactive mineral cell, and gift wrap all with a new unique use or effect, new icons again. As always, this was tested in singleplayer and while I did account for multiplayer if any inconsistencies or bugs occur let me know on my github.</details>
+
+<details>
+<summary>Version 1.4.2</summary>
+
+- Shrunk the handlamp so it doesn't cover as much screen space when held.
+- Fixed random inconsistencies.
+- Hopefully fixed the toolbox's syncing (forgot one word!).
+</details>
+
+<details>
+<summary>Version 1.4.3</summary>
+
+#### It's been a while since I started this update so I'll just note all the changes I remember.
+
+- The Toolbox is now button presses instead of holding to use.
+- The Medkit is now hold to heal instead of toggle.
+- Replaced the Gift wrap with the Wish list.
+- "radioactive mineral cell" is now named "radioactive cell" because name too long.
+- Added the sizable scissors scrap item.
+- Various model tweaks or redoes.
+- Fixed a bunch of bugs I found that weren't too serious so I'm assuming nobody experienced them enough to report them.
+- A ton of code changes and improvements probably.
+- Replenished motivation.
+
+#### And now for balance tweaks that I remember changing.
+
+- The Medkit costs less and heals slightly faster.
+- Bandages heal more with less charges (20 x 3) and now have a .5 second cooldown between uses.
+- When dismantling turrets with the toolbox it has a chance of dropping a high value laser pointer.
+- Explosive tank timer can be any time between 2-4 minutes.
+- Walking cane nerfed again because I felt literally untouchable running from monsters with it in hand so now it's speed boost is 2x.
+
+#### The next update shouldn't take as long, and as always, please report any issues on the GitHub page.
+
+</details>
