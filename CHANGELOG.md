@@ -110,3 +110,46 @@ New batch of items including: the toolbox, radioactive mineral cell, and gift wr
 #### The next update shouldn't take as long, and as always, please report any issues on the GitHub page.
 
 </details>
+
+<details>
+<summary>Version 1.4.4</summary>
+
+#### The First in a line of refinement updates. New items added after this will try to stay equal or above the quality of the current items meaning it may take slightly longer before I post a new item.
+
+- The Handlamp now uses it's own script so it shouldn't be affected by mods that change the flashlight but will still be affected by mods that change world lighting.
+- The Handlamp no longer shows the flashlight's headlight when pocketed.
+- The Handlamp is the first and only item to receive sounds. More items will have sounds added gradually.
+- Fixed the radioactive cells model clipping from some angles and changed it's holding position.
+- Fix for the harmless toolbox use error.
+- Fix for the radioactive cell keeping it's previous name when scanned.
+- Lowered the amount of clicks for the toolbox slightly and removed the click cooldown so clicking too quickly won't only count some clicks.
+- Drastically improved the icons for everything.
+- Candy jar disabled for now while I decide what to do with it.
+
+#### That's all for now. If any issues arise from the Handlamp's new script (as I only tested it in singleplayer) report the issue and I'll fix it asap.
+
+##### Also, I'm looking to change the name of the mod without having to post this as a new mod so if anyone knows how, I could really use the advice. I was considering just changing the name in the files but I don't want to break user's games by accident.
+
+</details>
+
+<details>
+<summary>Version 1.4.5</summary>
+
+#### Quick update
+- tweaked explosive tank holding position
+- removed glitchlist the wishlist (wishlist)
+
+</details>
+
+<details>
+<summary>Version 1.4.6</summary>
+
+#### Refinement strikes twice.
+
+- Added sounds to the Explosive Tank, Radioactive Cell, Toolbox, Medkit, Bandages, and Sizable Scissors.
+- Added the Lollipop scrap item.
+- Added the Padlock scrap item.
+- Readded the crowbar (Just a normal piece of scrap for now).
+
+Leave feedback about the sounds on my Github. Really wish there was a comment section that didn't need an account somewhere but whatever.
+</details>
