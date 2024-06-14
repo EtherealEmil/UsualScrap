@@ -1,4 +1,4 @@
-### I am switching a new pc currently and will be going on a trip for a couple weeks in the coming days and then starting a new job meaning updates will slow down again but I will still have time to update periodically.
+### I am switching to a new pc currently and will be going on a trip for a couple weeks in the coming days and then starting a new job after meaning updates will slow down again but I will still have time to update periodically.
 ## Purchasable Equipment
 <details>
 <summary>HandLamp (25C)</summary>
