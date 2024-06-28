@@ -1,4 +1,4 @@
-### I am switching to a new pc currently and will be going on a trip for a couple weeks in the coming days and then starting a new job after meaning updates will slow down again but I will still have time to update periodically.
+### I will fix any issues that are reported to me but I'm taking leave from the company until the next update, see y'all then. 
 ## Purchasable Equipment
 <details>
 <summary>HandLamp (25C)</summary>
