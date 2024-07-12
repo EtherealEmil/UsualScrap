@@ -1,4 +1,7 @@
-### 7/12/24 I will take note of any issues and fix them when I can. I won't have access to my pc for the next few weeks but will be back updating after.
+## Now working in LC v55
+
+![Preview](https://i.imgur.com/oTtwj4N.png)
+
 ## Purchasable Equipment
 <details>
 <summary>HandLamp (25C)</summary>
@@ -117,26 +120,20 @@ Weighs 1, Spawns on Rend, Dine, and Titan uncommonly
 
 Candies are several consumable items that give varied temporary effects. The types and their effects will be listed below as they are added.
 
-Lollipop - Gives a pretty strong speed boost, jump boost, and infinite stamina for 10 seconds.
+Lollipop - Not added yet.
 
-Caramel - Not added yet.
+Caramel - Gives 50 HP worth of passive healing.
 
-Mint - Not added yet.
+Mint - instant insanity reduction and speed boost for 15 seconds.
 
 Chocolate - Not added yet.
 
-Gumdrop - Not added yet.
+Gumdrop - Jump boost and slight speed boost for 15 seconds.
 </details>
 
 <details>
 
 <summary>Magical Storybook</summary>
-
-Not in any public releases or is not complete. This is here because this will be coming in a future update guaranteed.
-</details>
-
-<details>
-<summary>Ornate Lock-box and Ornate Key</summary>
 
 Not in any public releases or is not complete. This is here because this will be coming in a future update guaranteed.
 </details>
