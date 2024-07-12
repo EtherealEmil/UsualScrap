@@ -1,4 +1,4 @@
-## Now working in LC v55
+## 7/12/24 I will take note of any issues and fix them when I can. I won't have access to my pc for the next few weeks but will be back updating after.
 
 ![Preview](https://i.imgur.com/oTtwj4N.png)
 
