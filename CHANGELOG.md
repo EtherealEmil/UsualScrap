@@ -151,5 +151,48 @@ New batch of items including: the toolbox, radioactive mineral cell, and gift wr
 - Added the Padlock scrap item.
 - Readded the crowbar (Just a normal piece of scrap for now).
 
-Leave feedback about the sounds on my Github. Really wish there was a comment section that didn't need an account somewhere but whatever.
+Leave feedback or ideas on my Github. Really wish there was a comments section somewhere but whatever.
 </details>
+
+<details>
+<summary>Version 1.4.7</summary>
+
+- Explosive tank can be reactivated by dropping it a couple times after it's been deactivated.
+- Explosive tank effect and sounds are now indicators of whether it is active or not (no more sound effect in the ship).
+- Shuffled the candy effects around and added a couple new ones.
+- Lowered candies spawn rates to account for there being more of them.
+
+Planned Additions - More sounds, two completely new items, mod options, think of more interesting candy effects, defib finally.
+
+Updates will continue to be slow, sorry. Leave feedback or ideas on my Github. Really wish there was a comments section somewhere but whatever.
+</details>
+
+<details>
+<summary>Version 1.4.8</summary>
+
+#### Updated to v55
+
+- Fixed the weight issues introduced in v55 that some of the items had. No more 120 lb lollipops.
+- Fixed Explosive tank being completely broken in v55.
+- Tried adding an image to the mod page. hopefully it works.
+
+Planned Additions - More sounds, two completely new items, mod options, think of more interesting candy effects, defib finally.
+
+Updates will continue to be slow, sorry. Leave feedback or ideas on my Github. Really wish there was a comments section somewhere but whatever.
+</details>
+
+<details>
+<summary>Version 1.4.9</summary>
+
+#### Updated to v55
+
+- Fixed the weight issues introduced in v55 that some of the items had. No more 120 lb lollipops.
+- Fixed Explosive tank being completely broken in v55.
+- Tried adding an image to the mod page. hopefully it works.
+- Definitely didn't mess up something on the modpage in version 1.4.8 and updated again in two minutes to fix it.
+
+Planned Additions - More sounds, two completely new items, mod options, think of more interesting candy effects, defib finally.
+
+Updates will continue to be slow, sorry. Leave feedback or ideas on my Github. Really wish there was a comments section somewhere but whatever.
+</details>
+
