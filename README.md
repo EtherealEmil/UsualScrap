@@ -1,4 +1,4 @@
-### I will fix any issues that are reported to me but I'm taking leave from the company until the next update, see y'all then. 
+### 7/12/24 I will take note of any issues and fix them when I can. I won't have access to my pc for the next few weeks but will be back updating after.
 ## Purchasable Equipment
 <details>
 <summary>HandLamp (25C)</summary>
