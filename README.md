@@ -1,4 +1,4 @@
-## 7/12/24 I will take note of any issues and fix them when I can, I won't have access to my pc for the next few weeks but will be back to update soon after.
+## 7/21/24 I will take note of any issues and fix them when I can, I won't have access to my pc until I return on 7/29/24 and will update sometime after I settle my new job.
 
 ![Preview](https://i.imgur.com/oTtwj4N.png)
 
