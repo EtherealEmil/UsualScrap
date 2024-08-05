@@ -151,7 +151,7 @@ New batch of items including: the toolbox, radioactive mineral cell, and gift wr
 - Added the Padlock scrap item.
 - Readded the crowbar (Just a normal piece of scrap for now).
 
-Leave feedback or ideas on my Github. Really wish there was a comments section somewhere but whatever.
+Leave feedback, changes, or additions on my Github. Really wish there was a comments section somewhere but whatever.
 </details>
 
 <details>
@@ -164,7 +164,7 @@ Leave feedback or ideas on my Github. Really wish there was a comments section s
 
 Planned Additions - More sounds, two completely new items, mod options, think of more interesting candy effects, defib finally.
 
-Updates will continue to be slow, sorry. Leave feedback or ideas on my Github. Really wish there was a comments section somewhere but whatever.
+Updates will continue to be slow, sorry. Leave feedback, changes, or additions on my Github. Really wish there was a comments section somewhere but whatever.
 </details>
 
 <details>
@@ -178,7 +178,7 @@ Updates will continue to be slow, sorry. Leave feedback or ideas on my Github. R
 
 Planned Additions - More sounds, two completely new items, mod options, think of more interesting candy effects, defib finally.
 
-Updates will continue to be slow, sorry. Leave feedback or ideas on my Github. Really wish there was a comments section somewhere but whatever.
+Updates will continue to be slow, sorry. Leave feedback, changes, or additions on my Github. Really wish there was a comments section somewhere but whatever.
 </details>
 
 <details>
@@ -193,6 +193,36 @@ Updates will continue to be slow, sorry. Leave feedback or ideas on my Github. R
 
 Planned Additions - More sounds, two completely new items, mod options, think of more interesting candy effects, defib finally.
 
-Updates will continue to be slow, sorry. Leave feedback or ideas on my Github. Really wish there was a comments section somewhere but whatever.
+Updates will continue to be slow, sorry. Leave feedback, changes, or additions on my Github. Really wish there was a comments section somewhere but whatever.
 </details>
+
+<details>
+<summary>Version 1.5.0</summary>
+
+#### So many changes so little time. This mod will now require all players to have synced configs using any means.
+
+- Changed some names and fixed inconsistent names.
+- Added tags for all items to prevent item conflicts.
+- Increased Radioactive Cell's price very slightly and dimmed its light a bit.
+- Radioactive Cell's damage now works differently and its damage is based on how long you've held it.
+- Fixed crash and syncing issue with the padlock.
+- Removed healing sounds because they were very annoying to listen to.
+- Scissors are more consistently dangerous.
+- Reverted Tool Box to hold to use instead of spam clicking.
+- Tried to fix Tool Box rewards being desynced.
+- Tool Box can now decontruct active turrets after a lengthy deconstruction time (5 seconds for landmines, 15 for turrets).
+- Reduced the candies spawn rates further.
+- Increased the candies values.
+- Tweaked the Explosive Tank's functions.
+- Model and sprite tweaks.
+- Added control tooltips.
+- Added configs for whether an item is loaded and if it is scrap or a store item (Pretty messy, took hours, but works).
+- Added sound for deconstructing with the toolbox. I wanted UI but my mind refuses to sit through any more hours of confusion.
+- And as always random minor things I've forgotten about.
+
+Planned Additions - More sounds, three completely new items, think of more interesting candy effects, defib finally.
+
+If there are ANY issues, the link to my github is at the top of the page! Should be able to squeeze out one more update with some new content before I'll be very busy.
+</details>
+
 
