@@ -53,11 +53,11 @@ Versus bandages, the Medical Kit can heal 4x the health (240) bandages can heal 
 
 Costs 150 credits, Weighs 4
 
-The Tool Box can be used to deconstruct landmines and turrets and will produce scrap when done successfully.
+The Tool Box can be used to dismantle landmines and turrets and will produce scrap when done successfully.
 
-- To deconstruct a trap look at it, hold Left Click, and wait.
-- Landmines produce 1 piece of scrap and take 5 seconds to deconstruct
-- Turrets produce 2-3 pieces of scrap and take 15 seconds to deconstruct
+- To dismantle a trap, look at it, press and hold the Left Click button, and wait. If you hear a sound effect, it is working.
+- Landmines produce 1 piece of scrap and take 6 seconds to dismantle.
+- Turrets produce 2-3 pieces of scrap and take 12 seconds to dismantle.
 
 </details>
 
@@ -129,7 +129,7 @@ High Value, Weighs 12, Spawns on S and above difficulty moons rarely
 
 Sizable Scissors are a two handed scrap item that randomly damages it's holder only if they are sprinting.
 
-- Every second or two while running a 6 sided dice is rolled that will deal damage (20) that roll if a 6 is rolled.
+- Every second or two while running a 4 sided dice is rolled that will deal damage (20) that roll if a 1 is rolled.
 </details>
 
 <details>
@@ -139,15 +139,33 @@ Weighs 1, Spawns on S and above difficulty moons rarely
 
 Candies are several consumable items that give varied temporary effects. The types and their effects will be listed below as they are added.
 
-Lollipop - Not added yet.
+Lollipop, Chocolate, Gumdrop - Gives the sugar rush effect that currently grants a small boost to speed, jump height, and climbing speed for 60 seconds.
 
-Caramel - Gives 50 HP worth of passive healing.
+Caramel - Heals you overtime for a total of 60 HP over 30 seconds.
 
-Mint - instant insanity reduction and speed boost for 15 seconds.
+Mint - Grants infinite stamina and a big boost to speed for 10 seconds.
 
-Chocolate - Not added yet.
+</details>
 
-Gumdrop - Jump boost and slight speed boost for 15 seconds.
+<details>
+
+<summary>Rose</summary>
+
+Weighs 1, Spawns on S and above difficulty moons rarely
+
+The rose damages you when picked up or equipped.
+
+</details>
+
+<details>
+
+<summary>Tickets of Exchange</summary>
+
+Weighs 1, Spawns on S and above difficulty moons
+
+The Regular Ticket of Exchange spawns commonly and can be used ONCE to transform any item into a gift box, essentially exchanging it for something else.
+
+The Golden Ticket of Exchange is VERY rare and does the same thing it predecessor does but can do it TEN times instead of once.
 
 </details>
 

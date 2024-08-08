@@ -210,7 +210,7 @@ Updates will continue to be slow, sorry. Leave feedback, changes, or additions o
 - Scissors are more consistently dangerous.
 - Reverted Tool Box to hold to use instead of spam clicking.
 - Tried to fix Tool Box rewards being desynced.
-- Tool Box can now decontruct active turrets after a lengthy deconstruction time (5 seconds for landmines, 15 for turrets).
+- Tool Box can now dismantle active turrets after a lengthy dismantle time (5 seconds for landmines, 15 for turrets).
 - Reduced the candies spawn rates further.
 - Increased the candies values.
 - Tweaked the Explosive Tank's functions.
@@ -224,5 +224,27 @@ Planned Additions - More sounds, three completely new items, think of more inter
 
 If there are ANY issues, the link to my github is at the top of the page! Should be able to squeeze out one more update with some new content before I'll be very busy.
 </details>
+
+<details>
+<summary>Version 1.5.1</summary>
+
+#### New stuff, more fixes.
+
+- Added the rose scrap Item.
+- Added ticket of exchange and golden ticket of exchange scrap items.
+- Fixed some tool box and medical kit issues.
+- Fixed tangled configs issue.
+- Redid my latest icon changes because they looked terrible.
+- Code consolidation.
+- Reduced tool box turret dismantle time to 12, increased mine dismantle time to 6.
+- Added various sounds to items.
+- Rearranged the candy effects.
+
+
+Planned Additions - More sounds, think of more interesting candy effects, defib finally.
+
+If there are ANY issues, the link to my github is at the top of the page!
+</details>
+
 
 
