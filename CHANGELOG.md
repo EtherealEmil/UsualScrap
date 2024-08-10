@@ -162,7 +162,7 @@ Leave feedback, changes, or additions on my Github. Really wish there was a comm
 - Shuffled the candy effects around and added a couple new ones.
 - Lowered candies spawn rates to account for there being more of them.
 
-Planned Additions - More sounds, two completely new items, mod options, think of more interesting candy effects, defib finally.
+Planned Additions - More sounds, two completely new items, mod options, think of more interesting candy effects, defib and crowbar functions finally.
 
 Updates will continue to be slow, sorry. Leave feedback, changes, or additions on my Github. Really wish there was a comments section somewhere but whatever.
 </details>
@@ -176,7 +176,7 @@ Updates will continue to be slow, sorry. Leave feedback, changes, or additions o
 - Fixed Explosive tank being completely broken in v55.
 - Tried adding an image to the mod page. hopefully it works.
 
-Planned Additions - More sounds, two completely new items, mod options, think of more interesting candy effects, defib finally.
+Planned Additions - More sounds, two completely new items, mod options, think of more interesting candy effects, defib and crowbar functions finally.
 
 Updates will continue to be slow, sorry. Leave feedback, changes, or additions on my Github. Really wish there was a comments section somewhere but whatever.
 </details>
@@ -191,7 +191,7 @@ Updates will continue to be slow, sorry. Leave feedback, changes, or additions o
 - Tried adding an image to the mod page. hopefully it works.
 - Definitely didn't mess up something on the modpage in version 1.4.8 and updated again in two minutes to fix it.
 
-Planned Additions - More sounds, two completely new items, mod options, think of more interesting candy effects, defib finally.
+Planned Additions - More sounds, two completely new items, mod options, think of more interesting candy effects, defib and crowbar functions finally.
 
 Updates will continue to be slow, sorry. Leave feedback, changes, or additions on my Github. Really wish there was a comments section somewhere but whatever.
 </details>
@@ -199,7 +199,7 @@ Updates will continue to be slow, sorry. Leave feedback, changes, or additions o
 <details>
 <summary>Version 1.5.0</summary>
 
-#### So many changes so little time. This mod will now require all players to have synced configs using any means.
+#### So many changes so little time.
 
 - Changed some names and fixed inconsistent names.
 - Added tags for all items to prevent item conflicts.
@@ -220,7 +220,7 @@ Updates will continue to be slow, sorry. Leave feedback, changes, or additions o
 - Added sound for deconstructing with the toolbox. I wanted UI but my mind refuses to sit through any more hours of confusion.
 - And as always random minor things I've forgotten about.
 
-Planned Additions - More sounds, three completely new items, think of more interesting candy effects, defib finally.
+Planned Additions - More sounds, three completely new items, think of more interesting candy effects, defib and crowbar functions finally.
 
 If there are ANY issues, the link to my github is at the top of the page! Should be able to squeeze out one more update with some new content before I'll be very busy.
 </details>
@@ -241,10 +241,67 @@ If there are ANY issues, the link to my github is at the top of the page! Should
 - Rearranged the candy effects.
 
 
-Planned Additions - More sounds, think of more interesting candy effects, defib finally.
+Planned Additions - More sounds, think of more interesting candy effects, defib and crowbar functions finally.
 
 If there are ANY issues, the link to my github is at the top of the page!
 </details>
+
+<details>
+<summary>Version 1.5.2</summary>
+
+#### The "how many updates?" update.
+
+- Dimmed the hand lamp's bulb glow even further.
+- Some more toolbox fixes.
+- Gave exchange tickets the icons I forgot to add last update.
+- Fixed explosive tank drop counter getting stuck and slightly lowered the time before exploding.
+- Edits to the mod description.
+
+Planned Additions - More sounds, think of more interesting candy effects, defib and crowbar functions finally.
+
+If there are ANY issues, the link to my github is at the top of the page!
+</details>
+
+<details>
+<summary>Version 1.5.3</summary>
+
+#### The final update of my weekish long update spree.
+
+- Various model tweaks.
+- Stopped the rose from hurting you twice when picked up initially.
+- Removed leftover logging from testing.
+- Dimmed the hand lamp EVEN FURTHER.
+- Fixed the padlock floating when first spawned.
+- Fixed instances where the explosive tank being created inside the ship room causes issues.
+- I don't know if this actually needs csync so I removed the dependency for now.
+- Crowbar is now a melee weapon that weighs a bit less than the usual shovel. opening doors with it will come later.
+- Tweaked spawnrates a bit.
+- Buffed healing a little.
+- Added a bunch of missing sounds
+- Simplified some code.
+
+
+Planned Additions - defib and crowbar functions eventually, toolbox compat with modded traps.
+
+I can never playtest enough so if you encounter ANY issues, the link to my github is at the top of the page!
+</details>
+
+<details>
+<summary>Version 1.5.4</summary>
+
+#### Was supposed to be the last update for this week but...oops.
+
+- Was testing some new teleporter item code using chocolate and I forgot to put chocolate back to how it's suppose to be last update. OOPS.
+- Explosive tank and rad cell value increased.
+- Rad cell damage nerfed.
+- Added tips to the mod page for surviving only the most dangerous scrap items.
+- Candies that gave minor speed now also refill your stamina.
+
+Planned Additions - defib and crowbar functions eventually, toolbox compat with modded traps.
+
+If there are ANY issues, the link to my github is at the top of the page!
+</details>
+
 
 
 
