@@ -1,10 +1,12 @@
-![Preview](https://i.imgur.com/ph6MBgW.png)
+### Do not fear! It works fine in v60+!
+
+![Preview](https://i.imgur.com/HRaqFR0.png)
 
 ## Purchasable Equipment
 <details>
-<summary>Hand Lamp (25C)</summary>
+<summary>Hand Lamp (20C)</summary>
 
-Costs 25 credits, Weighs 5
+Costs 20 credits, Weighs 5
 
 Compared to vanilla flashlights...
 
@@ -38,31 +40,61 @@ Compared to the Medical Kit, Bandages heal 60 health instantly, weighs less, and
 <details>
 <summary>Medical Kit(90C)</summary>
 
-Costs 90 credits, Weighs 4
+Costs 90 credits, Weighs 3
 
-The Medical Kit heals the user overtime when used. It has a limited amount of health it can heal (240) but it can be refilled by returning to your ship.
+The Medical Kit heals the user overtime when used. It has a limited amount of health it can heal at once (240) but will replenish its availbe health overtime.
 
-Compared to Bandages, the Medical Kit can heal 4x the health (240) Bandages can heal (60) and can be refilled when brought to the ship making it have essentially infinite healing if preserved.
+Compared to Bandages, the Medical Kit can heal 2x the health (120) Bandages can heal (60) and can heal infinitely when given time to replenish.
 
 </details>
 
 <details>
-<summary>Tool Box(150C)</summary>
+<summary>Adrenaline Injector(30C)</summary>
 
-Costs 150 credits, Weighs 4
+Costs 30 credits, Weighs 1
+
+The Adrenaline injector gives you a speed boost, slight jump boost, and stamina regen boost for a while.
+
+- You can overdose on adrenaline injectors and will take damage if more are used while one is active. And no, you will not keep stacking the buffs.
+
+</details>
+
+
+<details>
+<summary>Lifeline(300C)</summary>
+
+Costs 300 credits, Weighs 4
+
+The Lifeline is a portable teleporter that saves a location and can then teleport you there if used before it runs out of battery.
+
+- The lifeline's saved location is lost when it runs out of battery or is charged.
+
+- The lifeline is a new very experimental item. Keep that in mind when testing the limits of the game.
+</details>
+
+
+<details>
+<summary>Toolbox(115C)</summary>
+
+Costs 115 credits, Weighs 5
 
 The Tool Box can be used to dismantle landmines and turrets and will produce scrap when done successfully.
 
-- To dismantle a trap, look at it, press and hold the Left Click button, and wait. If you hear a sound effect, it is working.
+- To dismantle a trap, look at it, press and hold the Left Click button, and listen for the sound effect playing, the sound means it's working. It is a bit wonky when crouching, when around weird geometry, or when the vanilla traps are changed (like bigger landmines).
 - Landmines produce 1 piece of scrap and take 6 seconds to dismantle.
 - Turrets produce 2-3 pieces of scrap and take 12 seconds to dismantle.
 
 </details>
 
 <details>
-<summary>Defibrillator</summary>
+<summary>Defibrillator(240c)</summary>
 
-Not in any public releases or is not complete. This is here because this will be coming in a future update guaranteed.
+Costs 240 credits, Weighs 3
+
+The defibrillator uses power to revive terminated employees.
+
+- Currently only revives one player before needing to be recharged (May increase to two later depending on it's performance in testing)
+- Whether a defibrillator has power or not can be easily seen by the glow of the battery compartment on its model.
 
 </details>
 
@@ -75,7 +107,7 @@ High value, Weighs 32, Spawns anywhere rarely
 
 Once the explosive tank is picked up, an internal timer will begin counting down to 0 which will then cause the tank to explode. The only way to deactivate the timer is by bringing the tank back to your ship safely.
 
-- The internal timer can be any time between 2 and 3 minutes, better get moving!
+- The internal timer can be any time around 3 minutes, better get moving!
 - Hitting the tank with a melee weapon will cause it to explode. immediately.
 - Each time the tank is dropped, its remaining time will be reduced by a percentage; On the third drop, the Tank will explode immediately.
 - After being brought to the ship the Tank will be in a inactive state, stopping the timer. In the inactive state, Hitting it will still cause it to explode and it can be reactivated by dropping it a few times (Dropping it only causes a explosion while it is active).
@@ -91,18 +123,18 @@ High value, Weighs 18, Spawns anywhere rarely
 
 The Radioactive Cell produces a sickly green light in a radius around it infinitely. When the cell is held, the holder will regularly take damage until they drop it or perish.
 
-- The Cell inflicts ramping damage on a rough curve going from 5 to 25.
+- The Cell inflicts ramping damage on a rough curve going from 5 to 20.
 
-Tips for survival - The damage ramps based on how long you hold it continuously so just drop it to reset the damage ramp to take minimum damage.
+Tips for survival - The damage ramps based on how long you hold it continuously so just drop it to reset the damage ramp to take minimum damage, sometimes it's just safer to leave it behind.
 
 </details>
 
 <details>
 <summary>Crowbar</summary>
 
-Weighs 8.5
+Average value, Weighs 6.5, Spawns anywhere uncommonly
 
-Is a melee weapon that will eventually also opens doors when I implement it.
+The Crowbar is a melee weapon that does normal damage but can open locked and unlocked doors by hitting them.
 
 </details>
 
@@ -127,7 +159,7 @@ Increases your movement speed when held.
 <details>
 <summary>Sizable Scissors</summary>
 
-High Value, Weighs 12, Spawns on S and above difficulty moons rarely
+High Value, Weighs 16, Spawns on S and above difficulty moons rarely
 
 Sizable Scissors are a two handed scrap item that randomly damages it's holder only if they are sprinting.
 
@@ -135,25 +167,31 @@ Sizable Scissors are a two handed scrap item that randomly damages it's holder o
 </details>
 
 <details>
-<summary>Candies</summary>
 
-Weighs 1, Spawns on S and above difficulty moons rarely
+<summary>Candy Dispenser</summary>
 
-Candies are several consumable items that give varied temporary effects. The types and their effects will be listed below as they are added.
+Average value, Weighs 12, Spawns on S and above difficulty moons rarely
 
-Lollipop, Chocolate, Gumdrop - Gives the sugar rush effect that currently grants a small boost to speed, jump height, and climbing speed for 60 seconds.
-
-Caramel - Heals you overtime for a total of 60 HP over 30 seconds.
-
-Mint - Grants infinite stamina and a big boost to speed for 10 seconds.
+The Candy Dispenser is a melee weapon that does 2x damage and will rarely drop a piece of candy when swinging it (1/25 chance each swing).
 
 </details>
 
 <details>
 
+<summary>Broken Pocket Watch</summary>
+
+Average value, Weighs 3, Spawns on S and above difficulty moons rarely
+
+The Broken Pocket Watch poorly tells the time.
+
+</details>
+
+
+<details>
+
 <summary>Rose</summary>
 
-Weighs 1, Spawns on S and above difficulty moons rarely
+Average value, Weighs 1, Spawns on S and above difficulty moons rarely
 
 The rose damages you a little when picked up or equipped.
 
@@ -163,11 +201,11 @@ The rose damages you a little when picked up or equipped.
 
 <summary>Tickets of Exchange</summary>
 
-Weighs 1, Spawns on S and above difficulty moons
+Low value/High Value, Weighs 1, Spawns on S and above difficulty moons
 
-The Regular Ticket of Exchange spawns commonly and can be used ONCE to transform any item into a gift box, essentially exchanging it for something else.
+The Regular Ticket of Exchange is a common low value item that can be used ONCE to transform any item into a gift box, essentially exchanging it for something else.
 
-The Golden Ticket of Exchange is VERY rare and does the same thing it predecessor does but can do it TEN times instead of once.
+The Golden Ticket of Exchange is extremely rare and high value item that does the same thing it predecessor does but can do it FIVE times instead of once.
 
 </details>
 
@@ -183,6 +221,8 @@ Massive thanks to Evaisa and anyone else who has contributed to LethalLib
 
 Massive thanks to everyone working on BepInEx
 
+And the biggest thanks to Zeekers for creating Lethal Company
+
 ---
 
 ### Report issues on my GitHub! - https://github.com/EtherealEmil/UsualScrap.git
@@ -192,6 +232,8 @@ Massive thanks to everyone working on BepInEx
 <summary>Issues</summary>
 
 - Last I checked, in the vanilla game the player health UI doesn't change back to white when healing because there aren't any ways to heal back to full health outside of respawning, The only thing I will do is recommend you use a mod that displays your health as a number so you can easily tell you're health is actually increasing.
+
+- Toolbox doesn't work when crouching, I have no idea why but i'll try to fix it.
 
 </details>
 

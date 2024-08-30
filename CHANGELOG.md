@@ -265,7 +265,7 @@ If there are ANY issues, the link to my github is at the top of the page!
 <details>
 <summary>Version 1.5.3</summary>
 
-#### The final update of my weekish long update spree.
+#### The final update of my week long update spree.
 
 - Various model tweaks.
 - Stopped the rose from hurting you twice when picked up initially.
@@ -281,7 +281,7 @@ If there are ANY issues, the link to my github is at the top of the page!
 - Simplified some code.
 
 
-Planned Additions - defib and crowbar functions eventually, toolbox compat with modded traps.
+Planned Additions - defib and crowbar functions eventually.
 
 I can never playtest enough so if you encounter ANY issues, the link to my github is at the top of the page!
 </details>
@@ -297,10 +297,165 @@ I can never playtest enough so if you encounter ANY issues, the link to my githu
 - Added tips to the mod page for surviving only the most dangerous scrap items.
 - Candies that gave minor speed now also refill your stamina.
 
-Planned Additions - defib and crowbar functions eventually, toolbox compat with modded traps.
+Planned Additions/Changes - defib and crowbar functions eventually.
 
 If there are ANY issues, the link to my github is at the top of the page!
 </details>
+
+<details>
+<summary>Version 1.5.5</summary>
+
+#### The "It's technically next week" update.
+
+- Handlamp bulb now properly changes whether it's on or off.
+- Explosive tank sound was playing when it wasn't yet enabled. don't know how this started but I fixed it.
+- Nerfed the radioactive cell's damage intervals even further to try and give more time when eyeless dogs force you to hold it and when the map is a longer one.
+- Following the previous change, I've increased the explosive tanks timer a bit to give more time.
+- Rewrote a chunk of old code to fix instances where the radioactive cell continued to hurt its holder from the grave when they are killed while holding it.
+
+Planned Additions/Changes - defib and crowbar functions eventually.
+
+If there are ANY issues, the link to my github is at the top of the page!
+</details>
+
+<details>
+<summary>Version 1.5.6</summary>
+
+#### The ..stable? update.
+
+- Completely rewrote how the handlamp code functions.
+- Consolidated some code, fixed some bugs.
+- Disabled candies in configs by default for now because they aren't too useful and bloat the spawning pool with lower value scrap items. If I don't find a use for them I may scrap them.
+- Added the candy dispenser.
+- Made the crowbar able to open doors by hitting them.
+- Messed with the medical kit, hopefully it works correctly now. probably not.
+
+Planned Additions/Changes - defib.
+
+If there are ANY issues, the link to my github is at the top of the page!
+</details>
+
+<details>
+<summary>Version 1.5.7</summary>
+
+#### The ..stable? update.
+
+- Completely rewrote how the handlamp code functions.
+- Consolidated some code, fixed some bugs.
+- Disabled candies in configs by default for now because they aren't too useful and bloat the spawning pool with lower value scrap items. If I don't find a use for them I may scrap them.
+- Added the candy dispenser.
+- Made the crowbar able to open doors by hitting them.
+- Messed with the medical kit, hopefully it works correctly now. probably not.
+- Forgot to import..
+
+Planned Additions/Changes - defib.
+
+If there are ANY issues, the link to my github is at the top of the page!
+</details>
+
+<details>
+<summary>Version 1.5.8</summary>
+
+#### An update of all time.
+
+- Tweaked radioactive cell damage to put you on critical health before killing you instead of killing you instantly at 25 health sometimes.
+- Crowbar takes two-three hits to unlock a locked door instead of 1 and will knock it open.
+- Crowbar can knock open unlocked closed doors by hitting them once.
+- Reduced time to heal with the medical kit.
+- The medical kit now replenishes its healthpool overtime instead of being restocked at the ship, it'll take a bit to get it balanced right but it's a start.
+- Possibly fixed spawning issues with all items including the tickets, dispenser, and toolbox. Or made it worse, we shall see.
+- Tweaked spawn rates a bit.
+- Model tweaks.
+
+Planned Additions/Changes - defib For real this time.
+
+I've been working on a few more interesting items but with my new job and needing to learn new code stuff for them it's taking a bit longer, and I just wanted to get this update out. If there are ANY issues, the link to my github is at the top of the page!
+</details>
+
+<details>
+<summary>Version 1.5.9</summary>
+
+#### V60 compatibilty confirmation update.
+
+- Increased crowbar's spawnrate to account for other item spawn increases.
+- Made any tools or scrap tools grabbable in orbit.
+- Lowered candy spawn rates.
+- Lowered the golden ticket conversions to 5 instead of 10 and increased it's spawn rate to 5.
+- Tried to fix spawned scrap values only showing for the host, like the candy from the dispenser.
+- Updated some internal stuff to the latest versions.
+
+Planned Additions/Changes - defib For real THIS time.
+
+Next update will be 2-3 new items. If there are ANY issues, the link to my github is at the top of the page!
+</details>
+
+<details>
+<summary>Version 1.6.0</summary>
+
+#### The laying foundations update 1/2
+
+- Tried to sync the padlock's door locking mechanic between players so you can lock your friends in rooms. You asked for it.
+- Added the Defibrillator (disabled by default for testing. If you'd like to try it, enable it in the configs, but expect bugs).
+- Added the Lifeline (disabled by default for testing. If you'd like to try it, enable it in the configs, but expect bugs).
+- Added the Pocket Watch (Was supposed to have a function but I gave it's function to the Lifeline Device after I had already made its model. If you have any ideas what it should do I'd love to hear them).
+- Added the adrenaline shot
+- Removed candies.
+- Restored some textures that mysteriously disappeared.
+- Reduced the handlamp's battery capacity slightly so I could boost it's light reach slightly
+- Made dropping the explosive tank deduct less time so new users have more time to think about picking it back up and so dropping it the first couple times isn't as punishing.
+- The explosive tank's dropping mechanics are now completely disabled when dropped within the ship. Hitting it still blows it up.
+- Messed with the spawn values again, one day maybe they'll feel correct.
+- Worked on the spawn method for everything again.
+- Increased the chance to spawn candy with the candy dispenser slightly.
+- Tweaked the toolbox's trap detection to be more stable and accurate because it turns out landmines just have a weird collider or something. It also works more consistently while crounching now.
+- Increased the value of scrap produced by the toolbox and slightly reduced it's cost because everytime I buy a toolbox it feels like traps mysteriously cease to exist.
+- Changed some item's weights.
+- Stuff I forgot about.
+
+
+Planned Additions/Changes - Use medkit on teamates to heal them functionality, I actually hate doing ui but the toolbox will get ui someday, ...
+
+The next update will have bug fixes for issues I recieve, some configs (I hate coding configs), effects/animations/sounds I didn't do due to lack of time, and probably balancing changes after I playtest the additions. I'm going to bed...
+Report ANY and ALL issues if possible, the link to my github is at the top of the page!
+</details>
+
+<details>
+<summary>Version 1.6.1</summary>
+
+#### Small follow-up update
+
+- Undid some changes I made that just broke more stuff.
+- Various fixes
+- Fixed defib and lifeline not having battery initially.
+- Made defib and lifeline disabled by default like I intended.
+- Increased the toolbox price.
+- Fixed plenty of incorrect code.
+- I'm redoing most icons so those will be coming soon but I've added temporary icons to the new items.
+- Tweaked some of the models.
+
+Planned Additions/Changes - I'm messing with the defib model and will add It's icon when I finish it (the white square on the hotbar is a missing item texture not a bug), some sounds are still missing, some effects are still missing, rename lifeline, more bugs.
+
+Pretty tired so the next update will take a few days unless a bug is critical, see y'all then. If there are ANY issues, the link to my github is at the top of the page!
+</details>
+
+<details>
+<summary>Version 1.6.2</summary>
+
+#### Coat of paint update 2/2
+
+- Fixed a OLD critical bug that caused the medical kit and bandages to stop working after a day or reset.
+- Gave candy dispenser it's damage back, that change wasn't intentional.
+- All new item icons and mod icon
+- Added new sounds
+- Added new effects
+- Tweaked models some more
+
+Planned Additions/Changes - A couple new deadly/dangerous scrap items...
+
+Thanks for 100,000 downloads I really appreciate it! If there are ANY issues, the link to my github is at the top of the page!
+</details>
+
+
 
 
 
