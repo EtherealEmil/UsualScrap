@@ -87,7 +87,7 @@ New batch of items including: the toolbox, radioactive mineral cell, and gift wr
 <details>
 <summary>Version 1.4.3</summary>
 
-#### It's been a while since I started this update so I'll just note all the changes I remember.
+### It's been a while since I started this update so I'll just note all the changes I can recall.
 
 - The Toolbox is now button presses instead of holding to use.
 - The Medkit is now hold to heal instead of toggle.
@@ -114,7 +114,7 @@ New batch of items including: the toolbox, radioactive mineral cell, and gift wr
 <details>
 <summary>Version 1.4.4</summary>
 
-#### The First in a line of refinement updates. New items added after this will try to stay equal or above the quality of the current items meaning it may take slightly longer before I post a new item.
+### The First in a line of refinement updates.
 
 - The Handlamp now uses it's own script so it shouldn't be affected by mods that change the flashlight but will still be affected by mods that change world lighting.
 - The Handlamp no longer shows the flashlight's headlight when pocketed.
@@ -135,16 +135,17 @@ New batch of items including: the toolbox, radioactive mineral cell, and gift wr
 <details>
 <summary>Version 1.4.5</summary>
 
-#### Quick update
-- tweaked explosive tank holding position
-- removed glitchlist the wishlist (wishlist)
+### Quick update
+
+- Tweaked explosive tank holding position
+- Removed glitchlist the wishlist (wishlist)
 
 </details>
 
 <details>
 <summary>Version 1.4.6</summary>
 
-#### Refinement strikes twice.
+### Refinement strikes twice. update.
 
 - Added sounds to the Explosive Tank, Radioactive Cell, Toolbox, Medkit, Bandages, and Sizable Scissors.
 - Added the Lollipop scrap item.
@@ -156,6 +157,8 @@ Leave feedback, changes, or additions on my Github. Really wish there was a comm
 
 <details>
 <summary>Version 1.4.7</summary>
+
+### Small changes.
 
 - Explosive tank can be reactivated by dropping it a couple times after it's been deactivated.
 - Explosive tank effect and sounds are now indicators of whether it is active or not (no more sound effect in the ship).
@@ -170,7 +173,7 @@ Updates will continue to be slow, sorry. Leave feedback, changes, or additions o
 <details>
 <summary>Version 1.4.8</summary>
 
-#### Updated to v55
+### Updated to v55
 
 - Fixed the weight issues introduced in v55 that some of the items had. No more 120 lb lollipops.
 - Fixed Explosive tank being completely broken in v55.
@@ -184,7 +187,7 @@ Updates will continue to be slow, sorry. Leave feedback, changes, or additions o
 <details>
 <summary>Version 1.4.9</summary>
 
-#### Updated to v55
+### Updated to v55. again?
 
 - Fixed the weight issues introduced in v55 that some of the items had. No more 120 lb lollipops.
 - Fixed Explosive tank being completely broken in v55.
@@ -199,7 +202,7 @@ Updates will continue to be slow, sorry. Leave feedback, changes, or additions o
 <details>
 <summary>Version 1.5.0</summary>
 
-#### So many changes so little time.
+### So many changes so little time. update.
 
 - Changed some names and fixed inconsistent names.
 - Added tags for all items to prevent item conflicts.
@@ -228,7 +231,7 @@ If there are ANY issues, the link to my github is at the top of the page! Should
 <details>
 <summary>Version 1.5.1</summary>
 
-#### New stuff, more fixes.
+### New stuff, more fixes.
 
 - Added the rose scrap Item.
 - Added ticket of exchange and golden ticket of exchange scrap items.
@@ -249,7 +252,7 @@ If there are ANY issues, the link to my github is at the top of the page!
 <details>
 <summary>Version 1.5.2</summary>
 
-#### The "how many updates?" update.
+### The "how many updates?" update.
 
 - Dimmed the hand lamp's bulb glow even further.
 - Some more toolbox fixes.
@@ -265,7 +268,7 @@ If there are ANY issues, the link to my github is at the top of the page!
 <details>
 <summary>Version 1.5.3</summary>
 
-#### The final update of my week long update spree.
+### The final update of my week long update spree.
 
 - Various model tweaks.
 - Stopped the rose from hurting you twice when picked up initially.
@@ -289,7 +292,7 @@ I can never playtest enough so if you encounter ANY issues, the link to my githu
 <details>
 <summary>Version 1.5.4</summary>
 
-#### Was supposed to be the last update for this week but...oops.
+### Was supposed to be the last update for this week but...oops.
 
 - Was testing some new teleporter item code using chocolate and I forgot to put chocolate back to how it's suppose to be last update. OOPS.
 - Explosive tank and rad cell value increased.
@@ -305,7 +308,7 @@ If there are ANY issues, the link to my github is at the top of the page!
 <details>
 <summary>Version 1.5.5</summary>
 
-#### The "It's technically next week" update.
+### The "It's technically next week" update.
 
 - Handlamp bulb now properly changes whether it's on or off.
 - Explosive tank sound was playing when it wasn't yet enabled. don't know how this started but I fixed it.
@@ -321,7 +324,7 @@ If there are ANY issues, the link to my github is at the top of the page!
 <details>
 <summary>Version 1.5.6</summary>
 
-#### The ..stable? update.
+### The ..stable? update.
 
 - Completely rewrote how the handlamp code functions.
 - Consolidated some code, fixed some bugs.
@@ -338,7 +341,7 @@ If there are ANY issues, the link to my github is at the top of the page!
 <details>
 <summary>Version 1.5.7</summary>
 
-#### The ..stable? update.
+### The ..stable? update. again.
 
 - Completely rewrote how the handlamp code functions.
 - Consolidated some code, fixed some bugs.
@@ -356,7 +359,7 @@ If there are ANY issues, the link to my github is at the top of the page!
 <details>
 <summary>Version 1.5.8</summary>
 
-#### An update of all time.
+### An update of all time.
 
 - Tweaked radioactive cell damage to put you on critical health before killing you instead of killing you instantly at 25 health sometimes.
 - Crowbar takes two-three hits to unlock a locked door instead of 1 and will knock it open.
@@ -392,7 +395,7 @@ Next update will be 2-3 new items. If there are ANY issues, the link to my githu
 <details>
 <summary>Version 1.6.0</summary>
 
-#### The laying foundations update 1/2
+### The laying foundations update 1/2
 
 - Tried to sync the padlock's door locking mechanic between players so you can lock your friends in rooms. You asked for it.
 - Added the Defibrillator (disabled by default for testing. If you'd like to try it, enable it in the configs, but expect bugs).
@@ -422,7 +425,7 @@ Report ANY and ALL issues if possible, the link to my github is at the top of th
 <details>
 <summary>Version 1.6.1</summary>
 
-#### Small follow-up update
+### Small follow-up update
 
 - Undid some changes I made that just broke more stuff.
 - Various fixes
@@ -439,22 +442,44 @@ Pretty tired so the next update will take a few days unless a bug is critical, s
 </details>
 
 <details>
-<summary>Version 1.6.2</summary>
+<summary>Version 1.6.2 & 1.6.3</summary>
 
-#### Coat of paint update 2/2
+### Coat of paint update 2/2  (THIS UPDATE WILL BREAK SAVES WITH PREVIOUS MOD VERSIONS, THERE ARE LOTS OF INTERNAL AND EXTERNAL CHANGES)
 
-- Fixed a OLD critical bug that caused the medical kit and bandages to stop working after a day or reset.
+- Fixed an OLD major bug that caused the medical kit and bandages to stop working after a day or reset.
+- Fixed ticket uses not registering.
 - Gave candy dispenser it's damage back, that change wasn't intentional.
-- All new item icons and mod icon
-- Added new sounds
-- Added new effects
-- Tweaked models some more
+- When items are destroyed (Tank exploding, Ticket used, etc.) their radar icons are now destroyed with them.
+- Many new/redone item icons.
+- Added configs for spawn rate and store cost. I will not be adding anymore configs anytime soon, this was tedious.
+- Renamed some items. Lifeline -> Displacement Controller, Adrenaline Injector -> Emergency Injector, Broken Pocket Watch -> Pocket Watch.
+- Displacement Controller heavily polished code wise and balanced so for now I will enable it by default.
+- Added missing sounds.
+- Tweaked models some more.
+- Fixed pocket watch scan node not being where it's supposed to be.
 
-Planned Additions/Changes - A couple new deadly/dangerous scrap items...
+- 1.6.3 -> Forgot to update the README with updated information :)
+
+Plans for next update - A couple new deadly/dangerous scrap items, Polished defibrillator.
 
 Thanks for 100,000 downloads I really appreciate it! If there are ANY issues, the link to my github is at the top of the page!
 </details>
 
+<details>
+<summary>Version 1.6.4</summary>
+
+### Bugfixes, consolidation.
+
+- Fixed Handlamp staying on when running out of battery.
+- Reduced light intensity of the controller's screen so it might not be so bright on modded moons.
+- Removed unused assets and references.
+- Reduced the glitch time of the controller a bit, extended the first connectivity stage range a bit.
+- Changed the teleport method of the controller so it hopefully works for clients now.
+
+Planned Additions/Changes - I'm messing with the defib model and will add It's icon when I finish it (the white square on the hotbar is a missing item texture not a bug), some sounds are still missing, some effects are still missing, rename lifeline, more bugs.
+
+This'll be all for this weekend! See y'all next weekend! If there are ANY issues, the link to my github is at the top of the page!
+</details>
 
 
 

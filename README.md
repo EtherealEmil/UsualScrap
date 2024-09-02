@@ -1,12 +1,12 @@
-### Do not fear! It works fine in v60+!
+### Works fine in v60+!
 
 ![Preview](https://i.imgur.com/HRaqFR0.png)
 
 ## Purchasable Equipment
 <details>
-<summary>Hand Lamp (20C)</summary>
+<summary>Handlamp (20C)</summary>
 
-Costs 20 credits, Weighs 5
+Costs 25 credits, Weighs 5
 
 Compared to vanilla flashlights...
 
@@ -49,27 +49,32 @@ Compared to Bandages, the Medical Kit can heal 2x the health (120) Bandages can 
 </details>
 
 <details>
-<summary>Adrenaline Injector(30C)</summary>
+<summary>Emergency Injector(45C)</summary>
 
-Costs 30 credits, Weighs 1
+Costs 45 credits, Weighs 1
 
-The Adrenaline injector gives you a speed boost, slight jump boost, and stamina regen boost for a while.
+The Emergency Injector instantly gives you a speed boost, jump boost, and a small amount of health.
 
-- You can overdose on adrenaline injectors and will take damage if more are used while one is active. And no, you will not keep stacking the buffs.
+- Taking more than one emergency injector in a short time will cause the overdose effect which will deal damage to you for a short time.
+- After the Injector turns red it is empty.
 
 </details>
 
 
 <details>
-<summary>Lifeline(300C)</summary>
+<summary>Displacement Controller(240C)</summary>
 
-Costs 300 credits, Weighs 4
+Costs 240 credits, Weighs 4
 
-The Lifeline is a portable teleporter that saves a location and can then teleport you there if used before it runs out of battery.
+The Displacement Controller is a portable teleporter that saves your coordinates and can then teleport you back there as long as it has battery.
 
-- The lifeline's saved location is lost when it runs out of battery or is charged.
+- The Displacement Controller's saved coordinates are set when used the first time, the second use will teleport you back at the cost of some of its battery.
+- The Displacement Controller consumes battery slowly when your coordinates have been set but haven't been returned to yet.
+- Your saved coordinates are wiped when the controller is recharged.
 
-- The lifeline is a new very experimental item. Keep that in mind when testing the limits of the game.
+Displacement controller connectivity mechanic:
+ - The Displacement Controller's connectivity is based on how far you are from the saved location, the farther you are the lower the connectivity. With full connectivity the controller works as expected but when connectivity starts to lower the controller will begin to experience glitches. Glitches will wipe your saved location and prevent you from using the controller for a short time.
+
 </details>
 
 
@@ -87,9 +92,9 @@ The Tool Box can be used to dismantle landmines and turrets and will produce scr
 </details>
 
 <details>
-<summary>Defibrillator(240c)</summary>
+<summary>Defibrillator(300c)</summary>
 
-Costs 240 credits, Weighs 3
+Costs 300 credits, Weighs 3
 
 The defibrillator uses power to revive terminated employees.
 
@@ -178,7 +183,7 @@ The Candy Dispenser is a melee weapon that does 2x damage and will rarely drop a
 
 <details>
 
-<summary>Broken Pocket Watch</summary>
+<summary>Pocket Watch</summary>
 
 Average value, Weighs 3, Spawns on S and above difficulty moons rarely
 
@@ -233,7 +238,7 @@ And the biggest thanks to Zeekers for creating Lethal Company
 
 - Last I checked, in the vanilla game the player health UI doesn't change back to white when healing because there aren't any ways to heal back to full health outside of respawning, The only thing I will do is recommend you use a mod that displays your health as a number so you can easily tell you're health is actually increasing.
 
-- Toolbox doesn't work when crouching, I have no idea why but i'll try to fix it.
+- Mods that mess with the world lighting can make some of the items insanely bright. I'll try to account for it when choosing the item effects but I can't fix it.
 
 </details>
 
