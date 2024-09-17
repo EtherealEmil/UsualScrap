@@ -1,4 +1,4 @@
-### Finally playtesting stuff in multiplayer so a TON of fixes will come in the next update along with new content. Keep an eye out.
+### Finally playtesting stuff in multiplayer so a TON of fixes will come in the next update along with some new content. Keep an eye out.
 
 ![Preview](https://i.imgur.com/HRaqFR0.png)
 
