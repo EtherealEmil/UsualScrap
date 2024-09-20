@@ -1,4 +1,4 @@
-### Finally playtesting stuff in multiplayer so a TON of fixes will come in the next update along with some new content. Keep an eye out.
+### Updating tomorrow when I'm at a good stopping point. I have all day to work on the mod.
 
 ![Preview](https://i.imgur.com/HRaqFR0.png)
 
