@@ -1,4 +1,4 @@
-### Updating tomorrow when I'm at a good stopping point. I have all day to work on the mod.
+### Update later today or tomorrow.
 
 ![Preview](https://i.imgur.com/HRaqFR0.png)
 
