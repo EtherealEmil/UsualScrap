@@ -1,4 +1,4 @@
-### Works in V64.
+### Update 1.6.6 finally released check it out - https://thunderstore.io/c/lethal-company/p/etherealemil/UsualScrap/
 
 ![Preview](https://i.imgur.com/HRaqFR0.png)
 
