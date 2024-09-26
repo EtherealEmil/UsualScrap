@@ -1,4 +1,4 @@
-### Big update soon.
+### Works in V64.
 
 ![Preview](https://i.imgur.com/HRaqFR0.png)
 
@@ -49,31 +49,31 @@ Compared to Bandages, the Medical Kit can heal 2x the health (120) Bandages can 
 </details>
 
 <details>
-<summary>Emergency Injector(45C)</summary>
+<summary>Emergency Injector(60C)</summary>
 
-Costs 45 credits, Weighs 1
+Costs 60 credits, Weighs 1
 
-The Emergency Injector instantly gives you a speed boost, jump boost, and a small amount of health.
+When used, the Emergency Injector gives you a speed boost, boosts your sprint meter capacity, refills your stamina, and gives you a jump boost.
 
-- Taking more than one emergency injector in a short time will cause the overdose effect which will deal damage to you for a short time.
-- After the Injector turns red it is empty.
+- The effect lasts for 1 minute. After 1 minute you will receive a severe slowness debuff and your stamina will be drained.
+- If another injector is used while you already have the effect you will quickly take damage and the effect will not stack or be reapplied.
 
 </details>
 
 
 <details>
-<summary>Displacement Controller(240C)</summary>
+<summary>Shift Controller(225C)</summary>
 
-Costs 240 credits, Weighs 4
+Costs 225 credits, Weighs 4
 
-The Displacement Controller is a portable teleporter that saves your coordinates and can then teleport you back there as long as it has battery.
+The Shift Controller is a portable teleporter that saves your coordinates and can then teleport you back there as long as it has battery.
 
-- The Displacement Controller's saved coordinates are set when used the first time, the second use will teleport you back at the cost of some of its battery.
-- The Displacement Controller consumes battery slowly when your coordinates have been set but haven't been returned to yet.
-- Your saved coordinates are wiped when the controller is recharged.
+- The Shift Controller's saved coordinates are set when used the first time, the second use will teleport you back at the cost of some of its battery.
+- The Shift Controller consumes battery slowly after your coordinates have been set.
+- The saved coordinates are wiped when the controller is recharged.
 
-Displacement controller connectivity mechanic:
- - The Displacement Controller's connectivity is based on how far you are from the saved location, the farther you are the lower the connectivity. With full connectivity the controller works as expected but when connectivity starts to lower the controller will begin to experience glitches. Glitches will wipe your saved location and prevent you from using the controller for a short time.
+Shift controller connectivity mechanic:
+ - The Shift Controller's connectivity is based on how far you are from the saved location, the farther you are the lower the connectivity. With full connectivity the controller works as expected but when connectivity starts to lower the controller will begin to experience glitches. Glitches will wipe your saved location and prevent you from using the controller for a short time.
 
 </details>
 
@@ -92,14 +92,17 @@ The Tool Box can be used to dismantle landmines and turrets and will produce scr
 </details>
 
 <details>
-<summary>Defibrillator(300c)</summary>
+<summary>Defibrillator(375c)</summary>
 
-Costs 300 credits, Weighs 3
+Costs 375 credits, Weighs 3
 
-The defibrillator uses power to revive terminated employees.
+The defibrillator uses power to revive up to 3 deceased employees.
 
-- Currently only revives one player before needing to be recharged (May increase to two later depending on it's performance in testing)
-- Whether a defibrillator has power or not can be easily seen by the glow of the battery compartment on its model.
+- The defibrillator has a charge meter (Not related to power) on the side of it. The charge meter indicate how long you've held down the use button and it must be fully charged to revive a player.
+- When the charge meter is full but you continue to hold the use button you can be ready to revive at a moments notice but keep in mind that the items power is constantly drained when charging.
+- A power cost is used when you release the use button at full charge regardless of if a player was revived or not.
+
+- Currently I've made players cut in half (butler, sizable scissors) impossible to revive. I may make more death types perma death or may just remove this, we shall see.
 
 </details>
 
@@ -179,6 +182,9 @@ Average value, Weighs 12, Spawns on S and above difficulty moons rarely
 
 The Candy Dispenser is a melee weapon that does 2x damage and will rarely drop a piece of candy when swinging it (1/25 chance each swing).
 
+- The candy dropped by the dispenser is worth 10 (It looks blank on clients but is still worth ten, I will fix this eventually) and can be eaten to heal you while also giving you a very minor speed boost.
+- The candy dispenser dropping candy is disabled in orbit and on moons that have no time cycle like the company building.
+
 </details>
 
 <details>
@@ -187,7 +193,7 @@ The Candy Dispenser is a melee weapon that does 2x damage and will rarely drop a
 
 Average value, Weighs 3, Spawns on S and above difficulty moons rarely
 
-The Broken Pocket Watch poorly tells the time.
+The Pocket Watch tells it's time. nothing.
 
 </details>
 
@@ -200,6 +206,8 @@ Average value, Weighs 1, Spawns on S and above difficulty moons rarely
 
 The rose damages you a little when picked up or equipped.
 
+- You will recieve a small slowness debuff everytime it damages you.
+
 </details>
 
 <details>
@@ -210,7 +218,7 @@ Low value/High Value, Weighs 1, Spawns on S and above difficulty moons
 
 The Regular Ticket of Exchange is a common low value item that can be used ONCE to transform any item into a gift box, essentially exchanging it for something else.
 
-The Golden Ticket of Exchange is extremely rare and high value item that does the same thing it predecessor does but can do it FIVE times instead of once.
+The Golden Ticket of Exchange is extremely rare and high value item that does the same thing it predecessor does but will make FIVE gift boxs instead of one.
 
 </details>
 
@@ -235,8 +243,6 @@ And the biggest thanks to Zeekers for creating Lethal Company
 
 <details>
 <summary>Issues</summary>
-
-- Last I checked, in the vanilla game the player health UI doesn't change back to white when healing because there aren't any ways to heal back to full health outside of respawning, The only thing I will do is recommend you use a mod that displays your health as a number so you can easily tell you're health is actually increasing.
 
 - Mods that mess with the world lighting can make some of the items insanely bright. I'll try to account for it when choosing the item effects but I can't fix it.
 
