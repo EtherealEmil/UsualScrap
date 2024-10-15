@@ -1,4 +1,4 @@
-### Works in V64.
+### Works in V64+
 
 ![Preview](https://i.imgur.com/LOazRR9.png)
 
@@ -138,6 +138,18 @@ Tips for survival - The damage ramps based on how long you hold it continuously 
 </details>
 
 <details>
+<summary>Capsules</summary>
+
+High value, Weighs 16, Spawns anywhere rarely
+
+Capsules are a new item that have different effect depending on the game states like whether it's day or night find them and discover what they do!
+
+Next update I'll reveal what they all do.
+
+</details>
+
+
+<details>
 <summary>Crowbar</summary>
 
 Average value, Weighs 6.5, Spawns anywhere uncommonly
@@ -186,17 +198,6 @@ The Candy Dispenser is a melee weapon that does 2x damage and will rarely drop a
 - The candy dispenser dropping candy is disabled in orbit and on moons that have no time cycle like the company building.
 
 </details>
-
-<details>
-
-<summary>Pocket Watch</summary>
-
-Average value, Weighs 3, Spawns on S and above difficulty moons rarely
-
-The Pocket Watch tells it's time. nothing.
-
-</details>
-
 
 <details>
 

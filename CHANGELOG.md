@@ -512,10 +512,10 @@ It's been a little bit but I've not stopped working on the mod in my free time. 
 - Defibrillator now has sounds and works correctly.
 - Tickets now work as intended.
 - The rose will now apply a small slowness debuff each time it damages you.
-- Brought back a few of my candies as special drops from the candy dispenser. The rest were lost to the void. The candies al do the same thing, they restore 10 health and give a very minor speed boost.
+- Brought back a few of my candies as special drops from the candy dispenser. The rest were lost to the void. The candies all do the same thing, they restore 10 health and give a very minor speed boost.
 - Padlocks locking doors is now synced between players.
 - Candy dispenser no longer spawns candy if the ship is in space, is currently in motion, or the current moon doesn't have a time cycle.
-- The injector no longer heals, increases your sprint meter capacity, give more speed, give a jump buff, and changes your sprint meter color while active.
+- The injector no longer heals, increases your sprint meter capacity, gives more speed, gives a jump buff, and changes your sprint meter color while active.
 - The injector also drains your sprint meter and gives you a short slow debuff when the speed expires. Your sprint meter will also change to a seperate color while the slow is active.
 - When used by clients the crowbar will now properly open the doors when unlocking locked doors.
 - Model changes, new color variations for some objects, and improved effects for some objects.
@@ -523,7 +523,7 @@ It's been a little bit but I've not stopped working on the mod in my free time. 
 - Renamed displacement controller to shift controller to avoid terminal issues.
 - Halved the glitch chance of the shift controller in the average connection range.
 - Added a cushion to when the glitchs start randomly rolling in the average connection range so it can't roll to glitch as soon as you leave the great connection range.
-- Spent like 5 hours trying to make a simple screen effect and have nothing to show for it.
+- Spent like 5 hours trying to make a simple screen effect and have nothing to show for it. Maybe another time.
 - Switched out most of the objects networking to my own networking and tested it so I ended up redoing most of them several times to get them working correctly and synced. This is what delayed this update so long.
 - The most noticable fixes are above but I fixed an insane amount of bugs that I did not bother recording here.
 
@@ -532,7 +532,55 @@ Planned Additions/Changes - Finish new items, rework the toolbox's function, loo
 May be a couple fix updates after if needed but otherwise I'll be taking a short break. If there are ANY issues, the link to my github is at the top of the page! The mod is also on the modding discord under the name "Usual Scrap" with a space.
 </details>
 
+<details>
+<summary>Version 1.6.7</summary>
 
+### Quick follow up fixes
+
+- Fixed defibrillator working without being fully charged.
+- Possibly fixed duplicate dead bodies when using the defibrillator.
+- In addition to being cut in half any death that removes your head is also impossible to revive.
+- Ticket use on corpses is now disabled.
+- Fixed some typos.
+
+</details>
+
+<details>
+<summary>Version 1.6.8</summary>
+
+### Quick follow up fixes #2
+
+- Fixed crowbar doing it's functions multiple times when used in multiplayer resulting in it one-shotting stuff sometimes and open/closing doors rapidly.
+- Updated content image.
+
+</details>
+
+<details>
+<summary>Version 1.6.9</summary>
+
+### Update
+
+I don't like going weeks without updating if I can help it so if an item taking long to make (frigid capsule in this case) i'm just going to update with what I have and the item will sit until it's done.
+
+- Removed leftover logging.
+- Fixed injector draining stamina instead of restoring stamina initially.
+- removed injector changing ui colors because of problems, will figure something else out.
+- Shift controller no longer glitches from just being dropped inside the ship.
+- Fixed harmless ticket error.
+- Increased the great connection range of the shift controller by around 30%.
+- Pocketwatch disabled.
+- Hopefully fixed defibrillator bodies being duplicated or remaining upon revival for good.
+- Made some light attempts at fixing a inconsistent invisible model issue upon revival (I tried some light fixes because I don't want to break other stuff doing random changes).
+- Added check so slowing effects won't go negative and reverse your controls.
+- Added Gloomy Capsule.
+- Added Frigid Capsule (Still a bit unstable).
+- Items that spawned on hard moons only now also spawn on any modded moons. Looking into spawning items based on the interior instead of the moon if possible.
+
+Upcoming - Toolbox rebuild,golden ticket changes, some new configs, a few more items eventually.
+
+If there are ANY issues, the link to my github is at the top of the page! The mod is also on the "Lethal Company Modding" discord under the name "Usual Scrap" with a space.
+
+</details>
 
 
 
