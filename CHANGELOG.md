@@ -558,13 +558,13 @@ May be a couple fix updates after if needed but otherwise I'll be taking a short
 <details>
 <summary>Version 1.6.9</summary>
 
-### Update
+### No name Update
 
 I don't like going weeks without updating if I can help it so if an item taking long to make (frigid capsule in this case) i'm just going to update with what I have and the item will sit until it's done.
 
 - Removed leftover logging.
 - Fixed injector draining stamina instead of restoring stamina initially.
-- removed injector changing ui colors because of problems, will figure something else out.
+- Removed injector changing ui colors because of problems, will figure something else out.
 - Shift controller no longer glitches from just being dropped inside the ship.
 - Fixed harmless ticket error.
 - Increased the great connection range of the shift controller by around 30%.
@@ -576,12 +576,59 @@ I don't like going weeks without updating if I can help it so if an item taking 
 - Added Frigid Capsule (Still a bit unstable).
 - Items that spawned on hard moons only now also spawn on any modded moons. Looking into spawning items based on the interior instead of the moon if possible.
 
-Upcoming - Toolbox rebuild,golden ticket changes, some new configs, a few more items eventually.
+Upcoming - Toolbox rework, golden ticket changes, some new configs, a few more new items eventually.
 
 If there are ANY issues, the link to my github is at the top of the page! The mod is also on the "Lethal Company Modding" discord under the name "Usual Scrap" with a space.
 
 </details>
 
+<details>
+<summary>Version 1.7.0</summary>
+
+I don't think I've said enough thanks and really didn't expect the mod to have nearly as many downloads/users as it's received so I just wanted to say thanks everyone for viewing and trying the mod. I really appreciate it.
+
+- New modpage image.
+- Updated many textures and some model tweaks.
+- Explosive Tank -> Unstable Fuel Cylinder , Changed the name so it's less obvious what it'll do.
+- Improved effects for some items, mostly the capsules.
+- Frigid capsule redone from scratch. It now creates a temporary localized snow storm that builds up frost stacks rapidly instead of firing 3 waves.
+- Frigid capsule knocks you off of ladders if you are frozen while on one to avoid getting you stuck on them permanently.
+- If a frozen player is damaged they will be unfrozen.
+- Shift controller fixes.
+- Pocketwatch removed.
+- Hopefully stopped gloomy capsule from sometimes teleporting players inside objects.
+- Fixed gloomy capsule grab/new day bug.
+- Further increased capsules value due to the danger they can pose.
+- Capsules staying active in orbit and on the company moon has been fixed. A config will be added to alter this behavior further.
+- Added Info on the first two capsules I added last update.
+- Added a short teleport delay to the shift controller.
+- Added shift controller connection range configs.
+- All configs changed to be categorized by item instead of type of config.
+
+- Fixed visual bugs and other minor bugs not worth recording.
+
+Here's a list of recent known and confirmed bugs -
+
+- Rose can invert your controls (may be fixed)
+- Crowbar 2 shots only hoarding bugs for some reason, I looked for hours and I can't figure out why this happens.
+- Frigid capsule can perma freeze you on ladders (may be fixed)
+
+And some possible changes/additions -
+
+- Item names tweaked for better compatibility
+- Toolbox mod compatibility
+- Golden ticket changes
+- Handlamp changes
+- Emergency injector changes
+- New items.
+
+I was on break and will continue to be mostly on break from modding, updates will be few and far between for a while.
+
+If you have any config issues after this update I recommend deleting your config file so it can be remade. I completely reorganized it this update.
+
+If there are ANY issues, the link to my github is at the top of the page! The mod is also on the "Lethal Company Modding" discord under the name "Usual Scrap" with a space.
+
+</details>
 
 
 

@@ -1,7 +1,7 @@
 {
     "name": "UsualScrap",
-    "version_number": "1.6.9",
-    "target_version": "V60+",
+    "version_number": "1.7.0",
+    "target_version": "Always the Latest Version",
     "website_url": "https://github.com/EtherealEmil/UsualScrap.git",
     "description": "Adds 15+ unique equipment and scrap items that try to keep the vanilla tone",
     "dependencies": [

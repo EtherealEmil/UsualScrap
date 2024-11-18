@@ -1,6 +1,6 @@
 ### Works in V64+
 
-![Preview](https://i.imgur.com/LOazRR9.png)
+![Preview](https://i.imgur.com/bUpWC4S.png)
 
 ## Purchasable Equipment
 <details>
@@ -142,9 +142,11 @@ Tips for survival - The damage ramps based on how long you hold it continuously 
 
 High value, Weighs 16, Spawns anywhere rarely
 
-Capsules are a new item that have different effect depending on the game states like whether it's day or night find them and discover what they do!
+Capsules will do different things depending on other in-game factors like the time of day, objects around you, or your health state for example.
 
-Next update I'll reveal what they all do.
+Gloomy Capsule - Activates during the evening and night, when fully charged it will randomly teleport it's holder either indoors or outdoors depending on their current location.
+
+Frigid Capsule - Activates during the day and afternoon, when fully charged it creates a localized snowstorm that will slow and eventually freeze players who remain in it too long. Frozen players will be unfrozen if they take damage.
 
 </details>
 
