@@ -1,4 +1,4 @@
-### Works in V64+
+### Works in the latest version! - 12/4/24
 
 ![Preview](https://i.imgur.com/bUpWC4S.png)
 
@@ -40,11 +40,13 @@ Compared to the Medical Kit, Bandages heal 60 health instantly, weighs less, and
 <details>
 <summary>Medical Kit(90C)</summary>
 
-Costs 90 credits, Weighs 3
+Costs 120 credits, Weighs 3
 
-The Medical Kit heals the user overtime when used. It has a limited amount of health it can heal at once (240) but will replenish its availbe health overtime.
+The Medical Kit heals the user overtime when used. It has a limited amount of health it can heal at once (100) but will replenish its available health overtime.
 
-Compared to Bandages, the Medical Kit can heal 2x the health (120) Bandages can heal (60) and can heal infinitely when given time to replenish.
+Compared to Bandages, the Medical Kit can heal more health (100) than Bandages can heal (60) and can heal infinitely if given time to replenish. 
+
+For Update 1.7.3 users and above - The medkit can now be used to directly heal other employees. This can be done by looking at your fellow employee and using the medkit like you're healing yourself with it, same healthpool and all. The only things to note is that after you start healing them, you will continue to heal them as long as you stay close together! You do not need to stare into the eyes of your fellow employees unless you want to of course.
 
 </details>
 
@@ -96,13 +98,13 @@ The Tool Box can be used to dismantle landmines and turrets and will produce scr
 
 Costs 375 credits, Weighs 3
 
-The defibrillator uses power to revive up to 3 deceased employees.
+The defibrillator uses power to revive deceased employees.
 
-- The defibrillator has a charge meter (Not related to power) on the side of it. The charge meter indicate how long you've held down the use button and it must be fully charged to revive a player.
-- When the charge meter is full but you continue to hold the use button you can be ready to revive at a moments notice but keep in mind that the items power is constantly drained when charging.
-- A power cost is used when you release the use button at full charge regardless of if a player was revived or not.
+- The defibrillator has a charge meter (Not related to power) on the side of it. The charge meter indicate how long you've held down the use button and it must be fully charged to successfully revive a player.
+- When the charge meter is full you can continue to hold the use button and be ready to revive at a moments notice but keep in mind that the items power is constantly drained when charging.
+- A power cost is deducted when you release the use button at full charge regardless of if a player was revived or not.
 
-- Currently I've made players cut in half (butler, sizable scissors) impossible to revive. I may make more death types perma death or may just remove this, we shall see.
+- Currently I've made players cut in half (butler, sizable scissors) or beheaded (Ghost Girl, Coil Head) impossible to revive. there will be a config to disable this eventually.
 
 </details>
 
@@ -146,7 +148,7 @@ Capsules will do different things depending on other in-game factors like the ti
 
 Gloomy Capsule - Activates during the evening and night, when fully charged it will randomly teleport it's holder either indoors or outdoors depending on their current location.
 
-Frigid Capsule - Activates during the day and afternoon, when fully charged it creates a localized snowstorm that will slow and eventually freeze players who remain in it too long. Frozen players will be unfrozen if they take damage.
+Frigid Capsule - Activates during the day and afternoon, when fully charged it creates a localized snowstorm that will apply stacks of slowness to players that remain in the storm.
 
 </details>
 
@@ -156,7 +158,7 @@ Frigid Capsule - Activates during the day and afternoon, when fully charged it c
 
 Average value, Weighs 6.5, Spawns anywhere uncommonly
 
-The Crowbar is a melee weapon that does normal damage but can open locked and unlocked doors by hitting them.
+The Crowbar is a melee weapon that does normal damage and can open locked and unlocked doors by hitting them.
 
 </details>
 
@@ -192,7 +194,7 @@ Sizable Scissors are a two handed scrap item that randomly damages it's holder o
 
 <summary>Candy Dispenser</summary>
 
-Average value, Weighs 12, Spawns on S and above difficulty moons rarely
+Average value, Weighs 14, Spawns on S and above difficulty moons rarely
 
 The Candy Dispenser is a melee weapon that does 2x damage and will rarely drop a piece of candy when swinging it (1/25 chance each swing).
 
@@ -223,11 +225,14 @@ The Regular Ticket of Exchange is a common low value item that can be used ONCE 
 
 The Golden Ticket of Exchange is extremely rare and high value item that does the same thing it predecessor does but will make FIVE gift boxs instead of one.
 
+Ticket are disabled while inside the company cruiser to avoid breaking the game. I don't know why it was breaking.
+
 </details>
 
 ## Dependencies
 1. LethalLib 
 2. BepInExPack
+3. Csync
 3. Latest Version of Lethal Company for latest mod versions
 ---
 

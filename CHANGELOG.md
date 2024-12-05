@@ -613,13 +613,13 @@ Here's a list of recent known and confirmed bugs -
 - Crowbar 2 shots only hoarding bugs for some reason, I looked for hours and I can't figure out why this happens.
 - Frigid capsule can perma freeze you on ladders (may be fixed)
 
-And some possible changes/additions -
+And some possible improvements/additions -
 
-- Item names tweaked for better compatibility
-- Toolbox mod compatibility
-- Golden ticket changes
-- Handlamp changes
-- Emergency injector changes
+- Item names tweaked for better compatibility.
+- Toolbox changes.
+- Golden ticket changes.
+- Handlamp changes.
+- Emergency injector changes.
 - New items.
 
 I was on break and will continue to be mostly on break from modding, updates will be few and far between for a while.
@@ -628,6 +628,75 @@ If you have any config issues after this update I recommend deleting your config
 
 If there are ANY issues, the link to my github is at the top of the page! The mod is also on the "Lethal Company Modding" discord under the name "Usual Scrap" with a space.
 
+</details>
+
+<details>
+<summary>Version 1.7.1</summary>
+
+Happy Holidays.
+
+- Pocketwatch readded. Just a normal item.
+- Rose now also damages you when you pocket it.
+- Lowered the audio range of the frigid capsule by 50%.
+- Lowered most default spawn rates.
+- Some prices altered.
+- Medical kit no longer replenishes while actively being used.
+- Frigid capsule freezing removed completely along with many of it's particles, It now just applies a stacking slow the longer you remain in the aoe. Freezing had too many factors, wasn't as fun as I thought, buggy, probably laggy, etc. No more staring at a wall for 15 seconds.
+- Possibly fixed double hit issue, did some changes and light testing and it seemed fixed. Let me know.
+- Added uselimit and useslimited configs for the defibrillator. uselimit is based on the amount of players the defib has been used to revive not general uses of the item.
+- Defibrillator now flashes red when used on a corpse that cannot be revived due to it being dismembered. It will also turn red permanently and play a sound when out of uses completely if that is enabled.
+- You now have to use the defib on a corpse twice to revive the deceased player.
+- Reverted the golden ticket back to having 5 uses instead of one use that spawns 5 gifts.
+- Added more checks for tickets and tickets no longer work on items that are inside the company cruiser. This cruiser bug was a very weird bug that I still don't understand but I've found a method to fixing it.
+- The Handlamp now remains on when pocketed.
+- Readded csync as a dependency.
+
+Bugs hopefully fixed with this update -
+
+- Melee item Double hit.
+- Ticket use on cruiser bug.
+- Frigid capsule several bugs.
+
+possible improvements/additions -
+
+- Medical kit long awaited function addition.
+- Toolbox long awaited redo.
+- Emergency injector additions.
+- Refinements and QOL.
+- New Items.
+
+Modding interest regained new items inbound.
+
+If there are ANY issues, the link to my github is at the top of the page! The mod is also on the "Lethal Company Modding" discord under the name "Usual Scrap" with a space.
+
+</details>
+
+<details>
+<summary>Version 1.7.2</summary>
+Quick follow-up update to 1.7.1, check out 1.7.1 for the more important changes ^
+
+- Added ticket cruiser fix to the golden ticket since I forgot to before.
+- Removed double use on the defib. Increased the defib's battery usage due to this.
+- Added configs back for the pocketwatch.
+
+</details>
+
+<details>
+<summary>Version 1.7.3</summary>
+Quick follow-up follow-up update to 1.7.1, check out 1.7.1 for the other important changes ^^
+
+- Actually removed defib double use.
+- Disabled leftover logging.
+- You can now heal other employees with the medical kit directly.
+- Fixed melee multi-hit for good.
+
+</details>
+
+<details>
+<summary>Version 1.7.4</summary>
+
+- When using the medical kit to heal fellow employees the rate of healing is now increased! (2x Healing Speed)
+- //When the gloomy capsule is charging but in your pocket a new vfx will play around your player.
 </details>
 
 
