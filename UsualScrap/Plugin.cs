@@ -16,7 +16,7 @@ namespace UsualScrap
     {
         public const string PLUGIN_GUID = "Emil.UsualScrap";
         public const string PLUGIN_NAME = "UsualScrap";
-        public const string PLUGIN_VERSION = "1.7.3";
+        public const string PLUGIN_VERSION = "1.7.4";
 
 
         public static Plugin instance;

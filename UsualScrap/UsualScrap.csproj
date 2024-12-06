@@ -4,7 +4,7 @@
         <TargetFramework>netstandard2.1</TargetFramework>
         <AssemblyName>UsualScrap</AssemblyName>
         <Description>Adds 15+ unique equipment and scrap items that try to keep the vanilla tone</Description>
-        <Version>1.7.3</Version>
+        <Version>1.7.4</Version>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <LangVersion>latest</LangVersion>
     </PropertyGroup>

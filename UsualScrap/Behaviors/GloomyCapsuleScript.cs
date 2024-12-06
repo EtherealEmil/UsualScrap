@@ -1,6 +1,4 @@
 ﻿using GameNetcodeStuff;
-using LethalLib.Modules;
-using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
@@ -11,13 +9,16 @@ namespace UsualScrap.Behaviors
     {
         ParticleSystem teleportParticles;
         ParticleSystem createdTeleportParticles;
+        ParticleSystem createdPocketedParticles;
         ParticleSystem chargedParticles;
         ParticleSystem chargingParticles;
+        ParticleSystem PocketedParticles;
         System.Random shipTeleporterSeed;
         bool activateCoroutineRunning = false;
         bool teleportCoroutineRunning = false;
         bool chargeParticlePlaying = false;
         bool chargedParticlesPlaying = false;
+        bool pocketedParticlesPlaying = false;
         int teleportChanceRoll;
         int charge = 0;
         bool disabledInShip;
@@ -30,6 +31,7 @@ namespace UsualScrap.Behaviors
             teleportParticles = this.transform.Find("TeleportParticles").GetComponent<ParticleSystem>();
             chargedParticles = this.transform.Find("ChargedParticles").GetComponent<ParticleSystem>();
             chargingParticles = this.transform.Find("ChargingParticles").GetComponent<ParticleSystem>();
+            PocketedParticles = this.transform.Find("PocketedParticles").GetComponent<ParticleSystem>();
             if (!StartOfRound.Instance.inShipPhase)
             {
                 this.shipTeleporterSeed = new System.Random(StartOfRound.Instance.randomMapSeed + 17 + (int)GameNetworkManager.Instance.localPlayerController.playerClientId);
@@ -90,6 +92,9 @@ namespace UsualScrap.Behaviors
                 }
                 if (isPocketed)
                 {
+                    createdPocketedParticles = Instantiate(PocketedParticles, playerHeldBy.transform.position, Quaternion.identity, playerHeldBy.transform);
+                    createdPocketedParticles.Play();
+                    pocketedParticlesPlaying = true;
                     chargingParticles.Stop();
                     chargeParticlePlaying = false;
                 }
@@ -100,11 +105,6 @@ namespace UsualScrap.Behaviors
                 }
                 if (charge >= 20 && !teleportCoroutineRunning)
                 {
-                    if (chargeParticlePlaying)
-                    {
-                        chargingParticles.Stop();
-                        chargeParticlePlaying = false;
-                    }
                     chargedParticles.Play();
                     chargedParticlesPlaying = true;
                     StartCoroutine(WaitToTeleport());
@@ -180,7 +180,8 @@ namespace UsualScrap.Behaviors
             PlayerControllerB player = playerHeldBy;
             if (player != null && isHeld)
             {
-                createdTeleportParticles = Instantiate(teleportParticles, player.gameObject.transform.position, Quaternion.identity);
+                chargedParticles.Stop();
+                createdTeleportParticles = Instantiate(teleportParticles, player.gameObject.transform.position, Quaternion.identity, player.transform);
                 createdTeleportParticles.Play();
                 player.averageVelocity = 0f;
                 player.velocityLastFrame = Vector3.zero;
@@ -198,7 +199,6 @@ namespace UsualScrap.Behaviors
                     player.isInHangarShipRoom = true;
                     player.isInElevator = true;
                 }
-                chargedParticles.Stop();
                 charge = 0;
                 createdTeleportParticles = Instantiate(teleportParticles, player.gameObject.transform.position, Quaternion.identity);
                 createdTeleportParticles.Play();

@@ -6,6 +6,6 @@ namespace UsualScrap.Behaviors
 {
     internal class TESTCursedCandle
     {
-        // Someday is gonna be the day.
+        // Someday is gonna be the day...
     }
 }

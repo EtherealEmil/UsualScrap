@@ -18,7 +18,7 @@ namespace UsualScrap.Behaviors
         public void Awake()
         {
             particle = GetComponentInChildren<ParticleSystem>();
-        } 
+        }
         public override void LateUpdate()
         {
             base.LateUpdate();
@@ -29,6 +29,7 @@ namespace UsualScrap.Behaviors
             if (healCoroutineRunning && replenishCoroutineRunning)
             {
                 StopCoroutine(replenishCoroutine);
+                replenishCoroutineRunning = false;
             }
         }
         public override void DiscardItem()
@@ -52,7 +53,7 @@ namespace UsualScrap.Behaviors
             }
             if (buttonDown)
             {
-                StartHealRoutineServerRpc();
+                HealServerRpc();
             }
             if (!buttonDown)
             {
@@ -74,17 +75,17 @@ namespace UsualScrap.Behaviors
             }
         }
         [ServerRpc(RequireOwnership = false)]
-        public void StartHealRoutineServerRpc()
+        public void HealServerRpc()
         {
-            if (Physics.SphereCast(this.playerHeldBy.gameplayCamera.transform.position, .5f ,this.playerHeldBy.gameplayCamera.transform.forward, out RaycastHit hit, 3f, LayerMask.GetMask("Player")))
+            if (Physics.SphereCast(this.playerHeldBy.gameplayCamera.transform.position, .5f, this.playerHeldBy.gameplayCamera.transform.forward, out RaycastHit hit, 3f, LayerMask.GetMask("Player")))
             {
                 PlayerControllerB g = hit.transform.gameObject.GetComponent<PlayerControllerB>();
                 int f = (int)g.playerClientId;
-                healCoroutine = StartCoroutine(HealPlayer(f, .6f));
+                healCoroutine = StartCoroutine(HealPlayer(f, .1f));
             }
             else
             {
-                healCoroutine = StartCoroutine(HealPlayer((int)playerHeldBy.playerClientId, .3f)); 
+                healCoroutine = StartCoroutine(HealPlayer((int)playerHeldBy.playerClientId, .2f));
             }
         }
         private System.Collections.IEnumerator HealPlayer(int playerID, float rateOfHealing)
@@ -111,14 +112,20 @@ namespace UsualScrap.Behaviors
                         break;
                     }
                 }
-                HealServerRpc(playerID);
+                HealClientRpc(playerID);
+                SubtractHealpoolServerRpc();
             }
             healCoroutineRunning = false;
         }
         [ServerRpc(RequireOwnership = false)]
-        public void HealServerRpc(int playerID)
+        public void SubtractHealpoolServerRpc()
         {
-            HealClientRpc(playerID);
+            SubtractHealpoolClientRpc();
+        }
+        [ClientRpc]
+        public void SubtractHealpoolClientRpc()
+        {
+            Healthpool--;
         }
         [ClientRpc]
         public void HealClientRpc(int playerID)
@@ -138,7 +145,7 @@ namespace UsualScrap.Behaviors
             }
             if (isHeld && player.health < 100 && Healthpool > 0)
             {
-                EffectsServerRpc(playerID);
+                Effects(playerID);
                 player.health = player.health + 1;
                 if (player.health > 20)
                 {
@@ -156,13 +163,7 @@ namespace UsualScrap.Behaviors
                 }
             }
         }
-        [ServerRpc(RequireOwnership = false)]
-        public void EffectsServerRpc(int playerID)
-        {
-            EffectsClientRpc(playerID);
-        }
-        [ClientRpc]
-        public void EffectsClientRpc(int playerID)
+        public void Effects(int playerID)
         {
             PlayerControllerB player2;
             if (RoundManager.Instance.playersManager.allPlayerScripts[playerID] != playerHeldBy)
@@ -173,9 +174,8 @@ namespace UsualScrap.Behaviors
             {
                 player2 = playerHeldBy;
             }
-            ParticleSystem Healparticle = Instantiate(particle, player2.transform.position, UnityEngine.Quaternion.identity);
+            ParticleSystem Healparticle = Instantiate(particle, player2.transform.position, UnityEngine.Quaternion.identity, player2.transform);
             Healparticle.Play();
-            Healthpool--;
         }
         private System.Collections.IEnumerator ReplenishKitRoutine()
         {
@@ -215,4 +215,5 @@ namespace UsualScrap.Behaviors
             //print($"{Healthpool}");
         }
     }
+
 }

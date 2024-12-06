@@ -215,7 +215,7 @@ namespace UsualScrap.Behaviors
         [ClientRpc]
         public void DestroyBodyClientRpc()
         {
-            RaycastHit[] hits = Physics.SphereCastAll(this.playerHeldBy.gameplayCamera.transform.position, 3f, this.playerHeldBy.gameplayCamera.transform.forward, 5F, LayerMask.GetMask("PlayerRagdoll"));
+            RaycastHit[] hits = Physics.SphereCastAll(this.playerHeldBy.gameplayCamera.transform.position, 1f, this.playerHeldBy.gameplayCamera.transform.forward, 5F, LayerMask.GetMask("PlayerRagdoll"));
             for (int i = 0; i < hits.Length; i++)
             {
                 RaycastHit hit = hits[i];

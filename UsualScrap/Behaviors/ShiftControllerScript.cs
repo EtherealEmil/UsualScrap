@@ -41,7 +41,7 @@ namespace UsualScrap.Behaviors
             cScreenAverage = this.transform.Find("ShiftControllerModel").gameObject.transform.Find("CScreenAverage").gameObject;
             cScreenGreat = this.transform.Find("ShiftControllerModel").gameObject.transform.Find("CScreenGreat").gameObject;
             this.insertedBattery = new Battery(false, 1f);
-            teleportBatteryCost = this.insertedBattery.charge / 4 ;
+            teleportBatteryCost = this.insertedBattery.charge / 5 ;
             GreatRange = (BoundConfig.ShiftControllerGreatRange.Value);
             PoorRange = (BoundConfig.ShiftControllerPoorRange.Value);
             if (GreatRange >= (PoorRange - 5) || PoorRange <= (GreatRange + 5))
@@ -159,7 +159,7 @@ namespace UsualScrap.Behaviors
         {
             itemTeleporting = true;
             ToggleCoroutineServerRpc(false);
-            await Task.Delay(TimeSpan.FromSeconds(1f));
+            await Task.Delay(TimeSpan.FromSeconds(.5f));
             if (this.heldByPlayerOnServer)
             {
                 this.isBeingUsed = false;

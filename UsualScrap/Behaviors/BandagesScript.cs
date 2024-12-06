@@ -29,7 +29,7 @@ namespace UsualScrap.Behaviors
         public void Heal()
         {
             particle = GetComponentInChildren<ParticleSystem>();
-            ParticleSystem Healparticle = Instantiate(particle, this.transform.position, Quaternion.identity);
+            ParticleSystem Healparticle = Instantiate(particle, playerHeldBy.transform.position, Quaternion.identity, playerHeldBy.transform);
             Healparticle.Play();
             if (uses > 1 && playerHeldBy.health < 80)
             {
