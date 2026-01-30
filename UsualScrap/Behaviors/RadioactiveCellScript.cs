@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Unity.Netcode;
 
 namespace UsualScrap.Behaviors
@@ -12,37 +10,33 @@ namespace UsualScrap.Behaviors
         GameObject Crystal;
         bool coroutinerunning = false;
         Coroutine coroutine;
-        int timesDamaged = 0;
-        UnityEngine.Color setColor;
+        int damageRamp;
+        Color setColor;
 
         public void Awake()
         {
             light = GetComponentInChildren<Light>();
             particle = GetComponentInChildren<ParticleSystem>();
             Crystal = this.transform.Find("RadioactiveCellModel").gameObject.transform.Find("Crystal").gameObject;
-            
         }
         public override void Start()
         {
             base.Start();
 
-            SetColorServerRPC();
+            SetColorServerRpc();
         }
         [ServerRpc(RequireOwnership = false)]
-        public void SetColorServerRPC()
+        public void SetColorServerRpc()
         {
             byte ColorRRoll = (byte)new System.Random().Next(1, 160);
             byte ColorBRoll = (byte)new System.Random().Next(1, 180);
 
-            //byte r = (byte)(.6f / ColorRRoll);
-            //byte b = (byte)(.5f / ColorBRoll);
+            setColor = new Color32(ColorRRoll, 255, ColorBRoll, 255);
 
-            setColor = new UnityEngine.Color32(ColorRRoll, 255, ColorBRoll, 255);
-
-            SetColorClientRPC(setColor);
+            SetColorClientRpc(setColor);
         }
         [ClientRpc]
-        public void SetColorClientRPC(UnityEngine.Color color)
+        public void SetColorClientRpc(Color color)
         {
             var CrystalMesh = Crystal.GetComponent<MeshRenderer>().material;
             CrystalMesh.color = color;
@@ -68,7 +62,7 @@ namespace UsualScrap.Behaviors
             if (coroutinerunning)
             {
                 StopCoroutine(coroutine);
-                timesDamaged = 0;
+                coroutinerunning = false;
             }
             ToggleLights(true);
             particle.Play();
@@ -79,46 +73,29 @@ namespace UsualScrap.Behaviors
             ToggleLights(true);
             particle.Play();
         }
-        public async override void GrabItem()
+        public override void GrabItem()
         {
             base.GrabItem();
-            if (isHeld)
+            if (coroutinerunning == false)
             {
-                await Task.Delay(TimeSpan.FromSeconds(2.5f));
-                if (isHeld)
-                {
-                    playerHeldBy.DamagePlayer(5);
-                    coroutine = StartCoroutine(DamageHolder());
-                }
+                coroutine = StartCoroutine(DamageHolder());
             }
         }
         private System.Collections.IEnumerator DamageHolder()
         {
             coroutinerunning = true;
-            while (isHeld)
+            damageRamp = 5;
+            yield return new WaitForSeconds(2.5f);
+            playerHeldBy.DamagePlayer(damageRamp);
+            while (playerHeldBy != null)
             {
                 yield return new WaitForSeconds(5f);
-                if (!isHeld)
+                if (playerHeldBy == null)
                 {
                     yield break;
                 }
-                if (timesDamaged < 1)
-                {
-                    playerHeldBy.DamagePlayer(5);
-                }
-                else if (timesDamaged == 1)
-                {
-                    playerHeldBy.DamagePlayer(10);
-                }
-                else if (timesDamaged == 2 || timesDamaged == 3)
-                {
-                    playerHeldBy.DamagePlayer(15);
-                }
-                else if (timesDamaged > 3)
-                {
-                    playerHeldBy.DamagePlayer(20);
-                }
-                timesDamaged++;
+                playerHeldBy.DamagePlayer(damageRamp);
+                damageRamp += 5;
             }
             coroutinerunning = false;
         }

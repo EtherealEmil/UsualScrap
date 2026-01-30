@@ -2,7 +2,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
@@ -19,13 +18,12 @@ namespace UsualScrap.Behaviors
         Coroutine reelingUpCoroutine;
         PlayerControllerB previousPlayerHeldBy;
 
-        private static Item _lollipopItem;
-        private static Item _peppermintItem;
+        private static Item _candyItem;
         GameObject dispenserBase;
         MeshRenderer dispenserMesh;
 
         int meleeWeaponMask = 1084754248;
-        int meleeWeaponHitForce = 2;
+        int meleeWeaponHitForce = 1;
         AudioSource dispenserAudio;
         AudioClip swing;
         AudioClip Dispense;
@@ -39,7 +37,6 @@ namespace UsualScrap.Behaviors
             swing = audioSourceSounds[1].clip;
             Dispense = audioSourceSounds[2].clip;
             hitSFX = new AudioClip[1] { dispenserAudio.clip };
-
         }
         public override void DiscardItem()
         {
@@ -58,15 +55,22 @@ namespace UsualScrap.Behaviors
         [ServerRpc(RequireOwnership = false)]
         public void SetColorServerRPC()
         {
-            float ColorRRoll = new System.Random().Next(2, 11);
-            float ColorGRoll = new System.Random().Next(2, 11);
-            float ColorBRoll = new System.Random().Next(2, 11);
+            //float ColorRRoll = new System.Random().Next(2, 11);
+            //float ColorGRoll = new System.Random().Next(2, 11);
+            //float ColorBRoll = new System.Random().Next(2, 11);
 
-            float r = .9f / ColorRRoll;
-            float g = .9f / ColorGRoll;
-            float b = .9f / ColorBRoll;
+            //float r = .9f / ColorRRoll;
+            //float g = .9f / ColorGRoll;
+            //float b = .9f / ColorBRoll;
 
-            setColor = new UnityEngine.Color(r, g, b, 1f);
+            //setColor = new Color(r, g, b, 1f);
+
+            byte ColorRRoll = (byte)new System.Random().Next(1, 256);
+            byte ColorGRoll = (byte)new System.Random().Next(1, 256);
+            byte ColorBRoll = (byte)new System.Random().Next(1, 256);
+
+
+            setColor = new Color32(ColorRRoll, ColorGRoll, ColorBRoll, 255);
 
             SetColorClientRPC(setColor);
         }
@@ -203,12 +207,12 @@ namespace UsualScrap.Behaviors
                     }
                 IL_361:;
                 }
-                float RandomRoll = new System.Random().Next(1, 20);
+                float RandomRoll = new System.Random().Next(1, 25);
                 if (RandomRoll == 1)
                 {
                     if (StartOfRound.Instance.inShipPhase || !StartOfRound.Instance.shipHasLanded || !TimeOfDay.Instance.currentLevel.planetHasTime)
                     {
-                        print("Candy spawning disabled, land at a moon with a time cycle!");
+                        print("US - Candy spawning disabled here, land at a moon with a time cycle!");
                         return;
                     }
                     dispenserAudio.PlayOneShot(Dispense);
@@ -225,7 +229,7 @@ namespace UsualScrap.Behaviors
                     dispenserAudio.PlayOneShot(hitSFX[sound]);
                     WalkieTalkie.TransmitOneShotAudio(dispenserAudio, hitSFX[sound]);
                 }
-                playerHeldBy.playerBodyAnimator.SetTrigger("crowbarHit");
+                playerHeldBy.playerBodyAnimator.SetTrigger("shovelHit");
                 HitMeleeWeaponServerRpc(sound);
             }
         }
@@ -255,28 +259,15 @@ namespace UsualScrap.Behaviors
         }
         public void SpawnCandy()
         {
-            Item lollipopItem = PullLollipop();
-            Item peppermintItem = PullPeppermint();
+            Item candyItem = PullCandyItem();
             GameObject LootSpawn;
 
-            int candyRoll = new System.Random().Next(1, 4);
+            LootSpawn = UnityEngine.Object.Instantiate<GameObject>(candyItem.spawnPrefab, playerHeldBy.transform.position + Vector3.up, Quaternion.identity);
+            GrabbableObject PieceofCandyObject = LootSpawn.GetComponent<GrabbableObject>();
+            PieceofCandyObject.fallTime = 0f;
+            PieceofCandyObject.NetworkObject.Spawn(false);
+            PieceofCandyObject.SetScrapValue(6);
 
-            if (candyRoll == 1 || candyRoll == 2)
-            {
-                LootSpawn = UnityEngine.Object.Instantiate<GameObject>(lollipopItem.spawnPrefab, playerHeldBy.transform.position + Vector3.up, Quaternion.identity);
-                GrabbableObject lollipopObject = LootSpawn.GetComponent<GrabbableObject>();
-                lollipopObject.fallTime = 0f;
-                lollipopObject.NetworkObject.Spawn(false);
-                lollipopObject.SetScrapValue(10);
-            }
-            else
-            {
-                LootSpawn = UnityEngine.Object.Instantiate<GameObject>(peppermintItem.spawnPrefab, playerHeldBy.transform.position + Vector3.up, Quaternion.identity);
-                GrabbableObject peppermintObject = LootSpawn.GetComponent<GrabbableObject>();
-                peppermintObject.fallTime = 0f;
-                peppermintObject.NetworkObject.Spawn(false);
-                peppermintObject.SetScrapValue(10);
-            }
             if (this.previousPlayerHeldBy != null && this.previousPlayerHeldBy.isInHangarShipRoom)
             {
                 this.previousPlayerHeldBy.SetItemInElevator(true, true, LootSpawn.GetComponent<GrabbableObject>());
@@ -284,22 +275,13 @@ namespace UsualScrap.Behaviors
 
         }
 
-        public static Item PullLollipop()
+        public static Item PullCandyItem()
         {
-            if ((UnityEngine.Object)(object)_lollipopItem == (UnityEngine.Object)null)
+            if ((UnityEngine.Object)(object)_candyItem == (UnityEngine.Object)null)
             {
-                _lollipopItem = StartOfRound.Instance.allItemsList.itemsList.First((Item i) => ((UnityEngine.Object)i).name == "Lollipop_Item");
+                _candyItem = StartOfRound.Instance.allItemsList.itemsList.First((Item i) => ((UnityEngine.Object)i).name == "US_PieceofCandyItem");
             }
-            return _lollipopItem;
-        }
-
-        public static Item PullPeppermint()
-        {
-            if ((UnityEngine.Object)(object)_peppermintItem == (UnityEngine.Object)null)
-            {
-                _peppermintItem = StartOfRound.Instance.allItemsList.itemsList.First((Item i) => ((UnityEngine.Object)i).name == "Peppermint_Item");
-            }
-            return _peppermintItem;
+            return _candyItem;
         }
     }
 }

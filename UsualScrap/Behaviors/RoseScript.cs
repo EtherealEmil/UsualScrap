@@ -1,20 +1,25 @@
-﻿using UsualScrap.Behaviors.Effects;
+﻿using GameNetcodeStuff;
 
 namespace UsualScrap.Behaviors
 {
     internal class RoseScript : GrabbableObject
     {
+        PlayerControllerB player;
         public override void EquipItem()
         {
             base.EquipItem();
-            playerHeldBy.DamagePlayer(5);
-            playerHeldBy.gameObject.AddComponent<RoseSlowEffect>();
+            player = playerHeldBy;
+            player.DamagePlayer(5);
         }
         public override void PocketItem()
         {
             base.PocketItem();
-            playerHeldBy.DamagePlayer(5);
-            playerHeldBy.gameObject.AddComponent<RoseSlowEffect>();
+            player.DamagePlayer(5);
+        }
+        public override void DiscardItem()
+        {
+            base.DiscardItem();
+            player = null;
         }
     }
 }

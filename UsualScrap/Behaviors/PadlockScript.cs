@@ -6,12 +6,12 @@ namespace UsualScrap.Behaviors
     internal class PadlockScript : GrabbableObject
     {
         DoorLock viewedDoorLock;
-        AudioSource audioSource;
+        AudioSource lockSound;
 
         public void Awake()
         {
-            GameObject audioGameObject = this.transform.Find("LockingSound").gameObject;
-            audioSource = audioGameObject.GetComponent<AudioSource>();
+            AudioSource[] Sounds = this.transform.Find("PadlockSounds").gameObject.GetComponents<AudioSource>();
+            lockSound = Sounds[0];
         }
         public override void ItemActivate(bool used, bool buttonDown = true)
         {
@@ -19,10 +19,18 @@ namespace UsualScrap.Behaviors
             if (Physics.Raycast(new Ray(this.playerHeldBy.gameplayCamera.transform.position, this.playerHeldBy.gameplayCamera.transform.forward), out RaycastHit raycastHit, 3f, LayerMask.GetMask("InteractableObject")))
             {
                 viewedDoorLock = raycastHit.transform.GetComponent<DoorLock>();
+                if (viewedDoorLock == null)
+                {
+                    TriggerPointToDoor component = raycastHit.transform.GetComponent<TriggerPointToDoor>();
+                    if (component != null)
+                    {
+                        viewedDoorLock = component.pointToDoor;
+                    }
+                }
 
                 if (viewedDoorLock != null && !viewedDoorLock.isLocked)
                 {
-                    print("locking door");
+                    print("US - US_Padlock locking door!");
                     UsePadlockServerRpc();
                 }
             }
@@ -42,8 +50,16 @@ namespace UsualScrap.Behaviors
             if (Physics.Raycast(new Ray(this.playerHeldBy.gameplayCamera.transform.position, this.playerHeldBy.gameplayCamera.transform.forward), out RaycastHit raycastHit, 3f, LayerMask.GetMask("InteractableObject")))
             {
                 viewedDoorLock = raycastHit.transform.GetComponent<DoorLock>();
+                if (viewedDoorLock == null)
+                {
+                    TriggerPointToDoor component = raycastHit.transform.GetComponent<TriggerPointToDoor>();
+                    if (component != null)
+                    {
+                        viewedDoorLock = component.pointToDoor;
+                    }
+                }
                 viewedDoorLock.LockDoor(30f);
-                audioSource.PlayOneShot(audioSource.clip);
+                AudioSource.PlayClipAtPoint(lockSound.clip, viewedDoorLock.transform.position);
                 if (this.radarIcon != null)
                 {
                     UnityEngine.Object.Destroy(this.radarIcon.gameObject);

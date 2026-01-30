@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Reflection;
 using Unity.Netcode;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -12,11 +11,20 @@ namespace UsualScrap.Behaviors
         public static Item _giftBoxItem;
         Object viewedGameObject;
         GameObject WrappedPresent;
-        ScanNodeProperties scanNodeProperties;
         NetworkObject viewedNetworkObject;
         GrabbableObject viewedGrabbableObject;
         GiftBoxItem component;
         RaycastHit hit;
+
+        bool worksOnCheapItemsConfig;
+
+        internal static UsualScrapConfigs BoundConfig { get; private set; } = null!;
+
+        public void Awake()
+        {
+            BoundConfig = Plugin.BoundConfig;
+            worksOnCheapItemsConfig = (BoundConfig.TicketsFunctionOnCheapItems.Value);
+        }
 
         public override void ItemActivate(bool used, bool buttonDown = true)
         {
@@ -36,14 +44,20 @@ namespace UsualScrap.Behaviors
                         {
                             return;
                         }
+                        if (!worksOnCheapItemsConfig && viewedGrabbableObject.scrapValue <= 15)
+                        {
+                            return;
+                        }
 
                         if (viewedGameObject != null && viewedNetworkObject != null && playerHeldBy != null && viewedGrabbableObject != null)
                         {
-                            SpawnGiftBoxServerRpc(vector);
-
-                            DestroyRadarIconsServerRpc(viewedNetworkObject.NetworkObjectId);
+                            DestroyTargetRadarIconsServerRpc(viewedNetworkObject.NetworkObjectId);
 
                             DespawnItemServerRpc(viewedNetworkObject.NetworkObjectId);
+
+                            SpawnGiftBoxServerRpc(vector);
+
+                            DestroyThisRadarIconsServerRpc();
 
                             playerHeldBy.DespawnHeldObject();
                         }
@@ -92,12 +106,12 @@ namespace UsualScrap.Behaviors
             netObject.Despawn(true);
         }
         [ServerRpc]
-        public void DestroyRadarIconsServerRpc(ulong ID)
+        public void DestroyTargetRadarIconsServerRpc(ulong ID)
         {
-            DestroyRadarIconsClientRpc(ID);
+            DestroyTargetRadarIconsClientRpc(ID);
         }
         [ClientRpc]
-        public void DestroyRadarIconsClientRpc(ulong ID)
+        public void DestroyTargetRadarIconsClientRpc(ulong ID)
         {
             try
             {
@@ -107,6 +121,22 @@ namespace UsualScrap.Behaviors
                 {
                     Destroy(ra.radarIcon.gameObject);
                 }
+            }
+            catch (Exception miss)
+            {
+                print($"US - {miss} Radar icons already missing. Skipping..");
+            }
+        }
+        [ServerRpc]
+        public void DestroyThisRadarIconsServerRpc()
+        {
+            DestroyThisRadarIconsClientRpc();
+        }
+        [ClientRpc]
+        public void DestroyThisRadarIconsClientRpc()
+        {
+            try
+            {
                 if (this.radarIcon.gameObject != null)
                 {
                     Destroy(this.radarIcon.gameObject);
@@ -114,7 +144,7 @@ namespace UsualScrap.Behaviors
             }
             catch (Exception miss)
             {
-                print($"{miss} Radar icons already missing. Skipping..");
+                print($"US - {miss} Radar icons already missing. Skipping..");
             }
         }
     }

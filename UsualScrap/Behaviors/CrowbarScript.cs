@@ -22,7 +22,6 @@ namespace UsualScrap.Behaviors
         bool isHoldingButton;
         bool reelingUp;
         Coroutine reelingUpCoroutine;
-        private RaycastHit rayHit;
         RaycastHit[] objectsHitByMeleeWeapon;
         List<RaycastHit> objectsHitByMeleeWeaponList = new List<RaycastHit>();
         public int meleeWeaponMask = 1084754248;
@@ -196,7 +195,7 @@ namespace UsualScrap.Behaviors
                     crowbarAudio.PlayOneShot(hitSFX[sound]);
                     WalkieTalkie.TransmitOneShotAudio(crowbarAudio, hitSFX[sound]);
                 }
-                playerHeldBy.playerBodyAnimator.SetTrigger("crowbarHit");
+                playerHeldBy.playerBodyAnimator.SetTrigger("shovelHit");
                 HitMeleeWeaponServerRpc(sound);
             }
         }
@@ -228,8 +227,15 @@ namespace UsualScrap.Behaviors
         [ClientRpc]
         public void OpenDoorClientRpc()
         {
-            viewedDoorLock.OpenOrCloseDoor(playerHeldBy);
-            viewedDoorLock.SetDoorAsOpen(true);
+            try
+            {
+                viewedDoorLock.OpenOrCloseDoor(playerHeldBy);
+                viewedDoorLock.SetDoorAsOpen(true);
+            }
+            catch (Exception)
+            {
+                //...
+            }
         }
         [ServerRpc(RequireOwnership = false)]
         public void UnlockDoorServerRpc()

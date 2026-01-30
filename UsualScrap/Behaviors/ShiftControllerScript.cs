@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.Design;
 using System.Threading.Tasks;
 using Unity.Netcode;
 using UnityEngine;
@@ -7,7 +8,6 @@ namespace UsualScrap.Behaviors
 {
     internal class ShiftControllerScript : GrabbableObject
     {
-        bool stageOneComplete;
         bool teleportSetIndoors;
         Vector3 savedLocation;
         GameObject startScreen;
@@ -22,6 +22,7 @@ namespace UsualScrap.Behaviors
         bool itemGlitching = false;
         bool itemTeleporting = false;
         float teleportBatteryCost;
+        int Stage = 0;
 
         private int GreatRange;
         private int PoorRange;
@@ -42,23 +43,14 @@ namespace UsualScrap.Behaviors
             cScreenGreat = this.transform.Find("ShiftControllerModel").gameObject.transform.Find("CScreenGreat").gameObject;
             this.insertedBattery = new Battery(false, 1f);
             teleportBatteryCost = this.insertedBattery.charge / 5 ;
-            GreatRange = (BoundConfig.ShiftControllerGreatRange.Value);
+            GreatRange = (BoundConfig.ShiftControllerGreatRange.Value); 
             PoorRange = (BoundConfig.ShiftControllerPoorRange.Value);
             if (GreatRange >= (PoorRange - 5) || PoorRange <= (GreatRange + 5))
             {
-                print("The great/first connection range cannot be too close, higher than, or equal to the poor/last connection range! setting value to default.");
-                print("The poor/last connection range cannot be too close to, lower than, or equal to the great/first connection range! setting value to default.");
+                print("US - The Shift Controller's great/first connection range cannot be too close, higher than, or equal to the poor/last connection range! setting value to default.");
+                print("US - The Shift Controller's poor/last connection range cannot be too close to, lower than, or equal to the great/first connection range! setting value to default.");
                 GreatRange = 50;
                 PoorRange = 175;
-            }
-        }
-        public override void UseUpBatteries()
-        {
-            base.UseUpBatteries();
-            if (this.insertedBattery != null)
-            {
-                ToggleCoroutineServerRpc(false);
-                SwitchScreenServerRpc("Off");
             }
         }
         public override void ChargeBatteries()
@@ -66,28 +58,25 @@ namespace UsualScrap.Behaviors
             if (playerHeldBy != null && !itemGlitching)
             {
                 GlitchServerRpc(3);
+                this.insertedBattery.empty = false;
+                this.insertedBattery.charge = 1;
             }
         }
         public override void ItemActivate(bool used, bool buttonDown = true)
         {
             base.ItemActivate(used, buttonDown);
-            print($"{GreatRange}");
-            print($"{PoorRange}");
+            //print($"{GreatRange}");
+            //print($"{PoorRange}");
             if (buttonDown && !itemGlitching && !itemTeleporting)
             {
-                if (stageOneComplete == false)
+                if (Stage == 0)
                 {
                     SetStageServerRpc(1);
                 }
-                else if (stageOneComplete == true)
+                else if (Stage == 1)
                 {
 
                     SetStageServerRpc(2);
-                }
-                else
-                {
-                    ToggleCoroutineServerRpc(false);
-                    SwitchScreenServerRpc("Off");
                 }
             }
         }
@@ -117,17 +106,17 @@ namespace UsualScrap.Behaviors
         {
             SetStage(stage);
         }
-        public void SetStage(int stage)
+        public void SetStage(int setStage)
         {
             if (StartOfRound.Instance.inShipPhase && !this.insertedBattery.empty && !itemGlitching || !StartOfRound.Instance.shipHasLanded && !this.insertedBattery.empty && !itemGlitching)
             {
                 GlitchServerRpc(3);
-                print("WE ARE LEAVING OR IN ORBIT, CONTROLLER DISABLED!");
+                print(" US - WE ARE LEAVING OR IN ORBIT, CONTROLLER DISABLED!");
                 return;
             }
-            if (stage == 1 && !this.insertedBattery.empty && !itemGlitching)
+            if (setStage == 1 && !this.insertedBattery.empty && !itemGlitching)
             {
-                stageOneComplete = true;
+                Stage = 1;
 
                 setCoordAudio.PlayOneShot(setCoordAudio.clip);
                 SwitchScreenServerRpc("Start");
@@ -147,8 +136,10 @@ namespace UsualScrap.Behaviors
 
                 ToggleCoroutineServerRpc(true);
             }
-            else if (stage == 2 && !this.insertedBattery.empty && !itemGlitching)
+            else if (setStage == 2 && !this.insertedBattery.empty && !itemGlitching)
             {
+                Stage = 0;
+
                 SwitchScreenServerRpc("Shift");
 
                 TeleportDelay();
@@ -166,13 +157,15 @@ namespace UsualScrap.Behaviors
                 teleportAudio.PlayOneShot(teleportAudio.clip);
                 if (teleportSetIndoors)
                 {
+                    Stage = 0;
                     TeleportServerRpc("Indoors", savedLocation);
-                    print("teleporting indoors.");
+                    print("US - Shift Controller teleporting indoors!");
                 }
                 else
                 {
+                    Stage = 0;
                     TeleportServerRpc("Outdoors", savedLocation);
-                    print("teleporting outdoors.");
+                    print("US - Shift Controller teleporting outdoors!");
                 }
 
                 if (this.insertedBattery.charge > teleportBatteryCost)
@@ -181,21 +174,22 @@ namespace UsualScrap.Behaviors
                 }
                 else if (this.insertedBattery.charge < teleportBatteryCost)
                 {
+                    this.isBeingUsed = false;
                     this.insertedBattery.empty = true;
                     this.insertedBattery.charge = 0;
-                    SwitchScreenServerRpc("Off");
-                    stageOneComplete = false;
-                    this.isBeingUsed = false;
                     ToggleCoroutineServerRpc(false);
-                    return;
+                    SwitchScreenServerRpc("Off");
+                    Stage = 0;
                 }
-                SwitchScreenServerRpc("Start");
+                if (this.insertedBattery.charge > 0)
+                {
+                    SwitchScreenServerRpc("Start");
+                }
             }
             else
             {
                 GlitchServerRpc(6);
             }
-            stageOneComplete = false;
             itemTeleporting = false;
         }
 
@@ -214,7 +208,7 @@ namespace UsualScrap.Behaviors
         {
             itemGlitching = true;
             this.isBeingUsed = false;
-            stageOneComplete = false;
+            Stage = 0;
 
             SwitchScreenServerRpc("Glitch");
             glitchAudio.Play();
@@ -241,15 +235,14 @@ namespace UsualScrap.Behaviors
             SwitchScreenServerRpc("Great");
             int glitchChance = 0;
             int averageGlitchCuchion = 10;
-            while (!itemGlitching && stageOneComplete == true)
+            while (!itemGlitching && Stage == 1)
             {
                 yield return new WaitForSeconds(1);
-                if (!isHeld)
+                if (!heldByPlayerOnServer)
                 {
-                    yield return new WaitUntil(() => this.isHeld);
+                    yield return new WaitUntil(() => heldByPlayerOnServer);
                 }
                 float distance = Vector3.Distance(playerHeldBy.transform.position, savedLocation);
-                //print($"{distance}");
                 if (distance <= GreatRange)
                 {
                     SwitchScreenServerRpc("Great");
@@ -259,16 +252,16 @@ namespace UsualScrap.Behaviors
                 else if (distance > GreatRange && distance < PoorRange)
                 {
                     SwitchScreenServerRpc("Average");
-                    glitchChance = 5;
+                    glitchChance = 0;
                     //print("Player is a ways away from me");
                 }
                 else if (distance >= PoorRange)
                 {
                     SwitchScreenServerRpc("Poor");
-                    glitchChance = 20;
+                    glitchChance = 25;
                     //print("Player is far from me");
                 }
-                if (glitchChance == 5)
+                if (glitchChance == 25)
                 {
                     if (averageGlitchCuchion > 0)
                     {
@@ -276,23 +269,13 @@ namespace UsualScrap.Behaviors
                     }
                     if (averageGlitchCuchion <= 0)
                     {
-                        int diceRoll = new System.Random().Next(1, 21);
+                        int diceRoll = new System.Random().Next(0, 5);
                         //print($"{diceRoll}");
                         if (diceRoll is 1)
                         {
                             GlitchServerRpc(6);
                             averageGlitchCuchion = 10;
                         }
-                    }
-                }
-                else if (glitchChance == 20)
-                {
-                    int diceRoll = new System.Random().Next(1, 11);
-                    //print($"{diceRoll}");
-                    if (diceRoll is 1 or 2)
-                    {
-                        GlitchServerRpc(6);
-                        averageGlitchCuchion = 10;
                     }
                 }
                 glitchChance = 0;
@@ -372,7 +355,7 @@ namespace UsualScrap.Behaviors
         {
             if (Area == null || Location == null)
             {
-                print("Teleport location returned null. resetting.");
+                print("US - Shift Controller Teleport location returned null. Resetting..");
                 return;
             }
             if(IsOwner)

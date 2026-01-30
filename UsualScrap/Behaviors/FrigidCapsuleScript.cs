@@ -1,10 +1,9 @@
 ﻿using GameNetcodeStuff;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
 using UsualScrap.Behaviors.Effects;
-using static UnityEngine.ParticleSystem;
 
 namespace UsualScrap.Behaviors
 {
@@ -16,19 +15,18 @@ namespace UsualScrap.Behaviors
         ParticleSystem frostedParticles;
         ParticleSystem ambientSnowParticles;
         ParticleSystem chargedSnowParticles;
-        //ParticleSystem frozenParticles;
+        Coroutine activateCoroutine;
+        Coroutine stormCoroutine;
         AudioSource[] Sounds;
         AudioSource snowstormAudio;
-        bool snowstormParticlesRunning = false;
         bool activateCoroutineRunning = false;
         bool snowstormCoroutineRunning = false;
         bool chargingParticlesPlaying = false;
         bool chargedParticlesPlaying = false;
         bool chargedParticlesPreviouslyPlaying = false;
-        bool randomSnowParticlesPlaying = false;
+        bool passiveSnowParticlesPlaying = false;
         Light light;
         int charge = 0;
-        int randomSnowParticleDelay;
         bool disabledInShip;
 
         internal static UsualScrapConfigs BoundConfig { get; private set; } = null!;
@@ -37,7 +35,6 @@ namespace UsualScrap.Behaviors
             BoundConfig = Plugin.BoundConfig;
             ambientSnowflakeParticles = this.transform.Find("AmbientSnowflakeParticles").GetComponent<ParticleSystem>();
             chargingSnowflakeParticles = this.transform.Find("ActiveSnowflakeParticles").GetComponent<ParticleSystem>();
-            //frozenParticles = this.transform.Find("FrozenParticles").GetComponent<ParticleSystem>();
             snowstormParticles = this.transform.Find("StormParticles").GetComponent<ParticleSystem>();
             frostedParticles = this.transform.Find("FrostedParticles").GetComponent<ParticleSystem>();
             ambientSnowParticles = this.transform.Find("AmbientSnowParticles").GetComponent<ParticleSystem>();
@@ -110,13 +107,20 @@ namespace UsualScrap.Behaviors
         public override void Update()
         {
             base.Update();
-            if (!snowstormCoroutineRunning && !randomSnowParticlesPlaying)
+            if (!snowstormCoroutineRunning && !passiveSnowParticlesPlaying)
             {
                 StartCoroutine(PlayRandomSnowParticle());
             }
             if (!StartOfRound.Instance.shipHasLanded && activateCoroutineRunning || !StartOfRound.Instance.shipHasLanded && snowstormCoroutineRunning)
             {
-                StopAllCoroutines();
+                if (activateCoroutineRunning)
+                {
+                    StopCoroutine(activateCoroutine);
+                }
+                if (snowstormCoroutineRunning)
+                {
+                    StopCoroutine(stormCoroutine);
+                }
                 activateCoroutineRunning = false;
                 snowstormCoroutineRunning = false;
 
@@ -124,14 +128,15 @@ namespace UsualScrap.Behaviors
                 chargingParticlesPlaying = false;
                 charge = 0;
 
-                snowstormParticlesRunning = false;
                 chargedParticlesPlaying = false;
                 chargedParticlesPreviouslyPlaying = false;
                 chargedSnowParticles.Stop();
-                snowstormParticles.Stop();
                 snowstormAudio.Stop();
 
-                ambientSnowflakeParticles.Play();
+                if (!snowstormCoroutineRunning && !passiveSnowParticlesPlaying)
+                {
+                    StartCoroutine(PlayRandomSnowParticle());
+                }
             }
             else if (disabledInShip == true && this.isInShipRoom)
             {
@@ -139,13 +144,13 @@ namespace UsualScrap.Behaviors
             }
             else if (StartOfRound.Instance.shipHasLanded && !activateCoroutineRunning && !snowstormCoroutineRunning && TimeOfDay.Instance.currentLevel.planetHasTime)
             {
-                StartCoroutine(WaitToActivate());
+                activateCoroutine = StartCoroutine(WaitToActivate());
             }
         }
         private System.Collections.IEnumerator PlayRandomSnowParticle()
         {
-            randomSnowParticlesPlaying = true;
-            randomSnowParticleDelay = new System.Random().Next(3, 9);
+            passiveSnowParticlesPlaying = true;
+            int randomSnowParticleDelay = new System.Random().Next(10, 21);
             while (!snowstormCoroutineRunning)
             {
                 yield return new WaitForSeconds(1);
@@ -160,17 +165,17 @@ namespace UsualScrap.Behaviors
                     randomSnowParticleDelay = new System.Random().Next(3, 9);
                 }
             }
-            randomSnowParticlesPlaying = false;
+            passiveSnowParticlesPlaying = false;
         }
 
         private System.Collections.IEnumerator WaitToActivate()
         {
             activateCoroutineRunning = true;
-            if (TimeOfDay.Instance.dayMode != DayMode.Noon || TimeOfDay.Instance.dayMode != DayMode.Dawn)
+            if (TimeOfDay.Instance.dayMode != DayMode.Midnight || TimeOfDay.Instance.dayMode != DayMode.Sundown)
             {
-                yield return new WaitUntil(() => TimeOfDay.Instance.dayMode == DayMode.Noon || TimeOfDay.Instance.dayMode == DayMode.Dawn);
+                yield return new WaitUntil(() => TimeOfDay.Instance.dayMode == DayMode.Midnight || TimeOfDay.Instance.dayMode == DayMode.Sundown);
             }
-            while (TimeOfDay.Instance.dayMode == DayMode.Noon && !snowstormCoroutineRunning || TimeOfDay.Instance.dayMode == DayMode.Dawn && !snowstormCoroutineRunning)
+            while (TimeOfDay.Instance.dayMode == DayMode.Midnight && !snowstormCoroutineRunning || TimeOfDay.Instance.dayMode == DayMode.Sundown && !snowstormCoroutineRunning)
             {
                 yield return new WaitForSeconds(1);
                 charge++;
@@ -182,37 +187,35 @@ namespace UsualScrap.Behaviors
                     chargingParticlesPlaying = false;
                     yield return new WaitUntil(() => !isInFactory);
                 }
-                if (charge is > 0 and < 15 && chargingParticlesPlaying == false && !isPocketed)
+                if (charge is < 30 && chargingParticlesPlaying == false && !isPocketed)
                 {
                     chargingSnowflakeParticles.Play();
                     ambientSnowflakeParticles.Stop();
                     chargingParticlesPlaying = true;
                 }
-                if (charge >= 20 && !snowstormCoroutineRunning)
+                if (charge >= 30 && !snowstormCoroutineRunning)
                 {
-                    SnowstormCoroutineServerRPC();
+                    SnowstormCoroutineServerRpc();
+                    activateCoroutineRunning = false;
+                    yield break;
                 }
             }
             activateCoroutineRunning = false;
-            if (!activateCoroutineRunning && !snowstormCoroutineRunning)
-            {
-                StartCoroutine(WaitToActivate());
-            }
         }
         [ServerRpc(RequireOwnership = false)]
-        public void SnowstormCoroutineServerRPC()
+        public void SnowstormCoroutineServerRpc()
         {
-            SnowstormCoroutineClientRPC();
+            SnowstormCoroutineClientRpc();
         }
         [ClientRpc]
-        public void SnowstormCoroutineClientRPC()
+        public void SnowstormCoroutineClientRpc()
         {
-            StartCoroutine(Snowstorm());
+            stormCoroutine = StartCoroutine(Snowstorm());
         }
         private System.Collections.IEnumerator Snowstorm()
         {
             snowstormCoroutineRunning = true;
-            int stormDuration = 20;
+            int stormDuration = 10;
             if (!chargedParticlesPlaying && !isPocketed)
             {
                 chargedSnowParticles.Play();
@@ -222,91 +225,95 @@ namespace UsualScrap.Behaviors
             {
                 chargedParticlesPreviouslyPlaying = true;
             }
-            if (!snowstormParticlesRunning)
-            {
-                snowstormParticlesRunning = true;
-                snowstormParticles.Play();
-            }
             snowstormAudio.Play();
             while (stormDuration > 0)
             {
-                yield return new WaitForSeconds(1.5f);
+                yield return new WaitForSeconds(1f);
+                snowstormParticles.Play();
                 stormDuration--;
-                CheckAndCallFrostStacksServerRPC();
+                //print("US - Applying frost stack");
+                CheckForPlayerAndCallServerRpc();
             }
             charge = 0;
-            snowstormCoroutineRunning = false;
-            if (snowstormParticlesRunning == true)
+            if (chargedParticlesPlaying == true)
             {
-                snowstormParticlesRunning = false;
                 chargedParticlesPlaying = false;
                 chargedSnowParticles.Stop();
-                snowstormParticles.Stop();
-                snowstormAudio.Stop();
                 chargedParticlesPreviouslyPlaying = false;
             }
+            if (!activateCoroutineRunning)
+            {
+                activateCoroutine = StartCoroutine(WaitToActivate());
+            }
+            snowstormCoroutineRunning = false;
         }
         [ServerRpc(RequireOwnership = false)]
-        public void CheckAndCallFrostStacksServerRPC()
+        public void CheckForPlayerAndCallServerRpc()
         {
-            CheckAndCallFrostStacksClientRPC();
+            CheckForPlayerAndCallClientRpc();
         }
         [ClientRpc]
-        public void CheckAndCallFrostStacksClientRPC()
+        public void CheckForPlayerAndCallClientRpc()
         {
-            CheckAndCallFrostStacks();
+            CheckForPlayerAndCall();
         }
 
-        public void CheckAndCallFrostStacks()
+        public void CheckForPlayerAndCall()
         {
             Collider[] playerArray = Physics.OverlapSphere(this.transform.position, 3, LayerMask.GetMask("Player"), QueryTriggerInteraction.Collide);
-            HashSet<Collider> Affected = new HashSet<Collider>();
+            HashSet<PlayerControllerB> Affected = new HashSet<PlayerControllerB>();
             foreach (Collider playerCollider in playerArray)
             {
-                if (!Affected.Contains(playerCollider))
+                PlayerControllerB playerControllerB = playerCollider.gameObject.GetComponent<PlayerControllerB>();
+                if (!Affected.Contains(playerControllerB))
                 {
-                    PlayerControllerB playerControllerB = playerCollider.gameObject.GetComponent<PlayerControllerB>();
-                    if (playerControllerB == null)
+                    if (playerControllerB == null || playerControllerB.isPlayerDead == true)
                     {
                         return;
                     }
                     var ID = (int)playerControllerB.playerClientId;
-                    if (playerControllerB.isPlayerDead == true)
-                    {
-                        return;
-                    }
-                    Component[] frostStacks = playerControllerB.gameObject.GetComponents<SnowstormStackingSlowEffect>();
-                    if (frostStacks.Length < 15) 
-                    {
-                        ApplyFrostStackServerRPC(ID, frostStacks.Length);
-                    }
-                    Affected.Add(playerCollider);
+                    CheckAndApplyFrostStacksServerRpc(ID);
+                    Affected.Add(playerControllerB);
                 }
             }
         }
         [ServerRpc(RequireOwnership = false)]
-        public void ApplyFrostStackServerRPC(int playerID, int stackNumber)
+        public void CheckAndApplyFrostStacksServerRpc(int playerID)
         {
-            ApplyFrostStackClientRPC(playerID, stackNumber);
+            CheckAndApplyFrostStacksClientRpc(playerID);
         }
         [ClientRpc]
-        public void ApplyFrostStackClientRPC(int playerID, int stackNumber)
+        public void CheckAndApplyFrostStacksClientRpc(int playerID)
         {
-            ApplyFrostStack(playerID, stackNumber);
+            CheckAndApplyFrostStacks(playerID);
         }
-        public void ApplyFrostStack(int playerID, int stackNumber)
+        public void CheckAndApplyFrostStacks(int playerID)
         {
             PlayerControllerB PlayerScript = RoundManager.Instance.playersManager.allPlayerScripts[playerID];
-            SnowstormStackingSlowEffect effect = PlayerScript.gameObject.AddComponent<SnowstormStackingSlowEffect>();
-            effect.frostedParticles = frostedParticles;
-            effect.stackNumber = stackNumber;
+            PlayerControllerB localplayercontroller = GameNetworkManager.Instance.localPlayerController;
+            StackingSlowEffect[] frostStacks = PlayerScript.gameObject.GetComponents<StackingSlowEffect>();
+            if (frostStacks.Length < 5)
+            {
+                if (localplayercontroller == PlayerScript)
+                {
+                    StackingSlowEffect effect = PlayerScript.gameObject.AddComponent<StackingSlowEffect>();
+                    effect.frostedParticles = frostedParticles;
+                }
+            }
         }
         public override void OnBroughtToShip()
         {
             base.OnBroughtToShip();
             if (disabledInShip == true)
             {
-                StopAllCoroutines();
+                if (activateCoroutineRunning)
+                {
+                    StopCoroutine(activateCoroutine);
+                }
+                if (snowstormCoroutineRunning)
+                {
+                    StopCoroutine(stormCoroutine);
+                }
                 activateCoroutineRunning = false;
                 snowstormCoroutineRunning = false;
 
@@ -314,14 +321,15 @@ namespace UsualScrap.Behaviors
                 chargingParticlesPlaying = false;
                 charge = 0;
 
-                snowstormParticlesRunning = false;
                 chargedParticlesPlaying = false;
                 chargedParticlesPreviouslyPlaying = false;
                 chargedSnowParticles.Stop();
-                snowstormParticles.Stop();
                 snowstormAudio.Stop();
 
-                ambientSnowflakeParticles.Play();
+                if (!snowstormCoroutineRunning && !passiveSnowParticlesPlaying)
+                {
+                    StartCoroutine(PlayRandomSnowParticle());
+                }
             }
         }
     }

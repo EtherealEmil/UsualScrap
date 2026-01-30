@@ -1,5 +1,4 @@
-﻿using GameNetcodeStuff;
-using System.Linq;
+﻿using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -7,175 +6,252 @@ namespace UsualScrap.Behaviors
 {
     internal class ToolboxScript : GrabbableObject
     {
-        private static Item _metalSheetItem;
         private static Item _laserPointerItem;
         private static Item _bigBoltItem;
-        private PlayerControllerB previousPlayerHeldBy;
-        private Object viewedTrap;
+        private Object viewedTrapObject;
         private Turret viewedTurret;
         private Landmine viewedLandmine;
         private Coroutine coroutine;
         private int timeLapsed = 0;
-        AudioSource audioSource;
+        private int timeToSuccess;
         bool coroutinerunning = false;
-        RaycastHit raycastHit;
+        Vector3 trap;
+
+        AudioSource[] toolboxAudio;
+        AudioSource toolboxSound;
+        AudioClip Smash;
+        ParticleSystem sparkEffect;
 
         public void Awake()
         {
-            GameObject audioChild = this.transform.Find("DismantleSound").gameObject;
-            audioSource = audioChild.GetComponent<AudioSource>();
+            try
+            {
+                toolboxSound = this.transform.Find("ToolboxSounds").gameObject.GetComponent<AudioSource>();
+                toolboxAudio = this.transform.Find("ToolboxSounds").gameObject.GetComponents<AudioSource>();
+                Smash = toolboxAudio[0].clip;
+                sparkEffect = this.transform.Find("SparkEffect").GetComponent<ParticleSystem>();
+            }
+            catch
+            {
+                if (toolboxAudio == null)
+                {
+                    print("ERROR: US_Toolbox audio not found.");
+                }
+                if (sparkEffect == null)
+                {
+                    print("ERROR: US_Toolbox effect not found.");
+                }
+            }
         }
         public override void DiscardItem()
         {
             base.DiscardItem();
             if (coroutinerunning)
             {
-                audioSource.Stop();
                 StopCoroutine(coroutine);
+                coroutinerunning = false;
             }
+            viewedTrapObject = null;
+            viewedTurret = null;
+            viewedLandmine = null;
+            timeLapsed = 0;
         }
         public override void PocketItem()
         {
             base.PocketItem();
             if (coroutinerunning)
             {
-                audioSource.Stop();
                 StopCoroutine(coroutine);
+                coroutinerunning = false;
             }
-        }
+            viewedTrapObject = null;
+            viewedTurret = null;
+            viewedLandmine = null;
+            timeLapsed = 0;
+        } 
         public override void ItemActivate(bool used, bool buttonDown = true)
         {
             base.ItemActivate(used, buttonDown);
             if (buttonDown) {
-                if (Physics.Raycast(playerHeldBy.transform.position + new Vector3(0, 0.5f , 0), playerHeldBy.transform.forward, out raycastHit , 5f , LayerMask.GetMask("MapHazards")))
+                print("Starting");
+                Collider[] detectedtrapsArray = Physics.OverlapSphere(this.transform.position, 3, LayerMask.GetMask("MapHazards"), QueryTriggerInteraction.Collide);
+                if (detectedtrapsArray.Length > 0)
                 {
-                    viewedTrap = raycastHit.transform.gameObject.transform.parent.gameObject;
-                    viewedTurret = raycastHit.transform.GetComponent<Turret>();
-                    viewedLandmine = raycastHit.transform.GetComponent<Landmine>();
-                    previousPlayerHeldBy = playerHeldBy;
-                    if (viewedTrap != null && viewedTurret != null && previousPlayerHeldBy != null|| viewedTrap != null && viewedLandmine != null && previousPlayerHeldBy != null)
+                    foreach (Collider collider in detectedtrapsArray)
                     {
-                        coroutine = StartCoroutine(DismantleTrap());
+                        if (collider.transform.GetComponent<Turret>() != null || collider.transform.GetComponent<Landmine>() != null || collider.transform.gameObject.GetComponent<SpikeRoofTrap>() != null)
+                        {
+                            //print("US - Toolbox initializing trap!");
+                            viewedTrapObject = collider.transform.gameObject.transform.parent.gameObject;
+                            viewedTurret = collider.transform.GetComponent<Turret>();
+                            viewedLandmine = collider.transform.GetComponent<Landmine>();
+                            trap = collider.transform.position;
+                            if (viewedTurret != null && viewedTrapObject != null && !coroutinerunning)
+                            {
+                                coroutine = StartCoroutine(DismantleTrap("Turret"));
+                            }
+                            else if (viewedLandmine != null && viewedTrapObject != null && !coroutinerunning)
+                            {
+                                coroutine = StartCoroutine(DismantleTrap("Landmine"));
+                            }
+                        }
                     }
                 }
             }
             if (!buttonDown) {
-                StopCoroutine(coroutine);
-                audioSource.Stop();
-                viewedTrap = null;
+                if (coroutinerunning)
+                {
+                    StopCoroutine(coroutine);
+                    coroutinerunning = false;
+                }
+                viewedTrapObject = null;
                 viewedTurret = null;
                 viewedLandmine = null;
                 timeLapsed = 0;
             }
         }
-        private System.Collections.IEnumerator DismantleTrap()
+        private System.Collections.IEnumerator DismantleTrap(string trapType)
         {
-            audioSource.Play();
             coroutinerunning = true;
-            while (viewedTrap != null)
+            timeLapsed = 0;
+            Vector3 playerPosition = playerHeldBy.transform.position;
+            if (viewedTurret != null)
             {
-                yield return new WaitForSeconds(1);
-                if (Physics.Raycast(new Ray(this.playerHeldBy.gameplayCamera.transform.position, this.playerHeldBy.gameplayCamera.transform.forward), out RaycastHit raycastHit, 3f, LayerMask.GetMask("MapHazards")))
+                timeToSuccess = 10;
+                //print("Turret detected");
+            }
+            else if (viewedLandmine != null)
+            {
+                timeToSuccess = 5;
+                //print("Landmine detected");
+            }
+            //print(timeToSuccess);
+            while (viewedTrapObject != null)
+            { 
+                yield return new WaitForSeconds(.8f);
+                sparkEffect = Instantiate(sparkEffect, trap, Quaternion.identity);
+                sparkEffect.Play();
+                toolboxSound.pitch = Random.Range(.4f, .6f);
+                toolboxSound.PlayOneShot(Smash);
+                Vector3 newPlayerPosition = playerHeldBy.transform.position;
+                if (newPlayerPosition != playerPosition)
                 {
-                    viewedTurret = raycastHit.transform.GetComponent<Turret>();
-                    viewedLandmine = raycastHit.transform.GetComponent<Landmine>();
-                    timeLapsed++;
-
-                    if (viewedTurret != null && timeLapsed == 12)
-                    {
-                        DismantleFunctionServerRPC();
-                    }
-                    else if (viewedLandmine != null && timeLapsed == 6)
-                    {
-                        DismantleFunctionServerRPC();
-                    }
-                }
-                else
-                {
-                    audioSource.Stop();
-                    viewedTrap = null;
+                    viewedTrapObject = null;
                     viewedTurret = null;
                     viewedLandmine = null;
                     timeLapsed = 0;
                     break;
                 }
+                else if (timeLapsed == timeToSuccess)
+                {
+                    //print("US - Starting dismantle function!");
+                    DismantleFunctionServerRPC(trapType);
+                    viewedTrapObject = null;
+                    viewedTurret = null;
+                    viewedLandmine = null;
+                    timeLapsed = 0;
+                    break;
+                }
+                else
+                {
+                    timeLapsed++;
+                    print(timeLapsed);
+                }
             }
-            audioSource.Stop();
-            viewedTrap = null;
-            viewedTurret = null;
-            viewedLandmine = null;
-            timeLapsed = 0;
-            StopCoroutine(coroutine);
+            coroutinerunning = false;
         }
 
         [ServerRpc(RequireOwnership = false)]
-        public void DismantleFunctionServerRPC()
+        public void DismantleFunctionServerRPC(string trapType)
         {
-            DismantleFunction();
-        }
-        public void DismantleFunction()
-        {
-            audioSource.Stop();
-            Item MetalSheetItem = PullMetalSheet();
+            print("US - Running spawn dismantled scrap method!");
             Item LaserPointerItem = PullLaserPointer();
             Item BigBoltItem = PullBigBolt();
             GameObject LootSpawn;
-            if (viewedTrap != null && playerHeldBy != null && viewedTurret)
+            Vector3 spawnVector;
+            Collider[] detectedtrapsArray = Physics.OverlapSphere(this.transform.position, 3, LayerMask.GetMask("MapHazards"), QueryTriggerInteraction.Collide);
+            if (detectedtrapsArray.Length > 0)
             {
-                int i;
-                for (i = 0; i < 2; i++)
+                foreach (Collider collider in detectedtrapsArray)
                 {
-                    float TurretLootRoll = new System.Random().Next(1, 11); 
-                    if (TurretLootRoll is 1 or 2)
+                    viewedTrapObject = collider.transform.gameObject.transform.parent.gameObject;
+                    if (trapType == "Turret" && collider.transform.GetComponent<Turret>() != null)
                     {
-                        LootSpawn = Object.Instantiate<GameObject>(LaserPointerItem.spawnPrefab, viewedTurret.transform.position + new Vector3(0f, 2.5f, 0f), Quaternion.identity);
-                        GrabbableObject component = LootSpawn.GetComponent<GrabbableObject>();
-                        component.SetScrapValue(new System.Random().Next(40, 45));
-                        component.NetworkObject.Spawn(false);
+                        viewedTurret = collider.transform.GetComponent<Turret>();
+                        for (int i = new System.Random().Next(1, 3); i > 0; i--)
+                        {
+                            float TurretLootRoll = new System.Random().Next(1, 11);
+                            spawnVector = viewedTurret.transform.position + Vector3.up * 0.25f;
+                            if (TurretLootRoll is 1)
+                            {
+                                LootSpawn = Object.Instantiate<GameObject>(LaserPointerItem.spawnPrefab, spawnVector, Quaternion.identity);
+                                GrabbableObject component = LootSpawn.GetComponent<GrabbableObject>();
+                                component.startFallingPosition = spawnVector;
+                                StartCoroutine(SetObjectToHitGroundSFX(component));
+                                component.targetFloorPosition = component.GetItemFloorPosition(viewedTurret.transform.position); ;
+                                component.SetScrapValue(new System.Random().Next(35, 50));
+                                component.NetworkObject.Spawn(false);
+                            }
+                            else if (TurretLootRoll is > 1 and <= 10)
+                            {
+                                LootSpawn = Object.Instantiate<GameObject>(BigBoltItem.spawnPrefab, spawnVector, Quaternion.identity);
+                                GrabbableObject component = LootSpawn.GetComponent<GrabbableObject>();
+                                component.startFallingPosition = spawnVector;
+                                StartCoroutine(SetObjectToHitGroundSFX(component));
+                                component.targetFloorPosition = component.GetItemFloorPosition(viewedTurret.transform.position); ;
+                                component.SetScrapValue(new System.Random().Next(15, 25));
+                                component.NetworkObject.Spawn(false);
+                            }
+                        }
                     }
-                    else if (TurretLootRoll is 3 or 4 or 5 or 6)
+                    else if (trapType == "Landmine" && collider.transform.GetComponent<Landmine>() != null)
                     {
-                        LootSpawn = Object.Instantiate<GameObject>(MetalSheetItem.spawnPrefab, viewedTurret.transform.position + new Vector3(0f, 2.5f, 0f), Quaternion.identity);
+                        viewedLandmine = collider.transform.GetComponent<Landmine>();
+                        spawnVector = viewedLandmine.transform.position;
+                        LootSpawn = Object.Instantiate<GameObject>(BigBoltItem.spawnPrefab, spawnVector, Quaternion.identity);
                         GrabbableObject component = LootSpawn.GetComponent<GrabbableObject>();
-                        component.SetScrapValue(new System.Random().Next(20, 25));
-                        component.NetworkObject.Spawn(false);
-                    }
-                    else if (TurretLootRoll is 7 or 8 or 9 or 10)
-                    {
-                        LootSpawn = Object.Instantiate<GameObject>(BigBoltItem.spawnPrefab, viewedTurret.transform.position + new Vector3(0f, 2.5f, 0f), Quaternion.identity);
-                        GrabbableObject component = LootSpawn.GetComponent<GrabbableObject>();
-                        component.SetScrapValue(new System.Random().Next(20, 25));
+                        component.startFallingPosition = spawnVector;
+                        StartCoroutine(SetObjectToHitGroundSFX(component));
+                        component.targetFloorPosition = component.GetItemFloorPosition(viewedLandmine.transform.position); ;
+                        component.SetScrapValue(new System.Random().Next(15, 25));
                         component.NetworkObject.Spawn(false);
                     }
                 }
             }
-            else if (viewedTrap != null && playerHeldBy != null && viewedLandmine)
-            {
-                float LandmineLootRoll = new System.Random().Next(1, 5);
-                if (LandmineLootRoll is 1 or 2)
-                {
-                    LootSpawn = Object.Instantiate<GameObject>(BigBoltItem.spawnPrefab, viewedLandmine.transform.position + new Vector3(0f, 2.5f, 0f), Quaternion.identity);
-                    GrabbableObject component = LootSpawn.GetComponent<GrabbableObject>();
-                    component.SetScrapValue(new System.Random().Next(20, 25));
-                    component.NetworkObject.Spawn(false);
-                }
-                else if (LandmineLootRoll is 3 or 4)
-                {
-                    LootSpawn = Object.Instantiate<GameObject>(MetalSheetItem.spawnPrefab, viewedLandmine.transform.position + new Vector3(0f, 2.5f, 0f), Quaternion.identity);
-                    GrabbableObject component = LootSpawn.GetComponent<GrabbableObject>();
-                    component.SetScrapValue(new System.Random().Next(20, 25));
-                    component.NetworkObject.Spawn(false);
-                }
-            }
-            Object.Destroy(viewedTrap);
+            DismantleFunctionClientRPC(trapType);
         }
-        public static Item PullMetalSheet()
+        [ClientRpc]
+        public void DismantleFunctionClientRPC(string trapType)
         {
-            if ((Object)(object)_metalSheetItem == (Object)null)
+            DismantleFunction(trapType);
+        }
+        public void DismantleFunction(string trapType)
+        {
+            print("US - Running destroy trap method!");
+            Collider[] detectedtrapsArray = Physics.OverlapSphere(this.transform.position, 3, LayerMask.GetMask("MapHazards"), QueryTriggerInteraction.Collide);
+            if (detectedtrapsArray.Length > 0)
             {
-                _metalSheetItem = StartOfRound.Instance.allItemsList.itemsList.First((Item i) => ((Object)i).name == "MetalSheet");
+                foreach (Collider collider in detectedtrapsArray)
+                {
+                    viewedTrapObject = collider.transform.gameObject.transform.parent.gameObject;
+                    if (trapType == "Turret" && collider.transform.GetComponent<Turret>() != null)
+                    {
+                        Object.Destroy(viewedTrapObject);
+                    }
+                    else if (trapType == "Landmine" && collider.transform.GetComponent<Landmine>() != null)
+                    {
+                        Object.Destroy(viewedTrapObject);
+                    }
+                }
             }
-            return _metalSheetItem;
+        }
+        private System.Collections.IEnumerator SetObjectToHitGroundSFX(GrabbableObject lootObject)
+        {
+            yield return new WaitForEndOfFrame();
+            lootObject.reachedFloorTarget = false;
+            lootObject.hasHitGround = false;
+            lootObject.fallTime = 0f;
+            yield break;
         }
         public static Item PullLaserPointer()
         {
@@ -184,7 +260,6 @@ namespace UsualScrap.Behaviors
                 _laserPointerItem = StartOfRound.Instance.allItemsList.itemsList.First((Item i) => ((Object)i).name == "FlashLaserPointer");
             }
             return _laserPointerItem;
-
         }
         public static Item PullBigBolt()
         {

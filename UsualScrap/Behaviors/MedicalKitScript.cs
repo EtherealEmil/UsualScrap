@@ -1,6 +1,4 @@
 ﻿using GameNetcodeStuff;
-using LethalLib.Modules;
-using System.Numerics;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -8,7 +6,7 @@ namespace UsualScrap.Behaviors
 {
     internal class MedicalKitScript : GrabbableObject
     {
-        int Healthpool = 100;
+        int Healthpool = 150;
         private Coroutine healCoroutine;
         private Coroutine replenishCoroutine;
         private ParticleSystem particle;
@@ -22,7 +20,7 @@ namespace UsualScrap.Behaviors
         public override void LateUpdate()
         {
             base.LateUpdate();
-            if (!replenishCoroutineRunning && !healCoroutineRunning && Healthpool < 100)
+            if (!replenishCoroutineRunning && !healCoroutineRunning && Healthpool < 150)
             {
                 replenishCoroutine = StartCoroutine(ReplenishKitRoutine());
             }
@@ -48,7 +46,7 @@ namespace UsualScrap.Behaviors
             base.ItemActivate(used, buttonDown);
             if (this.playerHeldBy == null)
             {
-                print("Medical Kit Playerheldby == null but is being used??");
+                print("US - Medical Kit playerheldby returned null.");
                 return;
             }
             if (buttonDown)
@@ -81,7 +79,7 @@ namespace UsualScrap.Behaviors
             {
                 PlayerControllerB g = hit.transform.gameObject.GetComponent<PlayerControllerB>();
                 int f = (int)g.playerClientId;
-                healCoroutine = StartCoroutine(HealPlayer(f, .1f));
+                healCoroutine = StartCoroutine(HealPlayer(f, .15f));
             }
             else
             {
@@ -105,10 +103,10 @@ namespace UsualScrap.Behaviors
                 yield return new WaitForSeconds(rateOfHealing);
                 if (player != playerHeldBy)
                 {
-                    float num = UnityEngine.Vector3.Distance(player.transform.position, playerHeldBy.transform.position);
+                    float num = Vector3.Distance(player.transform.position, playerHeldBy.transform.position);
                     if (num > 3)
                     {
-                        print("Out of range");
+                        //print("US - Medical Kit out of range.");
                         break;
                     }
                 }
@@ -158,8 +156,10 @@ namespace UsualScrap.Behaviors
                     {
                         player.playerBodyAnimator.SetBool("Limp", false);
                     }
-                    HUDManager.Instance.UpdateHealthUI(player.health, false);
-                    //^^^ Eventually update health only for player being healed if at all possible. 
+                    if (GameNetworkManager.Instance.localPlayerController == player)
+                    {
+                        HUDManager.Instance.UpdateHealthUI(player.health, false);
+                    }
                 }
             }
         }
@@ -174,13 +174,13 @@ namespace UsualScrap.Behaviors
             {
                 player2 = playerHeldBy;
             }
-            ParticleSystem Healparticle = Instantiate(particle, player2.transform.position, UnityEngine.Quaternion.identity, player2.transform);
+            ParticleSystem Healparticle = Instantiate(particle, player2.transform.position, Quaternion.identity, player2.transform);
             Healparticle.Play();
         }
         private System.Collections.IEnumerator ReplenishKitRoutine()
         {
             replenishCoroutineRunning = true;
-            while (Healthpool < 100)
+            while (Healthpool < 150)
             {
                 yield return new WaitForSeconds(1.5f);
                 ReplenishKitServerRpc();
@@ -206,9 +206,9 @@ namespace UsualScrap.Behaviors
         {
             if (StartOfRound.Instance.inShipPhase)
             {
-                Healthpool = 100;
+                Healthpool = 150;
             }
-            if (Healthpool < 100)
+            if (Healthpool < 150)
             {
                 Healthpool++;
             }

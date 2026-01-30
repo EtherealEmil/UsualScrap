@@ -6,8 +6,8 @@ namespace UsualScrap.Behaviors
     internal class HandlampScript : GrabbableObject
     {
         Light[] lights;
-        Light gh;
-        Light g;
+        Light light;
+        Light pocketLight;
         bool lightstate = false;
         bool previouslightstate = false;
         GameObject Bulb;
@@ -24,7 +24,7 @@ namespace UsualScrap.Behaviors
             LightOffSound = Sounds[1];
             this.insertedBattery = new Battery(false, 1f);
             lights = GetComponentsInChildren<Light>();
-            gh = lights[1];
+            light = lights[1];
         }
         public override void GrabItem()
         {
@@ -35,9 +35,9 @@ namespace UsualScrap.Behaviors
         {
             base.DiscardItem();
             previousPlayerHeldBy = null;
-            if (g != null)
+            if (pocketLight != null)
             {
-                Destroy(g.gameObject); 
+                Destroy(pocketLight.gameObject); 
             }
         }
         public void ToggleLights(bool toggle)
@@ -88,14 +88,15 @@ namespace UsualScrap.Behaviors
             if (lightstate == true)
             {
                 this.ToggleLights(false);
-                if (g == null)
+                if (pocketLight == null)
                 {
-                    g = Instantiate(gh, previousPlayerHeldBy.gameplayCamera.transform);
-                    g.enabled = true;
+                    pocketLight = Instantiate(light, previousPlayerHeldBy.gameplayCamera.transform.position + new Vector3(0,-2f,0), UnityEngine.Quaternion.identity, previousPlayerHeldBy.gameplayCamera.transform);
+                    pocketLight.intensity = 40;
+                    pocketLight.enabled = true;
                 }
                 else
                 {
-                    g.enabled = true;
+                    pocketLight.enabled = true;
                 }
             }
         }
@@ -105,9 +106,9 @@ namespace UsualScrap.Behaviors
             if (previouslightstate == true && lightstate != true && this.insertedBattery.charge > 0)
             {
                 this.ToggleLights(true);
-                if (g != null)
+                if (pocketLight != null)
                 {
-                    g.enabled = false;
+                    pocketLight.enabled = false;
                 }
             }
         }

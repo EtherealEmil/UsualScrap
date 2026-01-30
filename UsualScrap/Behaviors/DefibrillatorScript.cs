@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System;
 using Unity.Netcode;
 using UnityEngine;
+using System.Linq;
 
 namespace UsualScrap.Behaviors
 {
@@ -29,14 +30,26 @@ namespace UsualScrap.Behaviors
 
         internal static UsualScrapConfigs BoundConfig { get; private set; } = null!;
 
+        bool RequiresBattery;
         bool UsesLimited;
-        int UseLimit;
+        bool PermaDeathRule;
+        bool DefibrillatorRefillsOnLanding;
+        int useLimit;
+        //public NetworkVariable<int> useLimit = new NetworkVariable<int>(3, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
         public void Awake()
         {
             BoundConfig = Plugin.BoundConfig;
-            this.insertedBattery = new Battery(false, 1f);
-            batteryCost = this.insertedBattery.charge / 2;
+            RequiresBattery = (BoundConfig.DefibrillatorRequiresBattery.Value);
+            if (RequiresBattery)
+            {
+                this.insertedBattery = new Battery(false, 1f);
+                batteryCost = this.insertedBattery.charge / 2;
+            }
+            else
+            {
+                this.itemProperties.requiresBattery = false;
+            }
             AudioSource[] Sounds = this.transform.Find("DefibrillatorSounds").gameObject.GetComponents<AudioSource>();
             ChargedAudio = Sounds[0];
             ShockAudio = Sounds[1];
@@ -52,32 +65,74 @@ namespace UsualScrap.Behaviors
             DisplayFiveRenderer = ChargeDisplayFive.GetComponent<Renderer>();
             displayRenderers = [DisplayOneRenderer, DisplayTwoRenderer, DisplayThreeRenderer, DisplayFourRenderer, DisplayFiveRenderer];
             UsesLimited = (BoundConfig.DefibrillatorUsesLimited.Value);
-            UseLimit = (BoundConfig.DefibrillatorUseLimit.Value);
-            if (UsesLimited == true && UseLimit < 1)
+            useLimit = (BoundConfig.DefibrillatorUseLimit.Value);
+            PermaDeathRule = (BoundConfig.DefibrillatorPermaDeathRule.Value);
+            DefibrillatorRefillsOnLanding = (BoundConfig.DefibrillatorRefillsOnLanding.Value);
+            if (UsesLimited == true && useLimit < 1)
             {
-                print("Defibrillator uses enabled but number of uses less than the minimum of 1! setting uses to 1.");
-                UseLimit = 1;
+                print("US - US_Defibrillator savedUses enabled but number of savedUses less than the minimum of 1! setting savedUses to 1.");
+                useLimit = 1;
+            }
+        }
+        /*
+        public override int GetItemDataToSave()
+        {
+            base.GetItemDataToSave();
+            return useLimit.Value;
+        }
+
+        public override void LoadItemSaveData(int saveData)
+        {
+            base.LoadItemSaveData(saveData);
+            useLimit.Value = saveData;
+        }
+        */
+        public override void Update()
+        {
+            base.Update();
+            if (DefibrillatorRefillsOnLanding && StartOfRound.Instance.inShipPhase && useLimit != BoundConfig.DefibrillatorUseLimit.Value)
+            {
+                useLimit = BoundConfig.DefibrillatorUseLimit.Value;
             }
         }
         public override void ItemActivate(bool used, bool buttonDown = true)
         {
-            if (buttonDown && !this.insertedBattery.empty)
+            if (buttonDown)
             {
-                //print($"Uses remaining: {UseLimit}");
-                foreach (Renderer display in displayRenderers)
-                {
-                    display.material.SetColor("_EmissiveColor", Color.black);
-                }
-                if (UsesLimited == true && UseLimit <= 0)
+                if (RequiresBattery && !this.insertedBattery.empty)
                 {
                     foreach (Renderer display in displayRenderers)
                     {
-                        display.material.SetColor("_EmissiveColor", Color.red);
+                        display.material.SetColor("_EmissiveColor", Color.black);
                     }
-                    return;
+                    if (UsesLimited == true && useLimit <= 0)
+                    {
+                        foreach (Renderer display in displayRenderers)
+                        {
+                            display.material.SetColor("_EmissiveColor", Color.red);
+                        }
+                        return;
+                    }
+                    ReadyingDefib = true;
+                    coroutine = StartCoroutine(ReadyDefib());
                 }
-                ReadyingDefib = true;
-                coroutine = StartCoroutine(ReadyDefib());
+                else if (!RequiresBattery)
+                {
+                    foreach (Renderer display in displayRenderers)
+                    {
+                        display.material.SetColor("_EmissiveColor", Color.black);
+                    }
+                    if (UsesLimited == true && useLimit <= 0)
+                    {
+                        foreach (Renderer display in displayRenderers)
+                        {
+                            display.material.SetColor("_EmissiveColor", Color.red);
+                        }
+                        return;
+                    }
+                    ReadyingDefib = true;
+                    coroutine = StartCoroutine(ReadyDefib());
+                }
             }
             if (!buttonDown)
             {
@@ -86,7 +141,7 @@ namespace UsualScrap.Behaviors
         }
         private System.Collections.IEnumerator ReadyDefib()
         {
-            timeToHold = 25;
+            timeToHold = 20;
             isBeingUsed = true;
             while (ReadyingDefib == true)
             {
@@ -105,41 +160,41 @@ namespace UsualScrap.Behaviors
                 {
                     timeToHold--;
                 }
-                if (timeToHold is < 25 and > 20)
+                if (timeToHold > 15)
                 {
                     DisplayOneRenderer.material.SetColor("_EmissiveColor", Color.green);
                 }
-                if (timeToHold is < 20 and > 15)
+                if (timeToHold is < 15 and > 10)
                 {
                     DisplayTwoRenderer.material.SetColor("_EmissiveColor", Color.green);
                 }
-                if (timeToHold is < 15 and > 10)
+                if (timeToHold is < 10 and > 5)
                 {
                     DisplayThreeRenderer.material.SetColor("_EmissiveColor", Color.green);
                 }
-                if (timeToHold is < 10 and > 5)
+                if (timeToHold is < 5 and > 0)
                 {
                     DisplayFourRenderer.material.SetColor("_EmissiveColor", Color.green);
                 }
-                if (timeToHold < 5)
-                {
-                    DisplayFiveRenderer.material.SetColor("_EmissiveColor", Color.green);
-                }
                 if (timeToHold == 0 && ReadyingDefib)
                 {
+                    DisplayFiveRenderer.material.SetColor("_EmissiveColor", Color.green);
                     ChargedAudio.PlayOneShot(ChargedAudio.clip);
                     yield return new WaitUntil(() => !ReadyingDefib || !isHeld || isPocketed);
                     ShockAudio.PlayOneShot(ShockAudio.clip);
                     HUDManager.Instance.ShakeCamera(ScreenShakeType.Small);
-                    if (this.insertedBattery.charge > batteryCost)
+                    if (RequiresBattery)
                     {
-                        this.insertedBattery.charge = this.insertedBattery.charge - batteryCost;
-                    }
-                    else if (this.insertedBattery.charge < batteryCost)
-                    {
-                        this.insertedBattery.empty = true;
-                        this.insertedBattery.charge = 0;
-                        this.isBeingUsed = false;
+                        if (this.insertedBattery.charge > batteryCost)
+                        {
+                            this.insertedBattery.charge = this.insertedBattery.charge - batteryCost;
+                        }
+                        else if (this.insertedBattery.charge < batteryCost)
+                        {
+                            this.insertedBattery.empty = true;
+                            this.insertedBattery.charge = 0;
+                            this.isBeingUsed = false;
+                        }
                     }
                     if (!isHeld || isPocketed)
                     {
@@ -165,10 +220,9 @@ namespace UsualScrap.Behaviors
                 FindBody();
             }
         }
-        public async void FindBody()
+        public void FindBody()
         {
-            RaycastHit[] hits;
-            hits = Physics.SphereCastAll(this.playerHeldBy.gameplayCamera.transform.position, 3f , this.playerHeldBy.gameplayCamera.transform.forward, 5F, LayerMask.GetMask("PlayerRagdoll"));
+            RaycastHit[] hits = Physics.SphereCastAll(this.playerHeldBy.gameplayCamera.transform.position, 3 , this.playerHeldBy.gameplayCamera.transform.forward, 5, LayerMask.GetMask("PlayerRagdoll"));
             for (int i = 0; i < hits.Length; i++)
             {
                 RaycastHit hit = hits[i];
@@ -177,49 +231,61 @@ namespace UsualScrap.Behaviors
                     var ID = deadBodyInfo.playerObjectId;
                     PlayerControllerB playerScript = RoundManager.Instance.playersManager.allPlayerScripts[ID];
                     Vector3 HitLocation = hit.transform.position + Vector3.up * .25f;
-                    if (deadBodyInfo.causeOfDeath == CauseOfDeath.Snipped || deadBodyInfo.detachedHead == true)
+                    if (PermaDeathRule)
                     {
-                        print("This corpse can't be saved. What a mess.");
-                        foreach (Renderer display in displayRenderers)
+                        if (deadBodyInfo.causeOfDeath == CauseOfDeath.Snipped || deadBodyInfo.detachedHead == true)
                         {
-                            display.material.SetColor("_EmissiveColor", Color.red);
+                            print("US - This corpse can't be saved. What a mess.");
+                            return;
                         }
-                        await Task.Delay(TimeSpan.FromSeconds(.3f));
-                        foreach (Renderer display in displayRenderers)
-                        {
-                            display.material.SetColor("_EmissiveColor", Color.black);
-                        }
-                        return;
                     }
                     if (playerScript != null && playerScript.isPlayerDead && !playerScript.currentlyHeldObject)
                     {
                         RevivePlayerServerRpc(ID, HitLocation);
                         if (IsHost)
                         {
-                            Destroy(hit.transform.gameObject);
+                            DeadBodyInfo[] array1 = UnityEngine.Object.FindObjectsOfType<DeadBodyInfo>(true);
+                            foreach (DeadBodyInfo dead in array1)
+                            {
+                                if (dead.playerObjectId == ID)
+                                {
+                                    RagdollGrabbableObject[] array2 = UnityEngine.Object.FindObjectsOfType<RagdollGrabbableObject>(true);
+                                    foreach (RagdollGrabbableObject ragdoll in array2)
+                                    {
+                                        if (ragdoll.ragdoll.playerObjectId == dead.playerObjectId)
+                                        {
+                                            Destroy(ragdoll.transform.gameObject);
+                                        }
+                                    }
+                                }
+                            }
                         }
                         else if (IsClient)
                         {
-                            DestroyBodyServerRpc();
+                            DestroyBodyServerRpc(ID);
                         }
-                        i = hits.Length;
+                        break;
                     }
                 }
             }
         }
         [ServerRpc(RequireOwnership = false)]
-        public void DestroyBodyServerRpc()
+        public void DestroyBodyServerRpc(int ID)
         {
-            DestroyBodyClientRpc();
-        }
-        [ClientRpc]
-        public void DestroyBodyClientRpc()
-        {
-            RaycastHit[] hits = Physics.SphereCastAll(this.playerHeldBy.gameplayCamera.transform.position, 1f, this.playerHeldBy.gameplayCamera.transform.forward, 5F, LayerMask.GetMask("PlayerRagdoll"));
-            for (int i = 0; i < hits.Length; i++)
+            DeadBodyInfo[] array1 = UnityEngine.Object.FindObjectsOfType<DeadBodyInfo>(true);
+            foreach (DeadBodyInfo dead in array1)
             {
-                RaycastHit hit = hits[i];
-                Destroy(hit.transform.gameObject);
+                if (dead.playerObjectId == ID)
+                {
+                    RagdollGrabbableObject[] array2 = UnityEngine.Object.FindObjectsOfType<RagdollGrabbableObject>(true);
+                    foreach (RagdollGrabbableObject ragdoll in array2)
+                    {
+                        if (ragdoll.ragdoll.playerObjectId == dead.playerObjectId)
+                        {
+                            Destroy(ragdoll.transform.gameObject);
+                        }
+                    }
+                }
             }
         }
         [ServerRpc(RequireOwnership = false)]
@@ -231,12 +297,19 @@ namespace UsualScrap.Behaviors
         public void RevivePlayerClientRpc(int ID, Vector3 SpawnPosition)
         {
             RevivePlayer(ID, SpawnPosition);
+            if (GameNetworkManager.Instance.localPlayerController.isPlayerDead)
+            {
+                HUDManager.Instance.UpdateBoxesSpectateUI();
+                //HUDManager.Instance.UpdateSpectateBoxSpeakerIcons();
+                //Look into accessing ^ tooooo tirrrred!!!
+            }
+
         }
         public void RevivePlayer(int PlayerID, Vector3 SpawnPosition)
         {
             if (PlayerID < 0)
             {
-                print("No playerInital id? returning.");
+                print("US - No player inital id? returning..");
                 return;
             }
             PlayerControllerB PlayerScript = RoundManager.Instance.playersManager.allPlayerScripts[PlayerID];
@@ -270,7 +343,7 @@ namespace UsualScrap.Behaviors
             PlayerScript.thisController.enabled = true;
             if (PlayerScript.isPlayerDead)
             {
-                print("playerInital is dead, reviving them.");
+                print("US - Player inital is dead, reviving them!");
                 PlayerScript.thisController.enabled = true;
                 PlayerScript.isPlayerDead = false;
                 PlayerScript.isPlayerControlled = true;
@@ -360,10 +433,10 @@ namespace UsualScrap.Behaviors
             StartOfRound.Instance.livingPlayers++;
             StartOfRound.Instance.UpdatePlayerVoiceEffects();
 
-            if (UsesLimited == true && UseLimit > 0)
+            if (UsesLimited == true && useLimit > 0)
             {
-                UseLimit--;
-                if (UseLimit <= 0)
+                useLimit--;
+                if (useLimit <= 0)
                 {
                     foreach (Renderer display in displayRenderers)
                     {

@@ -5,8 +5,23 @@ namespace UsualScrap.Behaviors
 {
     internal class BandagesScript : GrabbableObject
     {
+        public NetworkVariable<int> savedUses = new NetworkVariable<int>(3, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
         int uses = 3;
         ParticleSystem particle;
+        
+        
+        public override int GetItemDataToSave()
+        {
+            base.GetItemDataToSave();
+            return savedUses.Value;
+        }
+
+        public override void LoadItemSaveData(int saveData)
+        {
+            base.LoadItemSaveData(saveData);
+            savedUses.Value = saveData;
+        }
+        
 
         public override void ItemActivate(bool used, bool buttonDown = true)
         {
@@ -31,25 +46,25 @@ namespace UsualScrap.Behaviors
             particle = GetComponentInChildren<ParticleSystem>();
             ParticleSystem Healparticle = Instantiate(particle, playerHeldBy.transform.position, Quaternion.identity, playerHeldBy.transform);
             Healparticle.Play();
-            if (uses > 1 && playerHeldBy.health < 80)
+            if (uses > 1 && playerHeldBy.health < 70)
             {
-                playerHeldBy.health = playerHeldBy.health + 20;
+                playerHeldBy.health = playerHeldBy.health + 30;
                 uses--;
             }
-            else if (uses > 1 && playerHeldBy.health >= 80 && playerHeldBy.health < 100)
+            else if (uses > 1 && playerHeldBy.health >= 70 && playerHeldBy.health < 100)
             {
                 playerHeldBy.health = playerHeldBy.health + (100 - playerHeldBy.health);
                 uses--;
             }
-            else if (uses <= 1 && playerHeldBy.health < 80)
+            else if (uses <= 1 && playerHeldBy.health < 70)
             {
-                playerHeldBy.health = playerHeldBy.health + 20;
+                playerHeldBy.health = playerHeldBy.health + 30;
                 if (this.isHeld)
                 {
                     playerHeldBy.DespawnHeldObject();
                 }
             }
-            else if (uses <= 1 && playerHeldBy.health >= 80 && playerHeldBy.health < 100)
+            else if (uses <= 1 && playerHeldBy.health >= 70 && playerHeldBy.health < 100)
             {
                 playerHeldBy.health = playerHeldBy.health + (100 - playerHeldBy.health);
                 if (this.isHeld)
@@ -68,8 +83,12 @@ namespace UsualScrap.Behaviors
                 {
                     playerHeldBy.playerBodyAnimator.SetBool("Limp", false);
                 }
-                HUDManager.Instance.UpdateHealthUI(playerHeldBy.health, false);
+                if (GameNetworkManager.Instance.localPlayerController == playerHeldBy)
+                {
+                    HUDManager.Instance.UpdateHealthUI(playerHeldBy.health, false);
+                }
             }
         }
+
     }
 }
