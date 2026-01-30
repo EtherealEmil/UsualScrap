@@ -10,6 +10,64 @@
 
 <details>
 
+<summary>Version 1.9.3</summary>
+
+- Removed much of the number values from the homepage so I can balance/change item's values without needing to update the page constantly.
+- Buffed the healing items slightly.
+
+</details>
+
+---
+
+<details>
+
+<summary>Version 1.9.2</summary>
+
+Quick follow up!
+
+- Removed terminalconflictfix dependency since dawnlib has it's own native iteration.
+- The Doom Bell has been disabled, it may return later.
+- Slightly reduced the time to use the toolbox overall.
+- Defib should now work correctly when the battery is disabled.
+
+</details>
+
+
+---
+
+<details>
+
+<summary>Version 1.9.1</summary>
+
+Hello hard working employees! I'm in the modding mood again after 3 whole months! Anyway, this update is just some updates and a few additions some of y'all have asked for. New stuff is next!
+
+- Updated methods for newest dawnlib changes.
+- Fixed and changed the golden tickets function to curb its infinite use issue. It will now simply convert up to 5 nearby items all at once when used,  the normal ticket remains the same.
+- Added check to the crowbar to avoid pointless errors.
+- Added terminalconflictfix as a dependency. This fixes issues buying some of the items caused by vanilla's poor terminal name checks.
+- Added a config to disable all this mod's item icons for use with runtime icons or similar mods.
+- Added a config to disable the defib's battery usage.
+
+Upcoming (Any future update):
+- Option to disable item lights in the ship.
+- Scissors melee option/new item variation.
+- Improvements to items for max health altering mods
+- Toolbox modded trap compatability.
+- Config presets like only scrap items and only store items.
+- Item use saving.
+- Mod page renovation.
+- Old item code improvements/rewrites.
+- More scrap pack items.
+- Modded moon spawn weights.
+- Scrap pack item spawn weights.
+
+</details>
+
+
+---
+
+<details>
+
 <summary>Version 1.9.0</summary>
 
 Version update, Fixes.
@@ -22,16 +80,15 @@ Version update, Fixes.
 Upcoming (Any future update):
 - Option to disable item lights in the ship.
 - Icon toggle / compat with runtime icons.
-- Scissors melee option/new item variation. NEXT
-- Toolbox modded trap compatability. NEXT
+- Scissors melee option/new item variation.
+- Toolbox modded trap compatability.
 - Config presets like only scrap items and only store items.
-- Item use saving. NEXT
-- Mod page redo. NEXT
-- Old item code improvements/rewrites. NEXT
+- Item use saving.
+- Mod page redo.
+- Old item code improvements/rewrites.
 - More scrap pack items.
-- Modded moon spawn weights
-- Scrap pack item spawn weights NEXT
-- More difficulty & more horror, whatever that means.
+- Modded moon spawn weights.
+- Scrap pack item spawn weights.
 
 </details>
 
@@ -49,7 +106,6 @@ Small changes/fixes.
 - Fixed candy dispenser.
 - Added scrap packs and the items included to the mod page.
 - Removed leftover logging.
-
 
 </details>
 
@@ -91,8 +147,6 @@ Upcoming (Any future update):
 - Config presets like only scrap items and only store items.
 - defib & injector use saving.
 - Mod page redo.
-- More difficulty & more horror, whatever that means.
-
 
 </details>
 
@@ -132,7 +186,6 @@ Upcoming (Any future update):
 - Config presets like only scrap items and only store items. Considering making item packs in the configs to add items to so that I can make vastly different items like medieval, horror, etc. based items all in one mod.
 - Capsule function tweaks & fixes.
 - defib & injector use saving.
-- More difficulty & more horror, whatever that means.
 
 If there are ANY issues, the link to my github is at the top of the page! The mod is also on the "Lethal Company Modding" discord under the name "Usual Scrap" WITH a space. Balance feedback is also very welcome as I haven't actually played lethal company in ages, Thanks.
 

@@ -1,12 +1,13 @@
 {
     "name": "UsualScrap",
-    "version_number": "1.7.3",
-    "target_version": "Always the Latest Version",
+    "version_number": "1.9.2",
+    "target_version": "Always the Latest LETHAL COMPANY Version",
     "website_url": "https://github.com/EtherealEmil/UsualScrap.git",
-    "description": "Adds 15+ unique equipment and scrap items that try to keep the vanilla tone",
+    "description": "Adds many new unique items that expand on the available scrap items and interactions!",
     "dependencies": [
-      "Evaisa-LethalLib-0.16.1",
+      "Evaisa-LethalLib-1.1.1",
 	"BepInEx-BepInExPack-5.4.2100",
+	"TeamXiaolan-DawnLib-0.7.4",
 	"Sigurd-CSync-5.0.1"
     ]
 }

@@ -1,111 +1,92 @@
-### Works in the latest version V73! - 10/22/25 
+### Works in the latest version V73! - 1/28/26
 
 ![Preview](https://i.imgur.com/PO7dK7S.png)
 
 ## Purchasable Equipment
 
 <details>
-<summary>Handlamp (25C)</summary>
+<summary>Handlamp</summary>
 
-Costs 25 credits, Weighs 5
+The handlamp is an alternative option to the usual flashlight; it makes light in an area around it instead of the beam of a normal flashlight
 
-Compared to vanilla flashlights...
-
-PROS
-
-- The lamp lights produces light in a radius around you making it useful for seeing things all around you and completely lighting up small rooms.
-
-- The lamp has a much larger battery capacity than the pro-flashlight (It's battery can last almost the entire day even when left on constantly!).
-
-CONS 
-
-- The light produced by the lamp isn't as clear at long ranges as the pro-flashlight nor does it reach as far.
-
-- The lamp's light can be very bright if used in fog, gas, smoke, dust storms, etc..
-
-Mod Issue - Mods messing with lighting can drastically affect the Hand Lamp's light. I probably won't find a universal way to fix this issue.
+Mod Issue! - Mods messing with lighting can drastically change the lamp's light, there won't be a univeral way for me to fix this issue
 
 </details>
 
 <details>
-<summary>Bandages(20C)</summary>
+<summary>Bandages</summary>
 
-Costs 20 credits, Weighs 1
+Bandages are a 3 use consumable item that heals instantly
 
-Bandages are a 3 use consumable item that heals 20 health per use.
+Compared to the medical kit, bandages... 
 
-Compared to the Medical Kit, Bandages heal 60 health instantly, weigh less, and are cheap and disposable.
+- Heal instantly
+
+- Weigh less
+
+- Are cheap and disposable
 
 </details>
 
 <details>
-<summary>Medical Kit(120C)</summary>
+<summary>Medical Kit</summary>
 
-Costs 120 credits, Weighs 3
+The Medical Kit heals the user overtime using it's internal stored health pool. It's max internal health caps out at 150 and will passively replenish when idle.
 
-The Medical Kit heals the user overtime using it's internal stored health. It's internal health caps out at 100 and will pssively replenish when not in use.
+Compared to Bandages, the medical kit... 
 
-Compared to Bandages, the Medical Kit can heal more health (100) than Bandages can heal (60) and can heal infinitely if given time to replenish. 
+- Is infinite healing if giving time to replenish
 
-For Update 1.7.3 users and above - The medkit can now be used to directly heal other employees and heals them faster than normal (2x faster). This can be done by looking at your fellow employee and using the medkit just like you're healing yourself with it, same healthpool and all.</details>
+- Can be used to heal teammates at 2x the healing rate
 
 <details>
-<summary>Productivity Auto-Injector(90C)</summary>
+<summary>Productivity Auto-Injector</summary>
 
-Costs 90 credits, Weighs 1
+The Auto-Injector is a single use item that applies the following buffs to the player who used it for 3 minutes...
 
-The Auto-Injector is a single use item that applies the following buffs to the player who used it for 3 minutes.
+- Speed boost
 
-- Speed boost.
-- Jump Height boost.
-- Weight effects negation.
+- Jump Height boost
+
+- Negates the effects of carry weight
 
 </details>
 
 
 <details>
-<summary>Shift Controller(225C)</summary>
+<summary>Shift Controller</summary>
 
-Costs 225 credits, Weighs 4
+The Shift Controller is a short-range portable teleporter that saves your coordinates and can teleport you back to that location as long as it has battery remaining.
 
-The Shift Controller is a short-range portable teleporter that saves your coordinates and can then teleport you back to that location as long as it has battery remaining.
+- The shift controller saves its coordinates when used the FIRST time and will then teleport you back to those initial saved coordinates when used a SECOND time, at the cost of some battery.
 
-- The Shift Controller saves its coordinates when used the first time and the second use will then teleport you back to those initial saved coordinates at the cost of some battery.
+- The shift controller consumes battery slowly when you've saved coordinates but haven't yet teleported
 
-- The Shift Controller consumes battery slowly after your coordinates have been saved but the teleport hasn't yet been used.
+- The saved coordinates can be wiped under certain conditions, like when it's recharged via the ship recharger
 
-- The saved coordinates are wiped when the controller is recharged.
-
-- The Shift controller is disabled in orbit.
+- The Shift controller is disabled in orbit
 
 Shift controller connectivity mechanic:
- - The Shift Controller's connectivity is based on how far you are from the saved coordinates, the farther you are --> the lower the connectivity. With full connectivity the controller works as expected but when connectivity starts to get low the controller will have a chance to glitch. When the controller glitches it will wipe your saved location and prevent you from using the controller for a short time.
+ - The Shift Controller's connectivity is based on how far you are from the saved coordinates, the farther you are --> the lower the connectivity. With full connectivity the controller works as expected but when connectivity starts to get low the controller will have a chance to "glitch". When the controller glitches it will wipe your saved location and prevent you from using the controller for a short time.
 
 </details>
 
 
 <details>
-<summary>Toolbox(115C)</summary>
-
-Costs 115 credits, Weighs 5
+<summary>Toolbox</summary>
 
 The Tool Box can be used to dismantle traps and will produce scrap when done successfully.
 
-To dismantle a trap, stand by it and hold left click. After a short period of time (the time depends on the trap) the trap will be dismantled and drop a number of scrap parts.
-
-- Turrets takes around 10 seconds to dismantle.
-- Landmines take around 5 seconds to dismantle.
+To dismantle a trap, stand by it and hold left click. You should see sparks and here a sound cue, and after short period of time (the time depends on the trap) the trap will be dismantled and drop a number of scrap parts.
 
 </details>
 
 <details>
-<summary>Defibrillator(375c)</summary>
-
-Costs 375 credits, Weighs 3
+<summary>Defibrillator</summary>
 
 The defibrillator uses battery to revive deceased employees.
 
-- The defibrillator has a charge meter (Not related to its battery) on the side of it. The charge meter indicate how long you've held down the use button and it must be fully charged to successfully revive a player.
+- The defibrillator has a charge meter (Not related to its battery) on the side of it. The charge meter indicates how long you've held down the use button and it must be fully charged to revive a player.
 
 - When the charge meter is full you can continue to hold the use button and be ready to revive at a moments notice but its battery will be constantly drained when holding its charge.
 
@@ -113,30 +94,29 @@ The defibrillator uses battery to revive deceased employees.
 
 </details>
 
-## Obtainable Scrap Items
+## Discoverable Scrap
 
 <details>
 <summary>Fuel Cylinder</summary>
 
-High value, Weighs 32, Spawns anywhere rarely
-
 When the Fuel cylinder is picked up it will have a high chance of activating. If successful, an internal timer will begin counting down to 0 which will then cause the tank to explode. The only way to deactivate the timer is by bringing the tank back to your ship safely.
 
 - The internal timer can be any time around 3 minutes, better get moving!
-- Hitting the tank with a melee weapon will cause it to explode immediately.
-- Each time the tank is dropped, its remaining time will be reduced by a percentage; On the third drop, the tank will explode immediately.
+
+- Hitting the tank with a melee weapon will cause it to explode immediately
+
+- Each time the tank is dropped, its remaining time will be reduced by a percentage; On the third drop, the tank will explode immediately
+
 - After being brought to the ship the tank will enter an inactive state, stopping the timer. In the inactive state, Hitting it will still cause it to explode and it can be reactivated by dropping it a few times (Dropping it will only cause a explosion if it is active).
 
-Tips for survival - Take it first or take it last and know the way back to the ship, the last thing you want to do while carrying the tank is waste time trying to find your way back to the ship.
+Tips for survival - Take it first or take it last and know the way back to the ship, the last thing you want to do while carrying the cylinder is waste time trying to find your way back to the ship.
 
 </details>
 
 <details>
 <summary>Radioactive Cell</summary>
 
-High value, Weighs 18, Spawns anywhere rarely
-
-The Radioactive Cell produces a sickly green light in a radius around it infinitely. When the cell is held, the holder will regularly take damage until they drop it or perish.
+The Radioactive Cell produces a sickly green light in a radius around it infinitely. When the cell is held, the holder will regularly take ramping damage until they drop it or perish.
 
 - The Cell inflicts ramping damage on a rough curve going from 5 to 20.
 
@@ -147,34 +127,25 @@ Tips for survival - The damage ramps based on how long you've held it continuous
 <details>
 <summary>Capsules</summary>
 
-High value, Weighs 16, Spawns anywhere rarely
+Gloomy Capsule - Charges during the evening and night, when fully charged it will randomly teleport it's holder either indoors or outdoors depending on their current location
 
-Capsules will do different things depending on other in-game factors like the time of day, objects around you, or your health state for example.
+Frigid Capsule - Charges during the evening and night, when fully charged it sends out waves of snow that will apply stacks of slowness to all nearby players
 
-Gloomy Capsule - Charges during the evening and night, when fully charged it will randomly teleport it's holder either indoors or outdoors depending on their current location.
+Sacrifical Capsule - Drains health from all nearby players, WIP
 
-Frigid Capsule - Charges during the evening and night, when fully charged it sends out waves of snow that will apply stacks of slowness to nearby players.
-
-Sacrifical Capsule - ...
-
-Noxious capsule - Charges during the dawn and noon, when fully charged nox gas begins to seep out damaging all players nearby rapidly.
-
+Noxious capsule - Charges during the dawn and noon, when fully charged nox gas begins to seep out damaging all players nearby rapidly, WIP
 </details>
 
 
 <details>
 <summary>Crowbar</summary>
 
-Average value, Weighs 6.5, Spawns anywhere uncommonly
-
-The Crowbar is a melee weapon that does normal damage and can open locked and unlocked doors by hitting them 3 times.
+The Crowbar is a melee weapon that does average damage and can unlock locked doors by smacking the door 3 times
 
 </details>
 
 <details>
 <summary>Padlock</summary>
-
-Low Value, Weighs 1, Spawns anywhere uncommonly
 
 The Padlock locks doors open or closed, nothing more.
 
@@ -183,8 +154,6 @@ The Padlock locks doors open or closed, nothing more.
 <details>
 <summary>Walking Cane</summary>
 
-High value, Weighs 1, Spawns anywhere very rarely
-
 Increases your movement speed when HELD.
 
 </details>
@@ -192,20 +161,14 @@ Increases your movement speed when HELD.
 <details>
 <summary>Sizable Scissors</summary>
 
-High Value, Weighs 16, Spawns anywhere rarely
+Sizable Scissors are a two handed melee weapon that deals double damage and randomly damages it's holder if they are sprinting.
 
-Sizable Scissors are a two handed melee weapon that randomly damages it's holder if they are sprinting and deals double damage.
-
-- Every second or two while running you have a 1 in 4 chance of suffering 30 damage for running with scissors...
-
-Tips for survival - don't run with them or drop them, if it kills you then you asked for it.
+Tips for survival - don't run with them or drop them. If the scissors kill you then you ran with scissors, what'd you expect?
 </details>
 
 <details>
 
 <summary>Candy Dispenser</summary>
-
-Average value, Weighs 14, Spawns anywhere rarely
 
 The Candy Dispenser is a melee weapon that will rarely drop a piece of candy when swinging it (1/25 chance each swing).
 
@@ -218,8 +181,6 @@ The Candy Dispenser is a melee weapon that will rarely drop a piece of candy whe
 
 <summary>Rose</summary>
 
-Average value, Weighs 1, Spawns anywhere rarely
-
 The rose damages you a small amount when picked up, equipped, and dropped.
 
 </details>
@@ -228,23 +189,11 @@ The rose damages you a small amount when picked up, equipped, and dropped.
 
 <summary>Tickets of Exchange</summary>
 
-Low value/High Value, Weighs 1, Spawns anywhere rarely/extremely rarely
+The Regular Ticket of Exchange is a consumable item that can be used to transform any ONE item into a gift box, essentially exchanging it for something else.
 
-The Regular Ticket of Exchange is a common low value consumable item that can be used ONCE to transform any item into a gift box, essentially exchanging it for something else.
-
-The Golden Ticket of Exchange is a extremely rare and high value consumable item that does the same thing it predecessor does but has FIVE uses instead of one.
+The Golden Ticket of Exchange is a extremely rare variant that does the same thing it predecessor does but will turn many surrounding items into gift boxes instead of just one.
 
 - Ticket are disabled while inside the company cruiser to avoid severely breaking the game.
-
-</details>
-
-<details>
-
-<summary>Doomsayer Bell</summary>
-
-Average Value, Weighs 3, Spawns anywhere rarely
-
-The Doomsayer Bell is a scrap item that has a chance to advance the time of the current moon when used or dropped.
 
 </details>
 
@@ -268,10 +217,13 @@ Included scrap items -
 Included scrap items -
 
 - Traffic Cone
-- Large Gear
+- Gritty Gear
 
 </details>
 
+---
+
+Any versions of this mod found on other sites were not posted and are not supported by me!
 
 ---
 
@@ -291,23 +243,14 @@ I highly recommend the mods below for a better playing experience.
 
 ---
 
-Massive thanks to Malcolm on YouTube for their LC modding guides and examples.
+MASSIVE thanks to Malcolm on YouTube for their LC modding guides and examples!
 
-Massive thanks to Evaisa and anyone else who has contributed to LethalLib.
+MASSIVE thanks to Evaisa and anyone else who has contributed to LethalLib!
 
-Thanks to everyone working on BepInEx.
+MASSIVE thanks to everyone working on BepInEx!
 
-Thanks for Dawnlib TeamXiaolan it is great.
+MASSIVE thanks to TeamXiaolan for Dawnlib!
 
-Thanks to everyone and anyone helping in the lethal company modding discord.
+Thanks to everyone and anyone helping in the lethal company modding discord!
 
-And the biggest thanks to Zeekers for creating Lethal Company!
-
----
-
-Any versions of this mod found on other sites were not posted and are not supported by me!
-
----
-
-### Report issues on my GitHub! - https://github.com/EtherealEmil/UsualScrap.git
-
+And finally the BIGGEST thanks to Zeekers for creating Lethal Company!
