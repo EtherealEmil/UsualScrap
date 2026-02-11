@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 namespace UsualScrap.Behaviors
 {
-    internal class BloodyCapsuleScript : GrabbableObject
+    public class BloodyCapsuleScript : GrabbableObject
     {
         ParticleSystem chargedParticles;
         ParticleSystem chargingParticles;
@@ -182,3 +182,4 @@ namespace UsualScrap.Behaviors
         }
     }
 }
+
