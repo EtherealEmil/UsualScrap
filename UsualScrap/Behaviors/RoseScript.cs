@@ -2,7 +2,7 @@
 
 namespace UsualScrap.Behaviors
 {
-    internal class RoseScript : GrabbableObject
+    public class RoseScript : GrabbableObject
     {
         PlayerControllerB player;
         public override void EquipItem()
@@ -23,3 +23,4 @@ namespace UsualScrap.Behaviors
         }
     }
 }
+
