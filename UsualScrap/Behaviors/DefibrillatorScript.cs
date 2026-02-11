@@ -404,12 +404,10 @@ namespace UsualScrap.Behaviors
                         PlayerScript.currentVoiceChatIngameSettings.InitializeComponents();
                     }
 
-                    if (PlayerScript.currentVoiceChatIngameSettings.voiceAudio == null)
+                    if (PlayerScript.currentVoiceChatIngameSettings.voiceAudio != null)
                     {
-                        return;
+                        PlayerScript.currentVoiceChatIngameSettings.voiceAudio.GetComponent<OccludeAudio>().overridingLowPass = false;
                     }
-
-                    PlayerScript.currentVoiceChatIngameSettings.voiceAudio.GetComponent<OccludeAudio>().overridingLowPass = false;
                 }
             }
             PlayerControllerB localplayercontroller = GameNetworkManager.Instance.localPlayerController;
@@ -447,4 +445,5 @@ namespace UsualScrap.Behaviors
         }
     }
 }
+
 
