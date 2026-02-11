@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace UsualScrap.Behaviors
 {
-    internal class ShiftControllerScript : GrabbableObject
+    public class ShiftControllerScript : GrabbableObject
     {
         bool teleportSetIndoors;
         Vector3 savedLocation;
