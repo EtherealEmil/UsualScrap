@@ -4,7 +4,7 @@ using UsualScrap.Behaviors.Effects;
 
 namespace UsualScrap.Behaviors
 {
-    internal class PieceofCandyScript : GrabbableObject
+    public class PieceofCandyScript : GrabbableObject
     {
         //int randomEffect = new System.Random().Next(1, 4);
         MeshRenderer candyMesh;
@@ -60,3 +60,4 @@ namespace UsualScrap.Behaviors
         }
     }
 }
+
