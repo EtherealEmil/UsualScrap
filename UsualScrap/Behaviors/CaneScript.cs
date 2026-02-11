@@ -1,6 +1,6 @@
 ﻿namespace UsualScrap.Behaviors
 {
-    internal class CaneScript : GrabbableObject
+    public class CaneScript : GrabbableObject
     {
         float movementbuff = 1f;
 
@@ -21,3 +21,4 @@
         }
     }
 }
+
