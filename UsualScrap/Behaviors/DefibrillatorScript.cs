@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace UsualScrap.Behaviors
 {
-    internal class DefibrillatorScript : GrabbableObject
+    public class DefibrillatorScript : GrabbableObject
     {
         Coroutine coroutine;
         bool ReadyingDefib = false;
@@ -447,3 +447,4 @@ namespace UsualScrap.Behaviors
         }
     }
 }
+
