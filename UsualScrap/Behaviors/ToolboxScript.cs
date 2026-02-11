@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UsualScrap.Behaviors
 {
-    internal class ToolboxScript : GrabbableObject
+    public class ToolboxScript : GrabbableObject
     {
         private static Item _laserPointerItem;
         private static Item _bigBoltItem;
@@ -270,4 +270,5 @@ namespace UsualScrap.Behaviors
             return _bigBoltItem;
         }
     }
+
 }
