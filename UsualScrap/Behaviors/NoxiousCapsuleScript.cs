@@ -8,7 +8,7 @@ using UsualScrap.Behaviors.Effects;
 
 namespace UsualScrap.Behaviors
 {
-    internal class NoxiousCapsuleScript : GrabbableObject
+    public class NoxiousCapsuleScript : GrabbableObject
     {
         ParticleSystem ambientSporeParticles;
         ParticleSystem noxiousCloudParticles;

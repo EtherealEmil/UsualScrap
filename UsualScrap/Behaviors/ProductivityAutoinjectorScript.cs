@@ -4,7 +4,7 @@ using UsualScrap.Behaviors.Effects;
 
 namespace UsualScrap.Behaviors
 {
-    internal class ProductivityAutoinjectorScript : GrabbableObject
+    public class ProductivityAutoinjectorScript : GrabbableObject
     {
         AudioSource audioSource;
         MeshRenderer InjectorDisplay;
@@ -66,3 +66,4 @@ namespace UsualScrap.Behaviors
         }
     }
 }
+

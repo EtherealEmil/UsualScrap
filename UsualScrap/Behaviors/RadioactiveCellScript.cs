@@ -3,7 +3,7 @@ using Unity.Netcode;
 
 namespace UsualScrap.Behaviors
 {
-    internal class RadioactiveCellScript : GrabbableObject
+    public class RadioactiveCellScript : GrabbableObject
     {
         Light light;
         ParticleSystem particle;
@@ -101,3 +101,4 @@ namespace UsualScrap.Behaviors
         }
     }
 }
+

@@ -6,7 +6,7 @@ using Object = UnityEngine.Object;
 
 namespace UsualScrap.Behaviors
 {
-    internal class TicketScript : GrabbableObject
+    public class TicketScript : GrabbableObject
     {
         public static Item _giftBoxItem;
         Object viewedGameObject;
