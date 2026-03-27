@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace UsualScrap.Behaviors
 {
-    internal class CrowbarScript : GrabbableObject
+    public class CrowbarScript : GrabbableObject
     {
         PlayerControllerB previousPlayerHeldBy;
         DoorLock viewedDoorLock;
@@ -249,4 +249,5 @@ namespace UsualScrap.Behaviors
         }
     }
 }
+
 

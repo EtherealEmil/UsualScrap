@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UsualScrap.Behaviors
 {
-    internal class WalkingCaneScript : GrabbableObject
+    public class WalkingCaneScript : GrabbableObject
     {
         private PlayerControllerB Player;
         readonly float speedBuff = 1.5f;
@@ -36,3 +36,4 @@ namespace UsualScrap.Behaviors
         }
     }
 }
+

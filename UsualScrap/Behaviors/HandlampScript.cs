@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UsualScrap.Behaviors
 {
-    internal class HandlampScript : GrabbableObject
+    public class HandlampScript : GrabbableObject
     {
         Light[] lights;
         Light light;
@@ -114,3 +114,4 @@ namespace UsualScrap.Behaviors
         }
     }
 }
+

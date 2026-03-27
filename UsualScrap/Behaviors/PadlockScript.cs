@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UsualScrap.Behaviors
 {
-    internal class PadlockScript : GrabbableObject
+    public class PadlockScript : GrabbableObject
     {
         DoorLock viewedDoorLock;
         AudioSource lockSound;
@@ -69,3 +69,4 @@ namespace UsualScrap.Behaviors
         }
     }
 }
+

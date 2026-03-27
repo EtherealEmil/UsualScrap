@@ -4,7 +4,7 @@ using Unity.Netcode;
 
 namespace UsualScrap.Behaviors
 {
-    internal class EmergencyInjectorScript : GrabbableObject
+    public class EmergencyInjectorScript : GrabbableObject
     {
         AudioSource audioSource;
         GameObject InjectorContents;
@@ -46,3 +46,4 @@ namespace UsualScrap.Behaviors
         }
     }
 }
+

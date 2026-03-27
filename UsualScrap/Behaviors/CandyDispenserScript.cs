@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace UsualScrap.Behaviors
 {
-    internal class CandyDispenserScript : GrabbableObject
+    public class CandyDispenserScript : GrabbableObject
     {
         RaycastHit[] objectsHitByMeleeWeapon;
         List<RaycastHit> objectsHitByMeleeWeaponList = new List<RaycastHit>();
@@ -285,4 +285,5 @@ namespace UsualScrap.Behaviors
         }
     }
 }
+
 

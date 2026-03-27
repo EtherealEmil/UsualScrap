@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UsualScrap.Behaviors
 {
-    internal class BandagesScript : GrabbableObject
+    public class BandagesScript : GrabbableObject
     {
         public NetworkVariable<int> savedUses = new NetworkVariable<int>(3, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
         int uses = 3;
@@ -92,3 +92,4 @@ namespace UsualScrap.Behaviors
 
     }
 }
+

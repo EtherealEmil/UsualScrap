@@ -7,7 +7,7 @@ using static UnityEngine.ParticleSystem;
 
 namespace UsualScrap.Behaviors
 {
-    internal class SanguineCapsuleScript : GrabbableObject
+    public class SanguineCapsuleScript : GrabbableObject
     {
         ParticleSystem chargedParticles;
         ParticleSystem chargingParticles;
@@ -99,3 +99,4 @@ namespace UsualScrap.Behaviors
         }
     }
 }
+

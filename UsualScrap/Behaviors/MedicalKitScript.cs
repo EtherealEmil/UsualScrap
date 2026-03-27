@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UsualScrap.Behaviors
 {
-    internal class MedicalKitScript : GrabbableObject
+    public class MedicalKitScript : GrabbableObject
     {
         int Healthpool = 150;
         private Coroutine healCoroutine;
@@ -217,3 +217,4 @@ namespace UsualScrap.Behaviors
     }
 
 }
+

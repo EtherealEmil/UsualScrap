@@ -9,7 +9,7 @@ using Unity.Netcode;
 
 namespace UsualScrap.Behaviors
 {
-    internal class ScissorsScript : GrabbableObject
+    public class ScissorsScript : GrabbableObject
     {
         private Coroutine coroutine;
 
@@ -249,3 +249,4 @@ namespace UsualScrap.Behaviors
         }
     }
 }
+

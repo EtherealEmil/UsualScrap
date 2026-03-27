@@ -7,7 +7,7 @@ using UnityEngine.Events;
 
 namespace UsualScrap.Behaviors
 {
-    internal class GloomyCapsuleScript : GrabbableObject
+    public class GloomyCapsuleScript : GrabbableObject
     {
         ParticleSystem teleportParticles;
         ParticleSystem createdTeleportParticles;
@@ -255,3 +255,4 @@ namespace UsualScrap.Behaviors
         }
     }
 }
+

@@ -6,7 +6,7 @@ using Object = UnityEngine.Object;
 
 namespace UsualScrap.Behaviors
 {
-    internal class GoldenTicketScript : GrabbableObject
+    public class GoldenTicketScript : GrabbableObject
     {
         ParticleSystem idleSparkle;
         bool particlePlaying = true;
@@ -189,3 +189,4 @@ namespace UsualScrap.Behaviors
         }
     }
 }
+

@@ -3,7 +3,7 @@ using UsualScrap.Behaviors.Effects;
 
 namespace UsualScrap.Behaviors
 {
-    internal class CandyScript : GrabbableObject
+    public class CandyScript : GrabbableObject
     {
         public override void ItemActivate(bool used, bool buttonDown = true)
         {
@@ -26,3 +26,4 @@ namespace UsualScrap.Behaviors
         }
     }
 }
+

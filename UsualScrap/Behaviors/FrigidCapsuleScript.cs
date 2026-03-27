@@ -7,7 +7,7 @@ using UsualScrap.Behaviors.Effects;
 
 namespace UsualScrap.Behaviors
 {
-    internal class FrigidCapsuleScript : GrabbableObject
+    public class FrigidCapsuleScript : GrabbableObject
     {
         ParticleSystem chargingSnowflakeParticles;
         ParticleSystem ambientSnowflakeParticles;
@@ -334,3 +334,4 @@ namespace UsualScrap.Behaviors
         }
     }
 }
+
