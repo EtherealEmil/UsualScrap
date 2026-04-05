@@ -10,10 +10,50 @@
 
 <details>
 
+<summary>Version 1.9.4</summary>
+
+- Small scissors
+- Rapier
+- Sledgehammer
+- Toolkit animation
+- Effects for tickets
+- Scrap pack items
+- Config saving
+- Update spectate screen on revive
+- HUD indicators for functions (medical kit)
+
+
+</details>
+
+
+---
+
+<details>
+
 <summary>Version 1.9.3</summary>
 
-- Removed much of the number values from the homepage so I can balance/change item's values without needing to update the page constantly.
+Finally back from my trips, pushed out my stale update for the new version of lethal company.
+
+- Removed much if not all of the number values from the homepage so I can balance/change item's values without needing to update the page constantly.
 - Buffed the healing items slightly.
+- Lowered the scissors chance to deal damage so you're less likely to outright die when running with them. Lowered it's default spawn rate also.
+- Increased shift controller's teleport delay from .5 to 1 for those quick item grabs.
+- Shrunk and renamed the gear to mere gear because it sounds nice.
+- Renamed and remodeled the toolbox to the toolkit, this model is much easier to add the animation I want in the future.
+- Rewrite and fixes for all the capsules, they no longer run code until picked up for the first time.
+- Frigid capsule is now active during all times of day, it charges slower.
+- Bloody capsule is now only active at night and outdoors, it drains nearby health more often.
+- Noxious capsule disabled.
+- Switched the ":" in item weight configs to "="
+- Made all items grabbable in orbit.
+- Made all item scripts public, thanks to T-Rizzle12 on Github!
+- Salvaged items removed and future scrap+store items will just be two completely different items instead of one split in two with slight name changes. 
+- Was messing with config saving but reverted it since I didn't finish the changes in time, will happen next update.
+- Had some items but they also will be delayed to next update pending polish.
+
+Confirmed to load and work on version 80! Didn't test everything though so if you have issues please report issues on my github or on the lethal company modding discord usual scrap page! Thanks.
+
+Next update, I'm looking at updating the spectate screen when someone is revived, adding effects/animations to a few items, and hud indicators to a couple item's functions.
 
 </details>
 

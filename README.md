@@ -1,4 +1,4 @@
-### Works in the latest version V73! - 1/28/26
+### Works in the latest version V80! - 4/5/26
 
 ![Preview](https://i.imgur.com/PO7dK7S.png)
 
@@ -127,13 +127,13 @@ Tips for survival - The damage ramps based on how long you've held it continuous
 <details>
 <summary>Capsules</summary>
 
-Gloomy Capsule - Charges during the evening and night, when fully charged it will randomly teleport it's holder either indoors or outdoors depending on their current location
+Gloomy Capsule - Charges when outdoors during the evening and night, when fully charged it will randomly teleport it's holder either indoors or outdoors depending on their current location.
 
-Frigid Capsule - Charges during the evening and night, when fully charged it sends out waves of snow that will apply stacks of slowness to all nearby players
+Frigid Capsule - Charges when outdoors, when fully charged it sends out waves of snow that will apply stacks of slowness to all nearby players.
 
-Sacrifical Capsule - Drains health from all nearby players, WIP
+Sacrifical Capsule - Drains health from all nearby players in a radius when outdoors at night.
 
-Noxious capsule - Charges during the dawn and noon, when fully charged nox gas begins to seep out damaging all players nearby rapidly, WIP
+Noxious capsule.
 </details>
 
 
@@ -217,7 +217,7 @@ Included scrap items -
 Included scrap items -
 
 - Traffic Cone
-- Gritty Gear
+- Mere Gear
 
 </details>
 
@@ -238,7 +238,6 @@ Any versions of this mod found on other sites were not posted and are not suppor
 
 I highly recommend the mods below for a better playing experience.
 
-- TerminalConflictFix By SylviBlossom
 - ButteryFixes By ButteryStancakes
 
 ---
