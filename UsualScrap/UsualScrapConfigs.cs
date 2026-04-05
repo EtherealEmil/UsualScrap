@@ -11,6 +11,8 @@ namespace UsualScrap
         //public readonly ConfigEntry<string> MansionScrapPackMoonSpawns;
         public readonly ConfigEntry<bool> FacilityScrapPackEnabled;
         //public readonly ConfigEntry<string> FacilityScrapPackMoonSpawns;
+        //public readonly ConfigEntry<bool> MedievalScrapPackEnabled;
+        //public readonly ConfigEntry<string> MedievalScrapPackMoonSpawns;
 
         public readonly ConfigEntry<bool> TicketLoaded;
         public readonly ConfigEntry<bool> TicketSpawnsAsScrap;
@@ -62,11 +64,6 @@ namespace UsualScrap
         public readonly ConfigEntry<string> FrigidCapsuleMoonSpawnWeights;
         public readonly ConfigEntry<int> FrigidCapsuleGlobalSpawnWeight;
 
-        public readonly ConfigEntry<bool> NoxiousCapsuleLoaded;
-        public readonly ConfigEntry<bool> NoxiousCapsuleSpawnsAsScrap;
-        public readonly ConfigEntry<string> NoxiousCapsuleMoonSpawnWeights;
-        public readonly ConfigEntry<int> NoxiousCapsuleGlobalSpawnWeight;
-
         public readonly ConfigEntry<bool> BloodyCapsuleLoaded;
         public readonly ConfigEntry<bool> BloodyCapsuleSpawnsAsScrap;
         public readonly ConfigEntry<string> BloodyCapsuleMoonSpawnWeights;
@@ -76,15 +73,11 @@ namespace UsualScrap
         public readonly ConfigEntry<bool> PadlockSpawnsAsScrap;
         public readonly ConfigEntry<string> PadlockMoonSpawnWeights;
         public readonly ConfigEntry<int> PadlockGlobalSpawnWeight;
-        public readonly ConfigEntry<bool> PadlockIsStoreItem;
-        public readonly ConfigEntry<int> PadlockStorePrice;
 
         public readonly ConfigEntry<bool> CrowbarLoaded;
         public readonly ConfigEntry<bool> CrowbarSpawnsAsScrap;
         public readonly ConfigEntry<string> CrowbarMoonSpawnWeights;
         public readonly ConfigEntry<int> CrowbarGlobalSpawnWeight;
-        public readonly ConfigEntry<bool> CrowbarIsStoreItem;
-        public readonly ConfigEntry<int> CrowbarStorePrice;
 
         public readonly ConfigEntry<bool> HandlampLoaded;
         public readonly ConfigEntry<bool> HandlampIsStoreItem;
@@ -111,9 +104,9 @@ namespace UsualScrap
         public readonly ConfigEntry<bool> ProductivityAutoinjectorIsStoreItem;
         public readonly ConfigEntry<int> ProductivityAutoinjectorStorePrice;
 
-        public readonly ConfigEntry<bool> ToolboxLoaded;
-        public readonly ConfigEntry<bool> ToolboxIsStoreItem;
-        public readonly ConfigEntry<int> ToolboxStorePrice;
+        public readonly ConfigEntry<bool> ToolkitLoaded;
+        public readonly ConfigEntry<bool> ToolkitIsStoreItem;
+        public readonly ConfigEntry<int> ToolkitStorePrice;
 
         public readonly ConfigEntry<bool> ShiftControllerLoaded;
         public readonly ConfigEntry<bool> ShiftControllerIsStoreItem;
@@ -161,7 +154,7 @@ namespace UsualScrap
                 "2. General Changes",
                 "Disable Item Icons",
                 false,
-                "Whether or not this mod's items icons are applied (For use with runtime icons and similar mods)"
+                "Whether or not to disable this mod's items icons (For use with runtime icons and similar mods)"
             );
 
             //========================================
@@ -200,34 +193,54 @@ namespace UsualScrap
             );
             */
 
+            //========================================
+            /*
+            MedievalScrapPackEnabled = cfg.Bind(
+                "3. Medieval Scrap Pack",
+                "Medieval Scrap Pack Enabled",
+                false,
+                "Whether or not the Medieval Scrap Pack is enabled"
+            );
+
+            
+            MedievalScrapPackMoonSpawns = cfg.Bind(
+                "2 Medieval Scrap Pack",
+                "Medieval Scrap Pack Spawning",
+                "experimentation:True, vow:True, march:True, assurance:True, offense:True, rend:True, dine:True, titan:true, adamance:True, artifice:true, embrion:true",
+                "Where Medieval Scrap Pack items will spawn."
+            );
+            */
+
+            //==================== Scrap Packs ====================
+
             //==================== Scrap Items ====================
 
             TicketLoaded = cfg.Bind(
                 "Scrap Item - Ticket",
-                "US_Ticket is loaded",
+                "Ticket is loaded",
                 true,
-                "Whether or not the US_Ticket is loaded"
+                "Whether or not the Ticket is loaded"
             );
 
             TicketSpawnsAsScrap = cfg.Bind(
                 "Scrap Item - Ticket",
-                "US_Ticket is a scrap item",
+                "Ticket is a scrap item",
                 true,
-                "Whether or not the US_Ticket spawns as scrap"
+                "Whether or not the Ticket spawns as scrap"
             );
 
             TicketMoonSpawnWeights = cfg.Bind(
                 "Scrap Item - Ticket",
-                "US_Ticket Moon Spawning",
-                "experimentation:-1, vow:-1, march:-1, assurance:-1, offense:-1, rend:-1, dine:-1, titan:-1, adamance:-1, artifice:-1, embrion:-1",
-                "Where and how often the US_Ticket will spawn (Moon spawn weights will individually overwrite global spawn weights, set to -1 or leave blank to disable. Correct spelling and formatting is critical, shown, and a log will appear pointing out unreadable/disabled configs"
+                "Ticket Moon Spawning",
+                "experimentation=-1, vow=-1, march=-1, assurance=-1, offense=-1, rend=-1, dine=-1, titan=-1, adamance=-1, artifice=-1, embrion=-1",
+                "Where and how often the Ticket will spawn (Moon spawn weights will individually overwrite global spawn weights, set to -1 or leave blank to disable. Correct spelling and formatting is critical, shown, and a log will appear pointing out unreadable/disabled configs"
             );
 
             TicketGlobalSpawnWeight = cfg.Bind(
                 "Scrap Item - Ticket",
-                "US_Ticket Global Spawning",
+                "Ticket Global Spawning",
                 40,
-                "How often the US_Ticket will spawn globally (Will affect all moons including modded moons unless overwritten by moon spawn weights, -1 to disable)"
+                "How often the Ticket will spawn globally (Will affect all moons including modded moons unless overwritten by moon spawn weights, -1 to disable)"
             );
 
             //========================================
@@ -249,7 +262,7 @@ namespace UsualScrap
             GoldenTicketMoonSpawnWeights = cfg.Bind(
                 "Scrap Item - Golden Ticket",
                 "Golden Ticket Moon Spawning",
-                "experimentation:-1, vow:-1, march:-1, assurance:-1, offense:-1, rend:-1, dine:-1, titan:-1, adamance:-1, artifice:-1, embrion:-1",
+                "experimentation=-1, vow=-1, march=-1, assurance=-1, offense=-1, rend=-1, dine=-1, titan=-1, adamance=-1, artifice=-1, embrion=-1",
                 "Where and how often the Golden Ticket will spawn (Moon spawn weights will individually overwrite global spawn weights, set to -1 or leave blank to disable. Correct spelling and formatting is critical, shown, and a log will appear pointing out unreadable/disabled configs"
             );
 
@@ -279,7 +292,7 @@ namespace UsualScrap
             RoseMoonSpawnWeights = cfg.Bind(
                 "Scrap Item - Rose",
                 "Rose Moon Spawning",
-                "experimentation:-1, vow:-1, march:-1, assurance:-1, offense:-1, rend:-1, dine:-1, titan:-1, adamance:-1, artifice:-1, embrion:-1",
+                "experimentation=-1, vow=-1, march=-1, assurance=-1, offense=-1, rend=-1, dine=-1, titan=-1, adamance=-1, artifice=-1, embrion=-1",
                 "Where and how often the Rose will spawn (Moon spawn weights will individually overwrite global spawn weights, set to -1 or leave blank to disable. Correct spelling and formatting is critical, shown, and a log will appear pointing out unreadable/disabled configs"
             );
 
@@ -309,14 +322,14 @@ namespace UsualScrap
             ScissorsMoonSpawnWeights = cfg.Bind(
                 "Scrap Item - Scissors",
                 "Scissors Moon Spawning",
-                "experimentation:-1, vow:-1, march:-1, assurance:-1, offense:-1, rend:-1, dine:-1, titan:-1, adamance:-1, artifice:-1, embrion:-1",
+                "experimentation=-1, vow=-1, march=-1, assurance=-1, offense=-1, rend=-1, dine=-1, titan=-1, adamance=-1, artifice=-1, embrion=-1",
                 "Where and how often the Scissors will spawn (Moon spawn weights will individually overwrite global spawn weights, set to -1 or leave blank to disable. Correct spelling and formatting is critical, shown, and a log will appear pointing out unreadable/disabled configs"
             );
 
             ScissorsGlobalSpawnWeight = cfg.Bind(
                 "Scrap Item - Scissors",
                 "Scissors Global Spawning",
-                30,
+                20,
                 "How often the Scissors will spawn globally (Will affect all moons including modded moons unless overwritten by moon spawn weights, -1 to disable)"
             );
 
@@ -339,7 +352,7 @@ namespace UsualScrap
             WalkingCaneMoonSpawnWeights = cfg.Bind(
                 "Scrap Item - Walking Cane",
                 "Walking Cane Moon Spawning",
-                "experimentation:-1, vow:-1, march:-1, assurance:-1, offense:-1, rend:-1, dine:-1, titan:-1, adamance:-1, artifice:-1, embrion:-1",
+                "experimentation=-1, vow=-1, march=-1, assurance=-1, offense=-1, rend=-1, dine=-1, titan=-1, adamance=-1, artifice=-1, embrion=-1",
                 "Where and how often the Walking Cane will spawn (Moon spawn weights will individually overwrite global spawn weights, set to -1 or leave blank to disable. Correct spelling and formatting is critical, shown, and a log will appear pointing out unreadable/disabled configs"
             );
 
@@ -369,7 +382,7 @@ namespace UsualScrap
             CandyDispenserMoonSpawnWeights = cfg.Bind(
                 "Scrap Item - Candy Dispenser",
                 "Candy Dispenser Moon Spawning",
-                "experimentation:-1, vow:-1, march:-1, assurance:-1, offense:-1, rend:-1, dine:-1, titan:-1, adamance:-1, artifice:-1, embrion:-1",
+                "experimentation=-1, vow=-1, march=-1, assurance=-1, offense=-1, rend=-1, dine=-1, titan=-1, adamance=-1, artifice=-1, embrion=-1",
                 "Where and how often the Candy Dispenser will spawn (Moon spawn weights will individually overwrite global spawn weights, set to -1 or leave blank to disable. Correct spelling and formatting is critical, shown, and a log will appear pointing out unreadable/disabled configs"
             );
 
@@ -399,7 +412,7 @@ namespace UsualScrap
             FuelCylinderMoonSpawnWeights = cfg.Bind(
                 "Scrap Item - Fuel Cylinder",
                 "Fuel Cylinder Moon Spawning",
-                "experimentation:-1, vow:-1, march:-1, assurance:-1, offense:-1, rend:-1, dine:-1, titan:-1, adamance:-1, artifice:-1, embrion:-1",
+                "experimentation=-1, vow=-1, march=-1, assurance=-1, offense=-1, rend=-1, dine=-1, titan=-1, adamance=-1, artifice=-1, embrion=-1",
                 "Where and how often the Fuel Cylinder will spawn (Moon spawn weights will individually overwrite global spawn weights, set to -1 or leave blank to disable. Correct spelling and formatting is critical, shown, and a log will appear pointing out unreadable/disabled configs"
             );
 
@@ -429,7 +442,7 @@ namespace UsualScrap
             RadioactiveCellMoonSpawnWeights = cfg.Bind(
                 "Scrap Item - Radioactive Cell",
                 "Radioactive Cell Moon Spawning",
-                "experimentation:-1, vow:-1, march:-1, assurance:-1, offense:-1, rend:-1, dine:-1, titan:-1, adamance:-1, artifice:-1, embrion:-1",
+                "experimentation=-1, vow=-1, march=-1, assurance=-1, offense=-1, rend=-1, dine=-1, titan=-1, adamance=-1, artifice=-1, embrion=-1",
                 "Where and how often the Radioactive Cell will spawn (Moon spawn weights will individually overwrite global spawn weights, set to -1 or leave blank to disable. Correct spelling and formatting is critical, shown, and a log will appear pointing out unreadable/disabled configs"
             );
 
@@ -459,7 +472,7 @@ namespace UsualScrap
             GloomyCapsuleMoonSpawnWeights = cfg.Bind(
                 "Scrap Item - Gloomy Capsule",
                 "Gloomy Capsule Moon Spawning",
-                "experimentation:-1, vow:-1, march:-1, assurance:-1, offense:-1, rend:-1, dine:-1, titan:-1, adamance:-1, artifice:-1, embrion:-1",
+                "experimentation=-1, vow=-1, march=-1, assurance=-1, offense=-1, rend=-1, dine=-1, titan=-1, adamance=-1, artifice=-1, embrion=-1",
                 "Where and how often the Gloomy Capsule will spawn (Moon spawn weights will individually overwrite global spawn weights, set to -1 or leave blank to disable. Correct spelling and formatting is critical, shown, and a log will appear pointing out unreadable/disabled configs"
             );
 
@@ -489,7 +502,7 @@ namespace UsualScrap
             FrigidCapsuleMoonSpawnWeights = cfg.Bind(
                 "Scrap Item - Frigid Capsule",
                 "Frigid Capsule Moon Spawning",
-                "experimentation:-1, vow:-1, march:-1, assurance:-1, offense:-1, rend:-1, dine:-1, titan:-1, adamance:-1, artifice:-1, embrion:-1",
+                "experimentation=-1, vow=-1, march=-1, assurance=-1, offense=-1, rend=-1, dine=-1, titan=-1, adamance=-1, artifice=-1, embrion=-1",
                 "Where and how often the Frigid Capsule will spawn (Moon spawn weights will individually overwrite global spawn weights, set to -1 or leave blank to disable. Correct spelling and formatting is critical, shown, and a log will appear pointing out unreadable/disabled configs"
             );
 
@@ -498,36 +511,6 @@ namespace UsualScrap
                 "Frigid Capsule Global Spawning",
                 15,
                 "How often the Frigid Capsule will spawn globally (Will affect all moons including modded moons unless overwritten by moon spawn weights, -1 to disable)"
-            );
-
-            //========================================
-
-            NoxiousCapsuleLoaded = cfg.Bind(
-                "Scrap Item - Noxious Capsule",
-                "Noxious Capsule is loaded",
-                true,
-                "Whether or not the Noxious Capsule is loaded"
-            );
-
-            NoxiousCapsuleSpawnsAsScrap = cfg.Bind(
-                "Scrap Item - Noxious Capsule",
-                "Noxious Capsule is a scrap item",
-                true,
-                "Whether or not the Noxious Capsule spawns as scrap"
-            );
-
-            NoxiousCapsuleMoonSpawnWeights = cfg.Bind(
-                "Scrap Item - Noxious Capsule",
-                "Noxious Capsule Moon Spawning",
-                "experimentation:-1, vow:-1, march:-1, assurance:-1, offense:-1, rend:-1, dine:-1, titan:-1, adamance:-1, artifice:-1, embrion:-1",
-                "Where and how often the Noxious Capsule will spawn (Moon spawn weights will individually overwrite global spawn weights, set to -1 or leave blank to disable. Correct spelling and formatting is critical, shown, and a log will appear pointing out unreadable/disabled configs"
-            );
-
-            NoxiousCapsuleGlobalSpawnWeight = cfg.Bind(
-                "Scrap Item - Noxious Capsule",
-                "Noxious Capsule Global Spawning",
-                15,
-                "How often the Noxious Capsule will spawn globally (Will affect all moons including modded moons unless overwritten by moon spawn weights, -1 to disable)"
             );
 
             //========================================
@@ -549,7 +532,7 @@ namespace UsualScrap
             BloodyCapsuleMoonSpawnWeights = cfg.Bind(
                 "Scrap Item - Bloody Capsule",
                 "Bloody Capsule Moon Spawning",
-                "experimentation:-1, vow:-1, march:-1, assurance:-1, offense:-1, rend:-1, dine:-1, titan:-1, adamance:-1, artifice:-1, embrion:-1",
+                "experimentation=-1, vow=-1, march=-1, assurance=-1, offense=-1, rend=-1, dine=-1, titan=-1, adamance=-1, artifice=-1, embrion=-1",
                 "Where and how often the Bloody Capsule will spawn (Moon spawn weights will individually overwrite global spawn weights, set to -1 or leave blank to disable. Correct spelling and formatting is critical, shown, and a log will appear pointing out unreadable/disabled configs"
             );
 
@@ -579,7 +562,7 @@ namespace UsualScrap
             PadlockMoonSpawnWeights = cfg.Bind(
                 "Item - Padlock",
                 "Padlock Moon Spawning",
-                "experimentation:-1, vow:-1, march:-1, assurance:-1, offense:-1, rend:-1, dine:-1, titan:-1, adamance:-1, artifice:-1, embrion:-1",
+                "experimentation=-1, vow=-1, march=-1, assurance=-1, offense=-1, rend=-1, dine=-1, titan=-1, adamance=-1, artifice=-1, embrion=-1",
                 "Where and how often the Padlock will spawn (Moon spawn weights will individually overwrite global spawn weights, set to -1 or leave blank to disable. Correct spelling and formatting is critical, shown, and a log will appear pointing out unreadable/disabled configs"
             );
 
@@ -590,62 +573,34 @@ namespace UsualScrap
                 "How often the Padlock will spawn globally (Will affect all moons including modded moons unless overwritten by moon spawn weights, -1 to disable)"
             );
 
-            PadlockIsStoreItem = cfg.Bind(
-                "Item - Padlock",
-                "Padlock is a store item",
-                false,
-                "Whether or not the Padlock is a store item"
-            );
-
-            PadlockStorePrice = cfg.Bind(
-                "Item - Padlock",
-                "Padlock store price",
-                15,
-                "The store price of the Padlock (Cannot be a negative number)"
-            );
-
             //========================================
 
             CrowbarLoaded = cfg.Bind(
                 "Item - Crowbar",
                 "Crowbar is loaded",
                 true,
-                "Whether or not the US_Crowbar is loaded"
+                "Whether or not the Crowbar is loaded"
             );
 
             CrowbarSpawnsAsScrap = cfg.Bind(
                 "Item - Crowbar",
                 "Crowbar is a scrap item",
                 true,
-                "Whether or not the US_Crowbar spawns as scrap"
+                "Whether or not the Crowbar spawns as scrap"
             );
 
             CrowbarMoonSpawnWeights = cfg.Bind(
                 "Item - Crowbar",
                 "Crowbar Moon Spawning",
-                "experimentation:-1, vow:-1, march:-1, assurance:-1, offense:-1, rend:-1, dine:-1, titan:-1, adamance:-1, artifice:-1, embrion:-1",
-                "Where and how often the US_Crowbar will spawn (Moon spawn weights will individually overwrite global spawn weights, set to -1 or leave blank to disable. Correct spelling and formatting is critical, shown, and a log will appear pointing out unreadable/disabled configs"
+                "experimentation=-1, vow=-1, march=-1, assurance=-1, offense=-1, rend=-1, dine=-1, titan=-1, adamance=-1, artifice=-1, embrion=-1",
+                "Where and how often the Crowbar will spawn (Moon spawn weights will individually overwrite global spawn weights, set to -1 or leave blank to disable. Correct spelling and formatting is critical, shown, and a log will appear pointing out unreadable/disabled configs"
             );
 
             CrowbarGlobalSpawnWeight = cfg.Bind(
                 "Item - Crowbar",
                 "Crowbar Global Spawning",
                 30,
-                "How often the US_Crowbar will spawn globally (Will affect all moons including modded moons unless overwritten by moon spawn weights, -1 to disable)"
-            );
-
-            CrowbarIsStoreItem = cfg.Bind(
-                "Item - Crowbar",
-                "Crowbar is a store item",
-                false,
-                "Whether or not the US_Crowbar is a store item"
-            );
-
-            CrowbarStorePrice = cfg.Bind(
-                "Item - Crowbar",
-                "Crowbar store price",
-                60,
-                "The store price of the US_Crowbar (Cannot be a negative number)"
+                "How often the Crowbar will spawn globally (Will affect all moons including modded moons unless overwritten by moon spawn weights, -1 to disable)"
             );
 
             //==================== Store ====================
@@ -798,25 +753,25 @@ namespace UsualScrap
 
             //========================================
 
-            ToolboxLoaded = cfg.Bind(
-                "Store Item - Toolbox",
-                "Toolbox is loaded",
+            ToolkitLoaded = cfg.Bind(
+                "Store Item - Toolkit",
+                "Toolkit is loaded",
                 true,
-                "Whether or not the Toolbox is loaded"
+                "Whether or not the Toolkit is loaded"
             );
 
-            ToolboxIsStoreItem = cfg.Bind(
-                "Store Item - Toolbox",
-                "Toolbox is a store item",
+            ToolkitIsStoreItem = cfg.Bind(
+                "Store Item - Toolkit",
+                "Toolkit is a store item",
                 true,
-                "Whether or not the Toolbox is a store item"
+                "Whether or not the Toolkit is a store item"
             );
 
-            ToolboxStorePrice = cfg.Bind(
-                "Store Item - Toolbox",
-                "Toolbox store price",
+            ToolkitStorePrice = cfg.Bind(
+                "Store Item - Toolkit",
+                "Toolkit store price",
                 115,
-                "The store price of the Toolbox"
+                "The store price of the Toolkit"
             );
 
             //========================================
