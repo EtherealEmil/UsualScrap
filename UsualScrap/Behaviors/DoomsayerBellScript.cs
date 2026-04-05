@@ -2,7 +2,7 @@
 
 namespace UsualScrap.Behaviors
 {
-    public class DoomsayerBellScript : GrabbableObject
+    internal class DoomsayerBellScript : GrabbableObject
     {
         AudioSource[] audioSource;
         AudioClip clip;
@@ -41,4 +41,3 @@ namespace UsualScrap.Behaviors
         }
     }
 }
-

@@ -13,6 +13,13 @@ namespace UsualScrap.Behaviors
         bool healCoroutineRunning = false;
         bool replenishCoroutineRunning = false;
 
+        public override void SetControlTipsForItem()
+        {
+            base.SetControlTipsForItem();
+            //LOOK INTO THIS FOR HEALTHPOOL TRACKING!
+        }
+
+
         public void Awake()
         {
             particle = GetComponentInChildren<ParticleSystem>();
@@ -217,4 +224,3 @@ namespace UsualScrap.Behaviors
     }
 
 }
-

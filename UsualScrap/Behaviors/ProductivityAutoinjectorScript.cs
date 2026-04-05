@@ -66,4 +66,3 @@ namespace UsualScrap.Behaviors
         }
     }
 }
-

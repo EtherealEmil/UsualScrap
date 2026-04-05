@@ -63,7 +63,7 @@ namespace UsualScrap.Behaviors
         }
         public async void RollForDamage()
         {
-            int damageroll = new System.Random().Next(1, 4);
+            int damageroll = new System.Random().Next(1, 5);
             //print($"{damageroll}");
             if (damageroll == 1)
             {
@@ -71,13 +71,13 @@ namespace UsualScrap.Behaviors
                 if (isHeld)
                 {
                     PlaySound();
-                    playerHeldBy.DamagePlayer(15, true, true, CauseOfDeath.Snipped, 7, false, default(Vector3));
+                    playerHeldBy.DamagePlayer(15, true, true, CauseOfDeath.Snipping, 7, false, default(Vector3));
                 }
                 await Task.Delay(TimeSpan.FromSeconds(.2));
                 if (isHeld)
                 {
                     PlaySound();
-                    playerHeldBy.DamagePlayer(15, true, true, CauseOfDeath.Snipped, 7, false, default(Vector3));
+                    playerHeldBy.DamagePlayer(15, true, true, CauseOfDeath.Snipping, 7, false, default(Vector3));
                 }
             }
         }
@@ -249,4 +249,3 @@ namespace UsualScrap.Behaviors
         }
     }
 }
-

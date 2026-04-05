@@ -150,7 +150,7 @@ namespace UsualScrap.Behaviors
         {
             itemTeleporting = true;
             ToggleCoroutineServerRpc(false);
-            await Task.Delay(TimeSpan.FromSeconds(.5f));
+            await Task.Delay(TimeSpan.FromSeconds(1f));
             if (this.heldByPlayerOnServer)
             {
                 this.isBeingUsed = false;

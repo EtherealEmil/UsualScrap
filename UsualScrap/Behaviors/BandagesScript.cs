@@ -9,7 +9,10 @@ namespace UsualScrap.Behaviors
         int uses = 3;
         ParticleSystem particle;
         
-        
+        public void Awake()
+        {
+            particle = GetComponentInChildren<ParticleSystem>();
+        }
         public override int GetItemDataToSave()
         {
             base.GetItemDataToSave();
@@ -43,7 +46,6 @@ namespace UsualScrap.Behaviors
         }
         public void Heal()
         {
-            particle = GetComponentInChildren<ParticleSystem>();
             ParticleSystem Healparticle = Instantiate(particle, playerHeldBy.transform.position, Quaternion.identity, playerHeldBy.transform);
             Healparticle.Play();
             if (uses > 1 && playerHeldBy.health < 70)
@@ -92,4 +94,3 @@ namespace UsualScrap.Behaviors
 
     }
 }
-

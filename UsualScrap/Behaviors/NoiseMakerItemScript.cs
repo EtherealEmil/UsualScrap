@@ -2,7 +2,7 @@
 
 namespace UsualScrap.Behaviors
 {
-    public class NoiseMakerItemScript : GrabbableObject
+    internal class NoiseMakerItemScript : GrabbableObject
     {
         AudioSource[] sources;
         AudioClip clip;
@@ -27,4 +27,3 @@ namespace UsualScrap.Behaviors
         }
     }
 }
-

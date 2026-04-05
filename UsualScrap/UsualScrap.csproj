@@ -4,7 +4,7 @@
         <TargetFramework>netstandard2.1</TargetFramework>
         <AssemblyName>UsualScrap</AssemblyName>
         <Description>Adds many new unique items that expand on the available scrap items and interactions!</Description>
-        <Version>1.9.1</Version>
+        <Version>1.9.3</Version>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <LangVersion>latest</LangVersion>
     </PropertyGroup>
@@ -39,56 +39,57 @@
       <Compile Remove="Behaviors\TESTZappyMeleeWeapon.cs" />
     </ItemGroup>
 
-    <ItemGroup>      <Reference Include="0Harmony">
-        <HintPath>..\..\..\LethalCompanyV73\BepInEx\core\0Harmony.dll</HintPath>
+    <ItemGroup>
+      <Reference Include="0Harmony">
+        <HintPath>..\..\..\Lethal Companyv80\BepInEx\core\0Harmony.dll</HintPath>
       </Reference>
       <Reference Include="Assembly-CSharp">
-        <HintPath>..\..\..\LethalCompanyV73\Lethal Company_Data\Managed\Assembly-CSharp.dll</HintPath>
+        <HintPath>..\..\..\Lethal Companyv80\Lethal Company_Data\Managed\Assembly-CSharp.dll</HintPath>
       </Reference>
       <Reference Include="BepInEx">
-        <HintPath>..\..\..\LethalCompanyV73\BepInEx\core\BepInEx.dll</HintPath>
+        <HintPath>..\..\..\Lethal Companyv80\BepInEx\core\BepInEx.dll</HintPath>
       </Reference>
       <Reference Include="com.github.teamxiaolan.dawnlib">
-        <HintPath>..\..\..\LethalCompanyV73\BepInEx\plugins\DawnLib\com.github.teamxiaolan.dawnlib.dll</HintPath>
+        <HintPath>..\..\..\Lethal Companyv80\BepInEx\plugins\DawnLib\com.github.teamxiaolan.dawnlib.dll</HintPath>
       </Reference>
       <Reference Include="LethalLib">
-        <HintPath>..\..\..\LethalCompanyV73\BepInEx\plugins\LethalLib\LethalLib.dll</HintPath>
+        <HintPath>..\..\..\Lethal Companyv80\BepInEx\plugins\LethalLib\LethalLib.dll</HintPath>
       </Reference>
       <Reference Include="Unity.Netcode.Runtime">
-        <HintPath>..\..\..\LethalCompanyV73\Lethal Company_Data\Managed\Unity.Netcode.Runtime.dll</HintPath>
+        <HintPath>..\..\..\Lethal Companyv80\Lethal Company_Data\Managed\Unity.Netcode.Runtime.dll</HintPath>
       </Reference>
       <Reference Include="Unity.RenderPipelines.HighDefinition.Runtime">
-        <HintPath>..\..\..\LethalCompanyV73\Lethal Company_Data\Managed\Unity.RenderPipelines.HighDefinition.Runtime.dll</HintPath>
+        <HintPath>..\..\..\Lethal Companyv80\Lethal Company_Data\Managed\Unity.RenderPipelines.HighDefinition.Runtime.dll</HintPath>
       </Reference>
       <Reference Include="Unity.TextMeshPro">
-        <HintPath>..\..\..\LethalCompanyV73\Lethal Company_Data\Managed\Unity.TextMeshPro.dll</HintPath>
+        <HintPath>..\..\..\Lethal Companyv80\Lethal Company_Data\Managed\Unity.TextMeshPro.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine">
-        <HintPath>..\..\..\LethalCompanyV73\Lethal Company_Data\Managed\UnityEngine.dll</HintPath>
+        <HintPath>..\..\..\Lethal Companyv80\Lethal Company_Data\Managed\UnityEngine.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.AIModule">
-        <HintPath>..\..\..\LethalCompanyV73\Lethal Company_Data\Managed\UnityEngine.AIModule.dll</HintPath>
+        <HintPath>..\..\..\Lethal Companyv80\Lethal Company_Data\Managed\UnityEngine.AIModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.AnimationModule">
-        <HintPath>..\..\..\LethalCompanyV73\Lethal Company_Data\Managed\UnityEngine.AnimationModule.dll</HintPath>
+        <HintPath>..\..\..\Lethal Companyv80\Lethal Company_Data\Managed\UnityEngine.AnimationModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.AssetBundleModule">
-        <HintPath>..\..\..\LethalCompanyV73\Lethal Company_Data\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
+        <HintPath>..\..\..\Lethal Companyv80\Lethal Company_Data\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.AudioModule">
-        <HintPath>..\..\..\LethalCompanyV73\Lethal Company_Data\Managed\UnityEngine.AudioModule.dll</HintPath>
+        <HintPath>..\..\..\Lethal Companyv80\Lethal Company_Data\Managed\UnityEngine.AudioModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.CoreModule">
-        <HintPath>..\..\..\LethalCompanyV73\Lethal Company_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+        <HintPath>..\..\..\Lethal Companyv80\Lethal Company_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.ParticleSystemModule">
-        <HintPath>..\..\..\LethalCompanyV73\Lethal Company_Data\Managed\UnityEngine.ParticleSystemModule.dll</HintPath>
+        <HintPath>..\..\..\Lethal Companyv80\Lethal Company_Data\Managed\UnityEngine.ParticleSystemModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.PhysicsModule">
-        <HintPath>..\..\..\LethalCompanyV73\Lethal Company_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+        <HintPath>..\..\..\Lethal Companyv80\Lethal Company_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.UI">
-        <HintPath>..\..\..\LethalCompanyV73\Lethal Company_Data\Managed\UnityEngine.UI.dll</HintPath>
+        <HintPath>..\..\..\Lethal Companyv80\Lethal Company_Data\Managed\UnityEngine.UI.dll</HintPath>
       </Reference>
     </ItemGroup>
 

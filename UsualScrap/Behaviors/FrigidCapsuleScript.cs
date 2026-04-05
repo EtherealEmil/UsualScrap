@@ -14,16 +14,14 @@ namespace UsualScrap.Behaviors
         ParticleSystem snowstormParticles;
         ParticleSystem frostedParticles;
         ParticleSystem ambientSnowParticles;
-        ParticleSystem chargedSnowParticles;
-        Coroutine activateCoroutine;
-        Coroutine stormCoroutine;
+        ParticleSystem activeSnowParticles;
+        Coroutine detectCoroutine = null;
         AudioSource[] Sounds;
         AudioSource snowstormAudio;
-        bool activateCoroutineRunning = false;
+        bool chargingSnowflakeParticlesPlaying = false;
+        bool ambientSnowflakeParticlesPlaying = false;
         bool snowstormCoroutineRunning = false;
-        bool chargingParticlesPlaying = false;
-        bool chargedParticlesPlaying = false;
-        bool chargedParticlesPreviouslyPlaying = false;
+        bool activeSnowParticlesPlaying = false;
         bool passiveSnowParticlesPlaying = false;
         Light light;
         int charge = 0;
@@ -38,170 +36,113 @@ namespace UsualScrap.Behaviors
             snowstormParticles = this.transform.Find("StormParticles").GetComponent<ParticleSystem>();
             frostedParticles = this.transform.Find("FrostedParticles").GetComponent<ParticleSystem>();
             ambientSnowParticles = this.transform.Find("AmbientSnowParticles").GetComponent<ParticleSystem>();
-            chargedSnowParticles = this.transform.Find("ActiveSnowParticles").GetComponent<ParticleSystem>();
+            activeSnowParticles = this.transform.Find("ActiveSnowParticles").GetComponent<ParticleSystem>();
             light = this.transform.Find("Point Light").GetComponent<Light>();
             Sounds = this.transform.Find("FrigidCapsuleSounds").gameObject.GetComponents<AudioSource>();
             snowstormAudio = Sounds[0];
             disabledInShip = (BoundConfig.CapsulesDisabledOnTheShip.Value);
-        }
-        public override void PocketItem()
-        {
-            base.PocketItem();
-            chargingSnowflakeParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-            ambientSnowflakeParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-            if (chargedParticlesPlaying)
-            {
-                chargedSnowParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-                chargedParticlesPlaying = false;
-                chargedParticlesPreviouslyPlaying = true;
-            }
-            if (light.enabled)
-            {
-                light.enabled = false;
-            }
-        }
-        public override void EquipItem()
-        {
-            base.EquipItem();
-            if (chargingParticlesPlaying)
-            {
-                chargingSnowflakeParticles.Play();
-            }
-            else
-            {
-                ambientSnowflakeParticles.Play();
-            }
-            if (chargedParticlesPreviouslyPlaying && !chargedParticlesPlaying)
-            {
-                chargedSnowParticles.Play();
-                chargedParticlesPlaying = true;
-                chargedParticlesPreviouslyPlaying = false;
-            }
-            if (!light.enabled)
-            {
-                light.enabled = true;
-            }
-        }
-        public override void DiscardItem()
-        {
-            base.DiscardItem();
-            if (chargingParticlesPlaying)
-            {
-                chargingSnowflakeParticles.Play();
-            }
-            else
-            {
-                ambientSnowflakeParticles.Play();
-            }
-            if (chargedParticlesPreviouslyPlaying && !chargedParticlesPlaying)
-            {
-                chargedSnowParticles.Play();
-                chargedParticlesPlaying = true;
-                chargedParticlesPreviouslyPlaying = false;
-            }
-            if (!light.enabled)
-            {
-                light.enabled = true;
-            }
-        }
-        public override void Update()
-        {
-            base.Update();
-            if (!snowstormCoroutineRunning && !passiveSnowParticlesPlaying)
-            {
-                StartCoroutine(PlayRandomSnowParticle());
-            }
-            if (!StartOfRound.Instance.shipHasLanded && activateCoroutineRunning || !StartOfRound.Instance.shipHasLanded && snowstormCoroutineRunning)
-            {
-                if (activateCoroutineRunning)
-                {
-                    StopCoroutine(activateCoroutine);
-                }
-                if (snowstormCoroutineRunning)
-                {
-                    StopCoroutine(stormCoroutine);
-                }
-                activateCoroutineRunning = false;
-                snowstormCoroutineRunning = false;
 
-                chargingSnowflakeParticles.Stop();
-                chargingParticlesPlaying = false;
-                charge = 0;
+            ambientSnowflakeParticles.Play();
+            ambientSnowflakeParticlesPlaying = true;
+        }
 
-                chargedParticlesPlaying = false;
-                chargedParticlesPreviouslyPlaying = false;
-                chargedSnowParticles.Stop();
-                snowstormAudio.Stop();
-
-                if (!snowstormCoroutineRunning && !passiveSnowParticlesPlaying)
-                {
-                    StartCoroutine(PlayRandomSnowParticle());
-                }
-            }
-            else if (disabledInShip == true && this.isInShipRoom)
+        public override void GrabItem()
+        {
+            base.GrabItem();
+            if (!StartOfRound.Instance.inShipPhase && detectCoroutine == null)
             {
-                return;
-            }
-            else if (StartOfRound.Instance.shipHasLanded && !activateCoroutineRunning && !snowstormCoroutineRunning && TimeOfDay.Instance.currentLevel.planetHasTime)
-            {
-                activateCoroutine = StartCoroutine(WaitToActivate());
+                StartCoroutine(Detecting());
             }
         }
-        private System.Collections.IEnumerator PlayRandomSnowParticle()
+
+        private System.Collections.IEnumerator Detecting()
         {
-            passiveSnowParticlesPlaying = true;
-            int randomSnowParticleDelay = new System.Random().Next(10, 21);
-            while (!snowstormCoroutineRunning)
+            while (true)
             {
                 yield return new WaitForSeconds(1);
-                if (isPocketed)
+                if (ambientSnowflakeParticlesPlaying == false && !isPocketed)
                 {
-                    yield return new WaitUntil(() => !isPocketed);
-                }
-                randomSnowParticleDelay--;
-                if (randomSnowParticleDelay <= 0)
-                {
-                    ambientSnowParticles.Play();
-                    randomSnowParticleDelay = new System.Random().Next(3, 9);
-                }
-            }
-            passiveSnowParticlesPlaying = false;
-        }
-
-        private System.Collections.IEnumerator WaitToActivate()
-        {
-            activateCoroutineRunning = true;
-            if (TimeOfDay.Instance.dayMode != DayMode.Midnight || TimeOfDay.Instance.dayMode != DayMode.Sundown)
-            {
-                yield return new WaitUntil(() => TimeOfDay.Instance.dayMode == DayMode.Midnight || TimeOfDay.Instance.dayMode == DayMode.Sundown);
-            }
-            while (TimeOfDay.Instance.dayMode == DayMode.Midnight && !snowstormCoroutineRunning || TimeOfDay.Instance.dayMode == DayMode.Sundown && !snowstormCoroutineRunning)
-            {
-                yield return new WaitForSeconds(1);
-                charge++;
-                //print($"{charge}");
-                if (isInFactory)
-                {
-                    chargingSnowflakeParticles.Stop();
                     ambientSnowflakeParticles.Play();
-                    chargingParticlesPlaying = false;
-                    yield return new WaitUntil(() => !isInFactory);
+                    ambientSnowflakeParticlesPlaying = true;
+
+                    if (chargingSnowflakeParticlesPlaying)
+                    {
+                        chargingSnowflakeParticles.Stop();
+                        chargingSnowflakeParticlesPlaying = false;
+                    }
                 }
-                if (charge is < 30 && chargingParticlesPlaying == false && !isPocketed)
+                else if (isPocketed && ambientSnowflakeParticlesPlaying == true)
                 {
-                    chargingSnowflakeParticles.Play();
-                    ambientSnowflakeParticles.Stop();
-                    chargingParticlesPlaying = true;
+                    ambientSnowflakeParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                    ambientSnowflakeParticlesPlaying = false;
+
+                    if (chargingSnowflakeParticlesPlaying)
+                    {
+                        chargingSnowflakeParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                        chargingSnowflakeParticlesPlaying = false;
+                    }
                 }
-                if (charge >= 30 && !snowstormCoroutineRunning)
+                if (!passiveSnowParticlesPlaying)
                 {
-                    SnowstormCoroutineServerRpc();
-                    activateCoroutineRunning = false;
-                    yield break;
+                    StartCoroutine(PassiveSnowParticles());
+                }
+                if (!StartOfRound.Instance.inShipPhase && StartOfRound.Instance.shipHasLanded && TimeOfDay.Instance.currentLevel.planetHasTime)
+                {
+                    if (disabledInShip == true && this.isInShipRoom)
+                    {
+                        yield return null;
+                        continue;
+                    }
+                    else
+                    {
+                        while (!this.isInFactory && !snowstormCoroutineRunning)
+                        {
+                            yield return new WaitForSeconds(1);
+                            if (StartOfRound.Instance.inShipPhase || disabledInShip == true && this.isInShipRoom)
+                            {
+                                charge = 0;
+                                break;
+                            }
+
+                            charge++;
+
+                            if (isPocketed)
+                            {
+                                if (chargingSnowflakeParticlesPlaying)
+                                {
+                                    chargingSnowflakeParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                                    chargingSnowflakeParticlesPlaying = false;
+                                }
+                                if (ambientSnowflakeParticlesPlaying)
+                                {
+                                    ambientSnowflakeParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                                    ambientSnowflakeParticlesPlaying = false;
+                                }
+                            }
+                            else if (chargingSnowflakeParticlesPlaying == false)
+                            {
+                                if (ambientSnowflakeParticlesPlaying == true)
+                                {
+                                    ambientSnowflakeParticles.Stop();
+                                    ambientSnowflakeParticlesPlaying = false;
+                                }
+                                chargingSnowflakeParticles.Play();
+                                chargingSnowflakeParticlesPlaying = true;
+                            }
+                            if (charge >= 45 && !snowstormCoroutineRunning)
+                            {
+
+                                SnowstormCoroutineServerRpc();
+
+                                charge = 0;
+                                break;
+                            }
+                        }
+                    }
                 }
             }
-            activateCoroutineRunning = false;
         }
+
         [ServerRpc(RequireOwnership = false)]
         public void SnowstormCoroutineServerRpc()
         {
@@ -210,43 +151,92 @@ namespace UsualScrap.Behaviors
         [ClientRpc]
         public void SnowstormCoroutineClientRpc()
         {
-            stormCoroutine = StartCoroutine(Snowstorm());
+            StartCoroutine(Snowstorm());
         }
         private System.Collections.IEnumerator Snowstorm()
         {
             snowstormCoroutineRunning = true;
-            int stormDuration = 10;
-            if (!chargedParticlesPlaying && !isPocketed)
-            {
-                chargedSnowParticles.Play();
-                chargedParticlesPlaying = true;
-            }
-            else
-            {
-                chargedParticlesPreviouslyPlaying = true;
-            }
+            int stormDuration = 15;
+            int particlespacer = 0;
             snowstormAudio.Play();
+            if (!activeSnowParticlesPlaying)
+            {
+                activeSnowParticles.Play();
+                activeSnowParticlesPlaying = true;
+            }
             while (stormDuration > 0)
             {
                 yield return new WaitForSeconds(1f);
-                snowstormParticles.Play();
+                if (particlespacer == 0)
+                {
+                    snowstormParticles.Play();
+                    particlespacer++;
+                }
+                else if (particlespacer == 1)
+                {
+                    particlespacer = 0;
+                }
+                else
+                {
+                    particlespacer++;
+                }
                 stormDuration--;
                 //print("US - Applying frost stack");
                 CheckForPlayerAndCallServerRpc();
             }
-            charge = 0;
-            if (chargedParticlesPlaying == true)
+            if (activeSnowParticlesPlaying)
             {
-                chargedParticlesPlaying = false;
-                chargedSnowParticles.Stop();
-                chargedParticlesPreviouslyPlaying = false;
-            }
-            if (!activateCoroutineRunning)
-            {
-                activateCoroutine = StartCoroutine(WaitToActivate());
+                activeSnowParticles.Stop();
+                activeSnowParticlesPlaying = false;
             }
             snowstormCoroutineRunning = false;
+        } 
+
+        public override void PocketItem()
+        {
+            base.PocketItem();
+            if (light.enabled)
+            {
+                light.enabled = false;
+            }
         }
+        public override void EquipItem()
+        {
+            base.EquipItem();
+            if (!light.enabled)
+            {
+                light.enabled = true;
+            }
+        }
+        public override void DiscardItem()
+        {
+            base.DiscardItem();
+            if (!light.enabled)
+            {
+                light.enabled = true;
+            }
+        }
+
+        private System.Collections.IEnumerator PassiveSnowParticles()
+        {
+            passiveSnowParticlesPlaying = true;
+            int randomSnowParticleDelay = new System.Random().Next(10, 15);
+            while (!snowstormCoroutineRunning)
+            {
+                yield return new WaitForSeconds(1);
+                if (!isPocketed)
+                {
+                    randomSnowParticleDelay--;
+                    if (randomSnowParticleDelay <= 0)
+                    {
+                        ambientSnowParticles.Play();
+                        randomSnowParticleDelay = new System.Random().Next(10, 15);
+                    }
+                }
+            }
+            passiveSnowParticlesPlaying = false;
+        }
+        
         [ServerRpc(RequireOwnership = false)]
         public void CheckForPlayerAndCallServerRpc()
         {
@@ -301,37 +291,5 @@ namespace UsualScrap.Behaviors
                 }
             }
         }
-        public override void OnBroughtToShip()
-        {
-            base.OnBroughtToShip();
-            if (disabledInShip == true)
-            {
-                if (activateCoroutineRunning)
-                {
-                    StopCoroutine(activateCoroutine);
-                }
-                if (snowstormCoroutineRunning)
-                {
-                    StopCoroutine(stormCoroutine);
-                }
-                activateCoroutineRunning = false;
-                snowstormCoroutineRunning = false;
-
-                chargingSnowflakeParticles.Stop();
-                chargingParticlesPlaying = false;
-                charge = 0;
-
-                chargedParticlesPlaying = false;
-                chargedParticlesPreviouslyPlaying = false;
-                chargedSnowParticles.Stop();
-                snowstormAudio.Stop();
-
-                if (!snowstormCoroutineRunning && !passiveSnowParticlesPlaying)
-                {
-                    StartCoroutine(PlayRandomSnowParticle());
-                }
-            }
-        }
     }
 }
-

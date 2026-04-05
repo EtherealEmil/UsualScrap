@@ -14,12 +14,15 @@ namespace UsualScrap.Behaviors
         AudioSource[] sounds;
         AudioClip pulse;
         Light light;
-        bool activateCoroutineRunning = false;
         bool chargingParticlePlaying = false;
+
         bool chargedParticlesPlaying = false;
+
+        Coroutine detectCoroutine = null;
+
         int charge = 0;
-        EnemyType maskedPlayer;
-        Vector3 navMeshPosition;
+        //EnemyType maskedPlayer;
+        //Vector3 navMeshPosition;
         bool disabledInShip;
         internal static UsualScrapConfigs BoundConfig { get; private set; } = null!;
 
@@ -47,6 +50,10 @@ namespace UsualScrap.Behaviors
                 if (drainingParticles == null)
                 {
                     print("Bloody Capsule missing draining particles! - USUAL SCRAP");
+                }
+                if (sounds == null)
+                {
+                    print("Bloody Capsule missing sounds! - USUAL SCRAP");
                 }
             }
             disabledInShip = (BoundConfig.CapsulesDisabledOnTheShip.Value);
@@ -77,90 +84,95 @@ namespace UsualScrap.Behaviors
             }
         }
 
-        public override void Update()
+        public override void GrabItem()
         {
-            base.Update();
-            if (StartOfRound.Instance.inShipPhase && activateCoroutineRunning || disabledInShip == true && this.isInShipRoom && activateCoroutineRunning)
+            base.GrabItem();
+            if (!StartOfRound.Instance.inShipPhase && detectCoroutine == null)
             {
-                StopAllCoroutines();
-                activateCoroutineRunning = false;
-                chargingParticlePlaying = false;
-                chargedParticlesPlaying = false;
-                charge = 0;
-                chargedParticles.Stop();
-                chargingParticles.Stop();
-                drainingParticles.Stop();
-            }
-            else if (StartOfRound.Instance.shipHasLanded && !activateCoroutineRunning && TimeOfDay.Instance.currentLevel.planetHasTime)
-            {
-                StartCoroutine(AbsorbBlood());
+                detectCoroutine = StartCoroutine(Detecting());
             }
         }
-        private System.Collections.IEnumerator AbsorbBlood()
-        {
-            activateCoroutineRunning = true;
-            if (!StartOfRound.Instance.shipHasLanded || !TimeOfDay.Instance.currentLevel.planetHasTime)
-            {
-                yield return new WaitUntil(() => StartOfRound.Instance.shipHasLanded && TimeOfDay.Instance.currentLevel.planetHasTime);
-            }
-            while (StartOfRound.Instance.shipHasLanded && TimeOfDay.Instance.currentLevel.planetHasTime)
-            {
-                yield return new WaitForSeconds(3);
-                Collider[] playerColliderArray = Physics.OverlapSphere(this.transform.position, 4, LayerMask.GetMask("Player"), QueryTriggerInteraction.Collide);
-                HashSet<PlayerControllerB> drainedPlayers = new HashSet<PlayerControllerB>();
-                if (playerColliderArray.Length > 0)
-                {
-                    foreach (Collider collider in playerColliderArray)
-                    {
-                        PlayerControllerB targetPlayer = collider.gameObject.GetComponent<PlayerControllerB>();
 
-                        if (targetPlayer != null && !drainedPlayers.Contains(targetPlayer))
+        private System.Collections.IEnumerator Detecting()
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(1);
+                if (chargingParticlePlaying == true)
+                {
+                    chargingParticles.Stop();
+                    chargingParticlePlaying = false;
+                }
+                if (!StartOfRound.Instance.inShipPhase && StartOfRound.Instance.shipHasLanded && TimeOfDay.Instance.currentLevel.planetHasTime)
+                {
+                    if (disabledInShip == true && this.isInShipRoom)
+                    {
+                        yield return null;
+                        continue;
+                    }
+                    else
+                    {
+                        while (TimeOfDay.Instance.dayMode == DayMode.Midnight && !this.isInFactory|| TimeOfDay.Instance.dayMode == DayMode.Sundown && !this.isInFactory)
                         {
-                            targetPlayer.DamagePlayer(10);
-                            drainedPlayers.Add(targetPlayer);
-                            ParticleSystem DrainingParticle = Instantiate(drainingParticles, collider.transform.position, Quaternion.identity, targetPlayer.transform);
-                            DrainingParticle.Play();
-                            sounds[0].PlayOneShot(pulse);
-                            charge++;
-                            if (charge is > 0 and < 12 && chargingParticlePlaying == false && !isPocketed)
+                            yield return new WaitForSeconds(3);
+                            if (StartOfRound.Instance.inShipPhase || disabledInShip == true && this.isInShipRoom)
+                            {
+                                charge = 0;
+                                break;
+                            }
+
+                            if (isPocketed)
+                            {
+                                chargingParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                                chargingParticlePlaying = false;
+                            }
+                            else if (chargingParticlePlaying == false)
                             {
                                 chargingParticles.Play();
                                 chargingParticlePlaying = true;
                             }
-                            if (charge >= 12)
+
+                            Collider[] playerColliderArray = Physics.OverlapSphere(this.transform.position, 4, LayerMask.GetMask("Player"), QueryTriggerInteraction.Collide);
+                            HashSet<PlayerControllerB> drainedPlayers = new HashSet<PlayerControllerB>();
+                            if (playerColliderArray.Length > 0)
                             {
-                                if (chargingParticlePlaying)
+                                foreach (Collider collider in playerColliderArray)
                                 {
-                                    chargingParticles.Stop();
-                                    chargingParticlePlaying = false;
+                                    PlayerControllerB targetPlayer = collider.gameObject.GetComponent<PlayerControllerB>();
+
+                                    if (targetPlayer != null && !drainedPlayers.Contains(targetPlayer))
+                                    {
+                                        targetPlayer.DamagePlayer(10);
+                                        drainedPlayers.Add(targetPlayer);
+                                        ParticleSystem DrainingParticle = Instantiate(drainingParticles, collider.transform.position, Quaternion.identity, targetPlayer.transform);
+                                        DrainingParticle.Play();
+                                        sounds[0].PlayOneShot(pulse);
+                                        charge++;
+                                    }
                                 }
+                            }
+
+                            if (charge >= 20)
+                            {
+                                chargingParticles.Stop();
+                                chargingParticlePlaying = false;
+
                                 chargedParticles.Play();
                                 chargedParticlesPlaying = true;
-                                charge = 0;
-                                yield return new WaitUntil(() => !isHeld);
-                                //SpawnMaskedServerRpc();
+
                                 chargedParticles.Stop();
                                 chargedParticlesPlaying = false;
 
+                                charge = 0;
+                                break;
                             }
                         }
                     }
                 }
-                else
-                {
-                    chargingParticles.Stop();
-                    chargingParticlePlaying = false;
-                }
-                if (isPocketed)
-                {
-                    chargingParticles.Stop();
-                    chargingParticlePlaying = false;
-                }
-                
             }
-            activateCoroutineRunning = false;
         }
 
+        /*
         [ServerRpc]
         public void SpawnMaskedServerRpc()
         {
@@ -180,6 +192,6 @@ namespace UsualScrap.Behaviors
             }
             RoundManager.Instance.SpawnEnemyGameObject(navMeshPosition, 0f, 0, maskedPlayer);
         }
+        */
     }
 }
-

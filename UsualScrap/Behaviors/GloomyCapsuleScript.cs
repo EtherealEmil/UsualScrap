@@ -10,21 +10,29 @@ namespace UsualScrap.Behaviors
     public class GloomyCapsuleScript : GrabbableObject
     {
         ParticleSystem teleportParticles;
+
         ParticleSystem createdTeleportParticles;
-        ParticleSystem createdPocketedParticles;
+
+        ParticleSystem createdPocketedChargingParticles;
+
         ParticleSystem chargingParticles;
-        ParticleSystem PocketedParticles;
-        ParticleSystem AmbientParticles;
-        System.Random shipTeleporterSeed;
-        Light light;
-        bool activateCoroutineRunning = false;
-        bool teleportCoroutineRunning = false;
         bool chargingParticlePlaying = false;
-        bool pocketedParticlesPlaying = false;
+
+        ParticleSystem pocketedChargingParticles;
+        bool pocketedChargingParticlesPlaying = false;
+
+        ParticleSystem chargedParticles;
+        bool chargedParticlesPlaying = false;
+
+        Coroutine detectCoroutine = null;
+
+        System.Random shipTeleporterSeed;
+        Light light;           
+        bool teleportingCoroutineRunning = false;
+
         int teleportChanceRoll;
         int charge = 0;
         bool disabledInShip;
-        bool ambientParticlesPlaying = true;
 
         internal static UsualScrapConfigs BoundConfig { get; private set; } = null!;
 
@@ -33,8 +41,8 @@ namespace UsualScrap.Behaviors
             BoundConfig = Plugin.BoundConfig;
             teleportParticles = this.transform.Find("TeleportParticles").GetComponent<ParticleSystem>();
             chargingParticles = this.transform.Find("ChargingParticles").GetComponent<ParticleSystem>();
-            PocketedParticles = this.transform.Find("PocketedParticles").GetComponent<ParticleSystem>();
-            AmbientParticles = this.transform.Find("AmbientParticles").GetComponent<ParticleSystem>();
+            pocketedChargingParticles = this.transform.Find("PocketedChargingParticles").GetComponent<ParticleSystem>();
+            chargedParticles = this.transform.Find("ChargedParticles").GetComponent<ParticleSystem>();
             light = this.transform.Find("Point Light").GetComponent<Light>();
             if (!StartOfRound.Instance.inShipPhase)
             {
@@ -42,14 +50,10 @@ namespace UsualScrap.Behaviors
             }
             disabledInShip = (BoundConfig.CapsulesDisabledOnTheShip.Value);
         }
+        
         public override void PocketItem()
         {
             base.PocketItem();
-            if (ambientParticlesPlaying)
-            {
-                AmbientParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-                ambientParticlesPlaying = false;
-            }
             if (light.enabled)
             {
                 light.enabled = false;
@@ -58,11 +62,6 @@ namespace UsualScrap.Behaviors
         public override void EquipItem()
         {
             base.EquipItem();
-            if (!ambientParticlesPlaying)
-            {
-                AmbientParticles.Play();
-                ambientParticlesPlaying = true;
-            }
             if (!light.enabled)
             {
                 light.enabled = true;
@@ -71,16 +70,12 @@ namespace UsualScrap.Behaviors
         public override void DiscardItem()
         {
             base.DiscardItem();
-            if (!ambientParticlesPlaying)
-            {
-                AmbientParticles.Play();
-                ambientParticlesPlaying = true;
-            }
             if (!light.enabled)
             {
                 light.enabled = true;
             }
         }
+        
         private void OnEnable()
         {
             StartOfRound.Instance.StartNewRoundEvent.AddListener(new UnityAction(SetTeleporterSeed));
@@ -91,107 +86,131 @@ namespace UsualScrap.Behaviors
             this.shipTeleporterSeed = new System.Random(StartOfRound.Instance.randomMapSeed + 17 + (int)GameNetworkManager.Instance.localPlayerController.playerClientId);
         }
 
-        public override void Update()
+        public override void GrabItem()
         {
-            base.Update();
-            if (StartOfRound.Instance.inShipPhase && activateCoroutineRunning || StartOfRound.Instance.inShipPhase && teleportCoroutineRunning)
+            base.GrabItem();
+            if (!StartOfRound.Instance.inShipPhase && detectCoroutine == null)
             {
-                StopAllCoroutines();
-                activateCoroutineRunning = false;
-                teleportCoroutineRunning = false;
-                chargingParticlePlaying = false;
-                pocketedParticlesPlaying = false;
-                charge = 0;
-                PocketedParticles.Stop();
-                chargingParticles.Stop();
-            }
-            else if (disabledInShip == true && this.isInShipRoom)
-            {
-                return;
-            }
-            else if (!StartOfRound.Instance.inShipPhase && !activateCoroutineRunning && !teleportCoroutineRunning && TimeOfDay.Instance.currentLevel.planetHasTime)
-            {
-                StartCoroutine(WaitToActivate());
+                detectCoroutine = StartCoroutine(Detecting());
             }
         }
 
-        private System.Collections.IEnumerator WaitToActivate()
+        private System.Collections.IEnumerator Detecting()
         {
-            activateCoroutineRunning = true;
-            if (TimeOfDay.Instance.dayMode != DayMode.Midnight || TimeOfDay.Instance.dayMode != DayMode.Sundown)
-            {
-                yield return new WaitUntil(() => TimeOfDay.Instance.dayMode == DayMode.Midnight || TimeOfDay.Instance.dayMode == DayMode.Sundown);
-            }
-            while (TimeOfDay.Instance.dayMode == DayMode.Midnight && !teleportCoroutineRunning|| TimeOfDay.Instance.dayMode == DayMode.Sundown && !teleportCoroutineRunning)
+            while (true)
             {
                 yield return new WaitForSeconds(1);
-                charge++;
-                //print($"{charge}");
-                if (isInFactory)
+                if (chargingParticlePlaying == true)
                 {
                     chargingParticles.Stop();
                     chargingParticlePlaying = false;
-                    yield return new WaitUntil(() => !isInFactory);
                 }
-                if (isPocketed)
+                if (!StartOfRound.Instance.inShipPhase && StartOfRound.Instance.shipHasLanded && TimeOfDay.Instance.currentLevel.planetHasTime)
                 {
-                    createdPocketedParticles = Instantiate(PocketedParticles, playerHeldBy.transform.position, Quaternion.identity, playerHeldBy.transform);
-                    createdPocketedParticles.Play();
-                    pocketedParticlesPlaying = true;
-                    chargingParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-                    chargingParticlePlaying = false;
-                }
-                if (charge is < 30 && chargingParticlePlaying == false && !isPocketed)
-                {
-                    chargingParticles.Play();
-                    chargingParticlePlaying = true;
-                }
-                if (charge >= 30 && !teleportCoroutineRunning)
-                {
-                    chargingParticles.Stop();
-                    chargingParticlePlaying = false;
-                    StartCoroutine(WaitToTeleport());
+                    if (disabledInShip == true && this.isInShipRoom)
+                    {
+                        yield return null;
+                        continue;
+                    }
+                    else
+                    {
+                        while (TimeOfDay.Instance.dayMode == DayMode.Midnight && !this.isInFactory && !teleportingCoroutineRunning|| TimeOfDay.Instance.dayMode == DayMode.Sundown && !this.isInFactory && !teleportingCoroutineRunning)
+                        {
+                            yield return new WaitForSeconds(1);
+                            if (StartOfRound.Instance.inShipPhase || disabledInShip == true && this.isInShipRoom)
+                            {
+                                charge = 0;
+                                break;
+                            }
+
+                            charge++;
+
+                            if (isPocketed)
+                            {
+                                chargingParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                                chargingParticlePlaying = false;
+
+                                createdPocketedChargingParticles = Instantiate(pocketedChargingParticles, playerHeldBy.transform.position, Quaternion.identity, playerHeldBy.transform);
+                                createdPocketedChargingParticles.Play();
+                            }
+                            else if (chargingParticlePlaying == false)
+                            {
+                                chargingParticles.Play();
+                                chargingParticlePlaying = true;
+                            }
+                            if (charge >= 40 && !teleportingCoroutineRunning)
+                            {
+                                chargingParticles.Stop();
+                                chargingParticlePlaying = false;
+
+                                chargedParticles.Play();
+                                chargedParticlesPlaying = true;
+
+                                teleportingCoroutineRunning = true;
+                                StartCoroutine(WaitToTeleport());
+                                yield return new WaitUntil(() => teleportingCoroutineRunning == false);
+
+                                chargedParticles.Stop();
+                                chargedParticlesPlaying = false;
+
+                                charge = 0;
+                                break;
+                            }
+                        }
+                    }
                 }
             }
-            activateCoroutineRunning = false;
         }
+
         private System.Collections.IEnumerator WaitToTeleport()
         {
-            teleportCoroutineRunning = true;
-            while (charge >= 20)
+            teleportingCoroutineRunning = true;
+            bool playerTeleported = false;
+            while (playerTeleported == false)
             {
                 yield return new WaitForSeconds(1);
+                if (StartOfRound.Instance.inShipPhase || disabledInShip == true && this.isInShipRoom)
+                {
+                    break;
+                }
                 teleportChanceRoll = new System.Random().Next(1, 6);
                 if (teleportChanceRoll == 1)
                 {
-                    if (!heldByPlayerOnServer)
+                    if (heldByPlayerOnServer)
                     {
-                        yield return new WaitUntil(() => heldByPlayerOnServer);
+                        if (playerHeldBy.isInsideFactory)
+                        {
+                            createdTeleportParticles = Instantiate(teleportParticles, playerHeldBy.gameObject.transform.position + new Vector3(0, 0, 0), Quaternion.identity, playerHeldBy.transform);
+                            createdTeleportParticles.Play();
+                            TeleportPlayerServerRpc(true);
+                            playerTeleported = true;
+                            break;
+                        }
+                        else if (!playerHeldBy.isInsideFactory)
+                        {
+                            createdTeleportParticles = Instantiate(teleportParticles, playerHeldBy.gameObject.transform.position + new Vector3(0, 0, 0), Quaternion.identity, playerHeldBy.transform);
+                            createdTeleportParticles.Play();
+                            TeleportPlayerServerRpc(false);
+                            playerTeleported = true;
+                            break;
+                        }
                     }
-                    if (playerHeldBy.isInsideFactory)
+                    else
                     {
-                        TeleportPlayerServerRpc(true);
+                        yield return null;
+                        continue;
                     }
-                    else if (!playerHeldBy.isInsideFactory)
-                    {
-                        TeleportPlayerServerRpc(false);
-                    }
-                    charge = 0;
-                    break;
                 }
-                teleportCoroutineRunning = false;
             }
-            teleportCoroutineRunning = false;
-            if (!activateCoroutineRunning && !teleportCoroutineRunning)
-            {
-                StartCoroutine(WaitToActivate());
-            }
+            teleportingCoroutineRunning = false;
         }
+
         [ServerRpc(RequireOwnership = false)]
         public void TeleportPlayerServerRpc(bool indoors)
         {
             TeleportPlayerClientRpc(indoors);
         }
+
         [ClientRpc]
         public void TeleportPlayerClientRpc(bool isIndoors)
         {
@@ -210,8 +229,6 @@ namespace UsualScrap.Behaviors
         {
             int playerID = (int)playerHeldBy.playerClientId;
             PlayerControllerB player = RoundManager.Instance.playersManager.allPlayerScripts[playerID];
-            createdTeleportParticles = Instantiate(teleportParticles, player.gameObject.transform.position + new Vector3(0, 1f, 0), Quaternion.identity, player.transform);
-            createdTeleportParticles.Play();
             await Task.Delay(TimeSpan.FromSeconds(2));
             if (player != null)
             {
@@ -236,23 +253,7 @@ namespace UsualScrap.Behaviors
                     player.isInHangarShipRoom = true;
                     player.isInElevator = true;
                 }
-                charge = 0;
-            }
-        }
-
-        public override void OnBroughtToShip()
-        {
-            base.OnBroughtToShip();
-            if (disabledInShip == true)
-            {
-                StopAllCoroutines();
-                activateCoroutineRunning = false;
-                teleportCoroutineRunning = false;
-                chargingParticlePlaying = false;
-                charge = 0;
-                chargingParticles.Stop();
             }
         }
     }
 }
-

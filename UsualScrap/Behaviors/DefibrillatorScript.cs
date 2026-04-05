@@ -233,7 +233,7 @@ namespace UsualScrap.Behaviors
                     Vector3 HitLocation = hit.transform.position + Vector3.up * .25f;
                     if (PermaDeathRule)
                     {
-                        if (deadBodyInfo.causeOfDeath == CauseOfDeath.Snipped || deadBodyInfo.detachedHead == true)
+                        if (deadBodyInfo.causeOfDeath == CauseOfDeath.Snipping || deadBodyInfo.detachedHead == true)
                         {
                             print("US - This corpse can't be saved. What a mess.");
                             return;
@@ -297,11 +297,9 @@ namespace UsualScrap.Behaviors
         public void RevivePlayerClientRpc(int ID, Vector3 SpawnPosition)
         {
             RevivePlayer(ID, SpawnPosition);
-            if (GameNetworkManager.Instance.localPlayerController.isPlayerDead)
+            if (!base.IsOwner && GameNetworkManager.Instance.localPlayerController.isPlayerDead)
             {
                 HUDManager.Instance.UpdateBoxesSpectateUI();
-                //HUDManager.Instance.UpdateSpectateBoxSpeakerIcons();
-                //Look into accessing ^ tooooo tirrrred!!!
             }
 
         }
@@ -406,8 +404,10 @@ namespace UsualScrap.Behaviors
 
                     if (PlayerScript.currentVoiceChatIngameSettings.voiceAudio != null)
                     {
-                        PlayerScript.currentVoiceChatIngameSettings.voiceAudio.GetComponent<OccludeAudio>().overridingLowPass = false;
+                        return;
                     }
+
+                    PlayerScript.currentVoiceChatIngameSettings.voiceAudio.GetComponent<OccludeAudio>().overridingLowPass = false;
                 }
             }
             PlayerControllerB localplayercontroller = GameNetworkManager.Instance.localPlayerController;
@@ -431,6 +431,11 @@ namespace UsualScrap.Behaviors
             StartOfRound.Instance.livingPlayers++;
             StartOfRound.Instance.UpdatePlayerVoiceEffects();
 
+            if (!base.IsOwner && GameNetworkManager.Instance.localPlayerController.isPlayerDead)
+            {
+                HUDManager.Instance.UpdateBoxesSpectateUI();
+            }
+
             if (UsesLimited == true && useLimit > 0)
             {
                 useLimit--;
@@ -445,5 +450,3 @@ namespace UsualScrap.Behaviors
         }
     }
 }
-
-
