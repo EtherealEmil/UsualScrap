@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Data;
 using System.Linq;
+using System.Numerics;
 using Unity.Netcode;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using Quaternion = UnityEngine.Quaternion;
+using Vector3 = UnityEngine.Vector3;
 
 namespace UsualScrap.Behaviors
 {
@@ -14,6 +18,8 @@ namespace UsualScrap.Behaviors
         GameObject WrappedPresent;
         ScanNodeProperties scanNodeProperties;
         GiftBoxItem component;
+        ParticleSystem wrapEffect;
+        AudioSource[] sounds;
 
         bool worksOnCheapItemsConfig;
 
@@ -21,9 +27,11 @@ namespace UsualScrap.Behaviors
 
         public void Awake()
         {
-            idleSparkle = GetComponentInChildren<ParticleSystem>();
+            wrapEffect = this.transform.Find("WrapEffect").GetComponent<ParticleSystem>();
+            idleSparkle = this.transform.Find("SparkleEffect").GetComponent<ParticleSystem>();
             BoundConfig = Plugin.BoundConfig;
             worksOnCheapItemsConfig = (BoundConfig.TicketsFunctionOnCheapItems.Value);
+            sounds = this.transform.Find("GoldenTicketSounds").gameObject.GetComponents<AudioSource>();
         }
         public override void PocketItem()
         {
@@ -75,7 +83,7 @@ namespace UsualScrap.Behaviors
                 {
                     Object viewedGameObject = itemCollider.transform.gameObject;
                     NetworkObject viewedNetworkObject = itemCollider.transform.gameObject.GetComponent<NetworkObject>();
-                    Vector3 viewVector = itemCollider.transform.gameObject.transform.position;
+                    Vector3 viewVector = itemCollider.transform.gameObject.transform.position + Vector3.up * .5f;
                     GrabbableObject viewedGrabbableObject = itemCollider.transform.gameObject.GetComponentInChildren<GrabbableObject>();
 
                     if (viewedNetworkObject.GetComponentInChildren<VehicleController>() != null || viewedNetworkObject.GetComponent<VehicleController>() != null || viewedNetworkObject.GetComponent<GiftBoxItem>() != null || !worksOnCheapItemsConfig && viewedGrabbableObject.scrapValue <= 5)
@@ -120,10 +128,25 @@ namespace UsualScrap.Behaviors
         public void SpawnGiftBox(Vector3 vector)
         {
             Item GiftBoxItem = PullGiftBox();
-            WrappedPresent = Object.Instantiate(GiftBoxItem.spawnPrefab, vector + Vector3.up * .25f, Quaternion.identity);
+            WrappedPresent = Object.Instantiate(GiftBoxItem.spawnPrefab, vector, Quaternion.identity);
+            GrabbableObject g = WrappedPresent.GetComponent<GrabbableObject>();
+            g.startFallingPosition = vector;
+            StartCoroutine(this.SetObjectToHitGroundSFX(component));
+            g.targetFloorPosition = g.GetItemFloorPosition(g.transform.position);
             component = WrappedPresent.GetComponent<GiftBoxItem>();
             component.NetworkObject.Spawn();
             component.SetScrapValue(5);
+            wrapEffect = Instantiate(wrapEffect, WrappedPresent.transform.position, Quaternion.identity);
+            wrapEffect.Play();
+            AudioSource.PlayClipAtPoint(sounds[0].clip, WrappedPresent.transform.position);
+        }
+        public System.Collections.IEnumerator SetObjectToHitGroundSFX(GrabbableObject Item)
+        {
+            yield return new WaitForEndOfFrame();
+            Item.reachedFloorTarget = false;
+            Item.hasHitGround = false;
+            Item.fallTime = 0f;
+            yield break;
         }
 
         public static Item PullGiftBox()

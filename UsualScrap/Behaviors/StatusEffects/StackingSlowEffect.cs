@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UsualScrap.Behaviors.Effects
 {
-    class StackingSlowEffect : MonoBehaviour
+    public class StackingSlowEffect : MonoBehaviour
     {
         PlayerControllerB player;
         public ParticleSystem frostedParticles;

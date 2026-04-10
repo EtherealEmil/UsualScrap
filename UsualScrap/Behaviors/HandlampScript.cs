@@ -90,7 +90,7 @@ namespace UsualScrap.Behaviors
                 this.ToggleLights(false);
                 if (pocketLight == null)
                 {
-                    pocketLight = Instantiate(light, previousPlayerHeldBy.gameplayCamera.transform.position + new Vector3(0,-2f,0), UnityEngine.Quaternion.identity, previousPlayerHeldBy.gameplayCamera.transform);
+                    pocketLight = Instantiate(light, previousPlayerHeldBy.gameplayCamera.transform.position + new Vector3(0,1.5f,-1f), UnityEngine.Quaternion.identity, previousPlayerHeldBy.gameplayCamera.transform);
                     pocketLight.intensity = 40;
                     pocketLight.enabled = true;
                 }

@@ -1,4 +1,5 @@
 ﻿using GameNetcodeStuff;
+using System;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
@@ -57,6 +58,24 @@ namespace UsualScrap.Behaviors
                 }
             }
             disabledInShip = (BoundConfig.CapsulesDisabledOnTheShip.Value);
+
+            StartCoroutine(Glow());
+        }
+
+        private System.Collections.IEnumerator Glow()
+        {
+            float maxintensity = light.intensity * 1.5f;
+            float minintensity = light.intensity * .5f;
+            while (true)
+            {
+                if (!light.enabled)
+                {
+                    yield return new WaitUntil(() => light.enabled);
+                }
+                float t = (MathF.Sin(Time.time * 1f) + 1f) / 2f;
+                light.intensity = minintensity + (maxintensity - minintensity) * t;
+                yield return null;
+            }
         }
 
         public override void PocketItem()
@@ -171,27 +190,5 @@ namespace UsualScrap.Behaviors
                 }
             }
         }
-
-        /*
-        [ServerRpc]
-        public void SpawnMaskedServerRpc()
-        {
-            SelectableLevel[] levels = StartOfRound.Instance.levels;
-
-            foreach (SelectableLevel val in levels)
-            {
-                foreach (SpawnableEnemyWithRarity enemy in val.Enemies)
-                {
-                    if (((UnityEngine.Object)enemy.enemyType).name.Contains("MaskedPlayerEnemy"))
-                    {
-                        maskedPlayer = enemy.enemyType;
-                        navMeshPosition = RoundManager.Instance.GetNavMeshPosition(this.transform.position, default(NavMeshHit), 10f, -1);
-                        break;
-                    }
-                }
-            }
-            RoundManager.Instance.SpawnEnemyGameObject(navMeshPosition, 0f, 0, maskedPlayer);
-        }
-        */
     }
 }

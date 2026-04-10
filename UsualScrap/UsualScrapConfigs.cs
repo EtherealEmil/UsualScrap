@@ -29,10 +29,10 @@ namespace UsualScrap
         public readonly ConfigEntry<string> RoseMoonSpawnWeights;
         public readonly ConfigEntry<int> RoseGlobalSpawnWeight;
 
-        public readonly ConfigEntry<bool> ScissorsLoaded;
-        public readonly ConfigEntry<bool> ScissorsSpawnsAsScrap;
-        public readonly ConfigEntry<string> ScissorsMoonSpawnWeights;
-        public readonly ConfigEntry<int> ScissorsGlobalSpawnWeight;
+        public readonly ConfigEntry<bool> SizableScissorsLoaded;
+        public readonly ConfigEntry<bool> SizableScissorsSpawnsAsScrap;
+        public readonly ConfigEntry<string> SizableScissorsMoonSpawnWeights;
+        public readonly ConfigEntry<int> SizableScissorsGlobalSpawnWeight;
 
         public readonly ConfigEntry<bool> WalkingCaneLoaded;
         public readonly ConfigEntry<bool> WalkingCaneSpawnsAsScrap;
@@ -160,10 +160,10 @@ namespace UsualScrap
             //========================================
 
             MansionScrapPackEnabled = cfg.Bind(
-                "3. Mansion Scrap Pack",
+                "3. Scrap Packs",
                 "Mansion Scrap Pack Enabled",
                 false,
-                "Whether or not the Mansion Scrap Pack is enabled"
+                "Whether or not the Mansion Scrap Pack is enabled. Scrap Packs include thematic items that have little to no function besides being scrap, they could be considered bloat and so they are toggleable."
             );
 
             /*
@@ -178,10 +178,10 @@ namespace UsualScrap
             //==================== Scrap Packs ====================
 
             FacilityScrapPackEnabled = cfg.Bind(
-                "3. Facility Scrap Pack",
+                "3. Scrap Packs",
                 "Facility Scrap Pack Enabled",
                 false,
-                "Whether or not the Facility Scrap Pack is enabled"
+                "Whether or not the Facility Scrap Pack is enabled. Scrap Packs include thematic items that have little to no function besides being scrap, they could be considered bloat and so they are toggleable."
             );
 
             /*
@@ -305,32 +305,32 @@ namespace UsualScrap
 
             //========================================
 
-            ScissorsLoaded = cfg.Bind(
-                "Scrap Item - Scissors",
-                "Scissors is loaded",
+            SizableScissorsLoaded = cfg.Bind(
+                "Scrap Item - Sizable Scissors",
+                "Sizable Scissors is loaded",
                 true,
-                "Whether or not the Scissors is loaded"
+                "Whether or not the Sizable Scissors is loaded"
             );
 
-            ScissorsSpawnsAsScrap = cfg.Bind(
-                "Scrap Item - Scissors",
-                "Scissors is a scrap item",
+            SizableScissorsSpawnsAsScrap = cfg.Bind(
+                "Scrap Item - Sizable Scissors",
+                "Sizable Scissors is a scrap item",
                 true,
-                "Whether or not the Scissors spawns as scrap"
+                "Whether or not the Sizable Scissors spawns as scrap"
             );
 
-            ScissorsMoonSpawnWeights = cfg.Bind(
-                "Scrap Item - Scissors",
-                "Scissors Moon Spawning",
+            SizableScissorsMoonSpawnWeights = cfg.Bind(
+                "Scrap Item - Sizable Scissors",
+                "Sizable Scissors Moon Spawning",
                 "experimentation=-1, vow=-1, march=-1, assurance=-1, offense=-1, rend=-1, dine=-1, titan=-1, adamance=-1, artifice=-1, embrion=-1",
-                "Where and how often the Scissors will spawn (Moon spawn weights will individually overwrite global spawn weights, set to -1 or leave blank to disable. Correct spelling and formatting is critical, shown, and a log will appear pointing out unreadable/disabled configs"
+                "Where and how often the Sizable Scissors will spawn (Moon spawn weights will individually overwrite global spawn weights, set to -1 or leave blank to disable. Correct spelling and formatting is critical, shown, and a log will appear pointing out unreadable/disabled configs"
             );
 
-            ScissorsGlobalSpawnWeight = cfg.Bind(
-                "Scrap Item - Scissors",
-                "Scissors Global Spawning",
+            SizableScissorsGlobalSpawnWeight = cfg.Bind(
+                "Scrap Item - Sizable Scissors",
+                "Sizable Scissors Global Spawning",
                 20,
-                "How often the Scissors will spawn globally (Will affect all moons including modded moons unless overwritten by moon spawn weights, -1 to disable)"
+                "How often the Sizable Scissors will spawn globally (Will affect all moons including modded moons unless overwritten by moon spawn weights, -1 to disable)"
             );
 
             //========================================
@@ -810,7 +810,6 @@ namespace UsualScrap
                 175,
                 $"The range where the Shift Controller enters it's poor/last connection range. (The average/middle connection range stops at this value, The poor/last connection range starts at this value)"
             );
-
 
             ClearOrphanedEntries(cfg);
             cfg.Save();

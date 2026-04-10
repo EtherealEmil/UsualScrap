@@ -19,10 +19,15 @@ namespace UsualScrap.Behaviors
         AudioSource setCoordAudio;
         AudioSource teleportAudio;
         AudioSource glitchAudio;
+        AudioSource buttonAudio;
         bool itemGlitching = false;
         bool itemTeleporting = false;
         float teleportBatteryCost;
         int Stage = 0;
+
+        Light light;
+        ParticleSystem particle;
+        bool sparksPlaying = true;
 
         private int GreatRange;
         private int PoorRange;
@@ -35,6 +40,7 @@ namespace UsualScrap.Behaviors
             setCoordAudio = Sounds[0];
             teleportAudio = Sounds[1];
             glitchAudio = Sounds[2];
+            buttonAudio = Sounds[3];
             startScreen = this.transform.Find("ShiftControllerModel").gameObject.transform.Find("StartScreen").gameObject;
             shiftScreen = this.transform.Find("ShiftControllerModel").gameObject.transform.Find("TeleportScreen").gameObject;
             glitchScreen = this.transform.Find("ShiftControllerModel").gameObject.transform.Find("GlitchScreen").gameObject;
@@ -52,6 +58,8 @@ namespace UsualScrap.Behaviors
                 GreatRange = 50;
                 PoorRange = 175;
             }
+            light = GetComponentInChildren<Light>();
+            particle = GetComponentInChildren<ParticleSystem>();
         }
         public override void ChargeBatteries()
         {
@@ -60,6 +68,42 @@ namespace UsualScrap.Behaviors
                 GlitchServerRpc(3);
                 this.insertedBattery.empty = false;
                 this.insertedBattery.charge = 1;
+                if (!sparksPlaying)
+                {
+                    light.enabled = true;
+                    particle.Play();
+                    sparksPlaying = true;
+                }
+            }
+        }
+        public override void PocketItem()
+        {
+            base.PocketItem();
+            if (sparksPlaying)
+            {
+                light.enabled = false;
+                particle.Stop();
+                sparksPlaying = false;
+            }
+        }
+        public override void EquipItem()
+        {
+            base.EquipItem();
+            if (!sparksPlaying && this.insertedBattery.charge > 0)
+            {
+                light.enabled = true;
+                particle.Play();
+                sparksPlaying = true;
+            }
+        }
+        public override void DiscardItem()
+        {
+            base.DiscardItem();
+            if (!sparksPlaying && this.insertedBattery.charge > 0)
+            {
+                light.enabled = true;
+                particle.Play();
+                sparksPlaying = true;
             }
         }
         public override void ItemActivate(bool used, bool buttonDown = true)
@@ -106,7 +150,7 @@ namespace UsualScrap.Behaviors
         {
             SetStage(stage);
         }
-        public void SetStage(int setStage)
+        public async void SetStage(int setStage)
         {
             if (StartOfRound.Instance.inShipPhase && !this.insertedBattery.empty && !itemGlitching || !StartOfRound.Instance.shipHasLanded && !this.insertedBattery.empty && !itemGlitching)
             {
@@ -116,10 +160,13 @@ namespace UsualScrap.Behaviors
             }
             if (setStage == 1 && !this.insertedBattery.empty && !itemGlitching)
             {
+                buttonAudio.PlayOneShot(buttonAudio.clip);
+                await Task.Delay(TimeSpan.FromSeconds(.2f));
+
                 Stage = 1;
 
-                setCoordAudio.PlayOneShot(setCoordAudio.clip);
                 SwitchScreenServerRpc("Start");
+                setCoordAudio.PlayOneShot(setCoordAudio.clip);
 
                 this.isBeingUsed = true;
 
@@ -138,6 +185,7 @@ namespace UsualScrap.Behaviors
             }
             else if (setStage == 2 && !this.insertedBattery.empty && !itemGlitching)
             {
+                buttonAudio.PlayOneShot(buttonAudio.clip);
                 Stage = 0;
 
                 SwitchScreenServerRpc("Shift");
@@ -179,6 +227,11 @@ namespace UsualScrap.Behaviors
                     this.insertedBattery.charge = 0;
                     ToggleCoroutineServerRpc(false);
                     SwitchScreenServerRpc("Off");
+
+                    light.enabled = false;
+                    particle.Stop();
+                    sparksPlaying = false;
+                    
                     Stage = 0;
                 }
                 if (this.insertedBattery.charge > 0)

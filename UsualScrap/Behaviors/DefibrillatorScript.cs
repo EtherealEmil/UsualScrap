@@ -17,11 +17,13 @@ namespace UsualScrap.Behaviors
         GameObject ChargeDisplayThree;
         GameObject ChargeDisplayFour;
         GameObject ChargeDisplayFive;
+        GameObject BatteryDisplay;
         Renderer DisplayOneRenderer;
         Renderer DisplayTwoRenderer;
         Renderer DisplayThreeRenderer;
         Renderer DisplayFourRenderer;
         Renderer DisplayFiveRenderer;
+        Renderer BatteryDisplayRenderer;
         AudioSource ChargedAudio;
         AudioSource ShockAudio;
         int timeToHold;
@@ -35,12 +37,46 @@ namespace UsualScrap.Behaviors
         bool PermaDeathRule;
         bool DefibrillatorRefillsOnLanding;
         int useLimit;
-        //public NetworkVariable<int> useLimit = new NetworkVariable<int>(3, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+        public NetworkVariable<int> savedUseLimit = new NetworkVariable<int>(3, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+
+        public override int GetItemDataToSave()
+        {
+            base.GetItemDataToSave();
+            if (useLimit <= 0)
+            {
+                savedUseLimit.Value = -1;
+            }
+            else
+            {
+                savedUseLimit.Value = useLimit;
+            }
+            return savedUseLimit.Value;
+        }
+
+        public override void LoadItemSaveData(int saveData)
+        {
+            base.LoadItemSaveData(saveData);
+            if (saveData == -1)
+            {
+                useLimit = 0;
+                foreach (Renderer display in displayRenderers)
+                {
+                    display.material.SetColor("_EmissiveColor", Color.red);
+                }
+            }
+            else
+            {
+                useLimit = saveData;
+            }
+        }
 
         public void Awake()
         {
             BoundConfig = Plugin.BoundConfig;
+            BatteryDisplay = this.transform.Find("DefibrillatorModel").gameObject.transform.Find("BatteryDisplay").gameObject;
+            BatteryDisplayRenderer = BatteryDisplay.GetComponent<Renderer>();
             RequiresBattery = (BoundConfig.DefibrillatorRequiresBattery.Value);
+            BatteryDisplayRenderer.material.SetColor("_EmissiveColor", Color.yellow);
             if (RequiresBattery)
             {
                 this.insertedBattery = new Battery(false, 1f);
@@ -53,11 +89,11 @@ namespace UsualScrap.Behaviors
             AudioSource[] Sounds = this.transform.Find("DefibrillatorSounds").gameObject.GetComponents<AudioSource>();
             ChargedAudio = Sounds[0];
             ShockAudio = Sounds[1];
-            ChargeDisplayOne = this.transform.Find("DefibrillatorModel").gameObject.transform.Find("ChargeDisplayOne").gameObject;
-            ChargeDisplayTwo = this.transform.Find("DefibrillatorModel").gameObject.transform.Find("ChargeDisplayTwo").gameObject;
-            ChargeDisplayThree = this.transform.Find("DefibrillatorModel").gameObject.transform.Find("ChargeDisplayThree").gameObject;
-            ChargeDisplayFour = this.transform.Find("DefibrillatorModel").gameObject.transform.Find("ChargeDisplayFour").gameObject;
-            ChargeDisplayFive = this.transform.Find("DefibrillatorModel").gameObject.transform.Find("ChargeDisplayFive").gameObject;
+            ChargeDisplayOne = this.transform.Find("DefibrillatorModel").gameObject.transform.Find("Charge1").gameObject;
+            ChargeDisplayTwo = this.transform.Find("DefibrillatorModel").gameObject.transform.Find("Charge2").gameObject;
+            ChargeDisplayThree = this.transform.Find("DefibrillatorModel").gameObject.transform.Find("Charge3").gameObject;
+            ChargeDisplayFour = this.transform.Find("DefibrillatorModel").gameObject.transform.Find("Charge4").gameObject;
+            ChargeDisplayFive = this.transform.Find("DefibrillatorModel").gameObject.transform.Find("Charge5").gameObject;
             DisplayOneRenderer = ChargeDisplayOne.GetComponent<Renderer>();
             DisplayTwoRenderer = ChargeDisplayTwo.GetComponent<Renderer>();
             DisplayThreeRenderer = ChargeDisplayThree.GetComponent<Renderer>();
@@ -74,25 +110,39 @@ namespace UsualScrap.Behaviors
                 useLimit = 1;
             }
         }
-        /*
-        public override int GetItemDataToSave()
+        public override void ChargeBatteries()
         {
-            base.GetItemDataToSave();
-            return useLimit.Value;
+            base.ChargeBatteries();
+            if (RequiresBattery)
+            {
+                BatteryDisplayRenderer.material.SetColor("_EmissiveColor", Color.yellow);
+            }
         }
-
-        public override void LoadItemSaveData(int saveData)
-        {
-            base.LoadItemSaveData(saveData);
-            useLimit.Value = saveData;
-        }
-        */
         public override void Update()
         {
             base.Update();
             if (DefibrillatorRefillsOnLanding && StartOfRound.Instance.inShipPhase && useLimit != BoundConfig.DefibrillatorUseLimit.Value)
             {
                 useLimit = BoundConfig.DefibrillatorUseLimit.Value;
+            }
+        }
+
+        public override void GrabItem()
+        {
+            base.GrabItem();
+            if (heldByPlayerOnServer && UsesLimited)
+            {
+                this.itemProperties.toolTips[0] = $"Remaining Uses - {useLimit}";
+                SetControlTipsForItem();
+            }
+        }
+        public override void EquipItem()
+        {
+            base.EquipItem();
+            if (heldByPlayerOnServer && UsesLimited)
+            {
+                this.itemProperties.toolTips[0] = $"Remaining Uses - {useLimit}";
+                SetControlTipsForItem();
             }
         }
         public override void ItemActivate(bool used, bool buttonDown = true)
@@ -145,7 +195,7 @@ namespace UsualScrap.Behaviors
             isBeingUsed = true;
             while (ReadyingDefib == true)
             {
-                yield return new WaitForSeconds(.1f);
+                yield return new WaitForSeconds(.05f);
                 if (!isHeld || isPocketed)
                 {
                     ReadyingDefib = false;
@@ -191,6 +241,7 @@ namespace UsualScrap.Behaviors
                         }
                         else if (this.insertedBattery.charge < batteryCost)
                         {
+                            BatteryDisplayRenderer.material.SetColor("_EmissiveColor", Color.black);
                             this.insertedBattery.empty = true;
                             this.insertedBattery.charge = 0;
                             this.isBeingUsed = false;
@@ -297,11 +348,6 @@ namespace UsualScrap.Behaviors
         public void RevivePlayerClientRpc(int ID, Vector3 SpawnPosition)
         {
             RevivePlayer(ID, SpawnPosition);
-            if (!base.IsOwner && GameNetworkManager.Instance.localPlayerController.isPlayerDead)
-            {
-                HUDManager.Instance.UpdateBoxesSpectateUI();
-            }
-
         }
         public void RevivePlayer(int PlayerID, Vector3 SpawnPosition)
         {
@@ -394,20 +440,17 @@ namespace UsualScrap.Behaviors
                 {
                     StartOfRound.Instance.RefreshPlayerVoicePlaybackObjects();
                 }
-
                 if (PlayerScript.currentVoiceChatIngameSettings != null)
                 {
                     if (PlayerScript.currentVoiceChatIngameSettings.voiceAudio == null)
                     {
                         PlayerScript.currentVoiceChatIngameSettings.InitializeComponents();
                     }
-
-                    if (PlayerScript.currentVoiceChatIngameSettings.voiceAudio != null)
+                    try
                     {
-                        return;
+                        PlayerScript.currentVoiceChatIngameSettings.voiceAudio.GetComponent<OccludeAudio>().overridingLowPass = false;
                     }
-
-                    PlayerScript.currentVoiceChatIngameSettings.voiceAudio.GetComponent<OccludeAudio>().overridingLowPass = false;
+                    catch { Debug.LogError($"Audio error for player {PlayerScript.name}, US."); }
                 }
             }
             PlayerControllerB localplayercontroller = GameNetworkManager.Instance.localPlayerController;
@@ -429,12 +472,13 @@ namespace UsualScrap.Behaviors
 
             StartOfRound.Instance.allPlayersDead = false;
             StartOfRound.Instance.livingPlayers++;
-            StartOfRound.Instance.UpdatePlayerVoiceEffects();
 
-            if (!base.IsOwner && GameNetworkManager.Instance.localPlayerController.isPlayerDead)
+            if (GameNetworkManager.Instance.localPlayerController.isPlayerDead)
             {
                 HUDManager.Instance.UpdateBoxesSpectateUI();
             }
+
+            StartOfRound.Instance.UpdatePlayerVoiceEffects();
 
             if (UsesLimited == true && useLimit > 0)
             {
@@ -446,6 +490,12 @@ namespace UsualScrap.Behaviors
                         display.material.SetColor("_EmissiveColor", Color.red);
                     }
                 }
+            }
+
+            if (heldByPlayerOnServer && UsesLimited)
+            {
+                this.itemProperties.toolTips[0] = $"Remaining Uses - {useLimit}";
+                SetControlTipsForItem();
             }
         }
     }

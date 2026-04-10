@@ -17,7 +17,7 @@ namespace UsualScrap
     {
         public const string PLUGIN_GUID = "Emil.UsualScrap";
         public const string PLUGIN_NAME = "UsualScrap";
-        public const string PLUGIN_VERSION = "1.9.3";
+        public const string PLUGIN_VERSION = "1.9.8";
 
         public static Plugin instance;
 
@@ -28,6 +28,10 @@ namespace UsualScrap
             public static NamespacedKey<DawnItemInfo> US_PocketWatch = NamespacedKey<DawnItemInfo>.From("Usual_Scrap", "US_Pocket_Watch");
 
             public static NamespacedKey<DawnItemInfo> US_ServantBell = NamespacedKey<DawnItemInfo>.From("Usual_Scrap", "US_Servant_Bell");
+
+            public static NamespacedKey<DawnItemInfo> US_ChessPieces = NamespacedKey<DawnItemInfo>.From("Usual_Scrap", "US_Chess_Pieces");
+
+            public static NamespacedKey<DawnItemInfo> US_GoldenChessPieces = NamespacedKey<DawnItemInfo>.From("Usual_Scrap", "US_Golden_Chess_Pieces");
 
             public static NamespacedKey<DawnItemInfo> US_TrafficCone = NamespacedKey<DawnItemInfo>.From("Usual_Scrap", "US_Traffic_Cone");
 
@@ -42,7 +46,7 @@ namespace UsualScrap
 
             public static NamespacedKey<DawnItemInfo> US_Rose = NamespacedKey<DawnItemInfo>.From("Usual_Scrap", "US_Rose");
 
-            public static NamespacedKey<DawnItemInfo> US_Scissors = NamespacedKey<DawnItemInfo>.From("Usual_Scrap", "US_Scissors");
+            public static NamespacedKey<DawnItemInfo> US_SizableScissors = NamespacedKey<DawnItemInfo>.From("Usual_Scrap", "US_SizableScissors");
 
             public static NamespacedKey<DawnItemInfo> US_WalkingCane = NamespacedKey<DawnItemInfo>.From("Usual_Scrap", "US_Walking_Cane");
 
@@ -64,7 +68,6 @@ namespace UsualScrap
 
             public static NamespacedKey<DawnItemInfo> US_Crowbar = NamespacedKey<DawnItemInfo>.From("Usual_Scrap", "US_Crowbar");
 
-            //public static NamespacedKey<DawnItemInfo> US_DoomsayerBell = NamespacedKey<DawnItemInfo>.From("Usual_Scrap", "US_Doomsayer_Bell");
         }
 
         public static class StoreItemKeys
@@ -115,6 +118,8 @@ namespace UsualScrap
 
             BoundConfig = new UsualScrapConfigs(base.Config);
 
+            new UsualScrapConfigs(Config);
+
             AssetBundle assetBundle = AssetBundle.LoadFromFile(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "usualscrapassetbundle"));
 
             //========== SCRAP PACKS ==========
@@ -127,19 +132,41 @@ namespace UsualScrap
                     itemList.Add(US_PocketWatch);
                     PhysicsProp pocketWatchScript = US_PocketWatch.spawnPrefab.AddComponent<PhysicsProp>();
                     InitializeItem(pocketWatchScript, true, true, US_PocketWatch);
-                    DawnLib.DefineItem(ScrapPackKeys.US_PocketWatch, US_PocketWatch, builder => builder.DefineScrap(scrapBuilder => scrapBuilder.SetWeights(weightBuilder => weightBuilder.SetGlobalWeight(20))));
+                    DawnLib.DefineItem(ScrapPackKeys.US_PocketWatch, US_PocketWatch, builder => builder.DefineScrap(scrapBuilder => scrapBuilder.SetWeights(weightBuilder => weightBuilder.SetGlobalWeight(15))));
                 }
                 catch {Debug.LogError("USUAL SCRAP - Pocket Watch scrap pack item experienced an error while loading. Skipping...");}
+
                 try
                 {
                     Item US_ServantBell = assetBundle.LoadAsset<Item>("Assets/UsualScrapContent/ScrapPackItems/ServantBellAssets/US_ServantBellItem.asset");
                     itemList.Add(US_ServantBell);
-                    NoiseMakerItemScript servantBellScript = US_ServantBell.spawnPrefab.AddComponent<NoiseMakerItemScript>();
+                    NoiseMakerScript servantBellScript = US_ServantBell.spawnPrefab.AddComponent<NoiseMakerScript>();
                     InitializeItem(servantBellScript, true, true, US_ServantBell);
                     DawnLib.DefineItem(ScrapPackKeys.US_ServantBell, US_ServantBell, builder => builder.DefineScrap(scrapBuilder => scrapBuilder.SetWeights(weightBuilder => weightBuilder.SetGlobalWeight(20))));
                 }
                 catch {Debug.LogError("USUAL SCRAP - Servant Bell scrap pack item experienced an error while loading. Skipping..."); }
-                
+
+                try
+                {
+                    Item US_ChessPieces = assetBundle.LoadAsset<Item>("Assets/UsualScrapContent/ScrapPackItems/ChessPiecesAssets/US_ChessPiecesItem.asset");
+                    itemList.Add(US_ChessPieces);
+                    RandomModelBNWScript chessPiecesScript = US_ChessPieces.spawnPrefab.AddComponent<RandomModelBNWScript>();
+                    chessPiecesScript.changeColor = true;
+                    InitializeItem(chessPiecesScript, true, true, US_ChessPieces);
+                    DawnLib.DefineItem(ScrapPackKeys.US_ChessPieces, US_ChessPieces, builder => builder.DefineScrap(scrapBuilder => scrapBuilder.SetWeights(weightBuilder => weightBuilder.SetGlobalWeight(30))));
+                }
+                catch { Debug.LogError("USUAL SCRAP - Chess Pieces scrap pack item experienced an error while loading. Skipping..."); }
+
+                try
+                {
+                    Item US_GoldenChessPieces = assetBundle.LoadAsset<Item>("Assets/UsualScrapContent/ScrapPackItems/GoldenChessPiecesAssets/US_GoldenChessPiecesItem.asset");
+                    itemList.Add(US_GoldenChessPieces);
+                    RandomModelBNWScript goldenChessPiecesScript = US_GoldenChessPieces.spawnPrefab.AddComponent<RandomModelBNWScript>();
+                    goldenChessPiecesScript.changeColor = false;
+                    InitializeItem(goldenChessPiecesScript, true, true, US_GoldenChessPieces);
+                    DawnLib.DefineItem(ScrapPackKeys.US_GoldenChessPieces, US_GoldenChessPieces, builder => builder.DefineScrap(scrapBuilder => scrapBuilder.SetWeights(weightBuilder => weightBuilder.SetGlobalWeight(10))));
+                }
+                catch { Debug.LogError("USUAL SCRAP - Golden Chess Pieces scrap pack item experienced an error while loading. Skipping..."); }
             }
 
             if (BoundConfig.FacilityScrapPackEnabled.Value)
@@ -153,6 +180,7 @@ namespace UsualScrap
                     DawnLib.DefineItem(ScrapPackKeys.US_TrafficCone, US_TrafficCone, builder => builder.DefineScrap(scrapBuilder => scrapBuilder.SetWeights(weightBuilder => weightBuilder.SetGlobalWeight(20))));
                 }
                 catch { Debug.LogError("USUAL SCRAP - Traffic Cone scrap pack item experienced an error while loading. Skipping..."); }
+
                 try
                 {
                     Item US_MereGear = assetBundle.LoadAsset<Item>("Assets/UsualScrapContent/ScrapPackItems/MereGearAssets/US_MereGearItem.asset");
@@ -166,26 +194,6 @@ namespace UsualScrap
             /*
             if (BoundConfig.MedievalScrapPackEnabled.Value)
             {
-                
-                try
-                {
-                    Item US_PocketWatch = assetBundle.LoadAsset<Item>("Assets/UsualScrapContent/ScrapPackItems/PocketWatchAssets/US_PocketWatchItem.asset");
-                    itemList.Add(US_PocketWatch);
-                    PhysicsProp pocketWatchScript = US_PocketWatch.spawnPrefab.AddComponent<PhysicsProp>();
-                    InitializeItem(pocketWatchScript, true, true, US_PocketWatch);
-                    DawnLib.DefineItem(ScrapPackKeys.US_PocketWatch, US_PocketWatch, builder => builder.DefineScrap(scrapBuilder => scrapBuilder.SetWeights(weightBuilder => weightBuilder.SetGlobalWeight(20))));
-                }
-                catch { Debug.LogError("USUAL SCRAP - Pocket Watch scrap pack item experienced an error while loading. Skipping..."); }
-                try
-                {
-                    Item US_ServantBell = assetBundle.LoadAsset<Item>("Assets/UsualScrapContent/ScrapPackItems/ServantBellAssets/US_ServantBellItem.asset");
-                    itemList.Add(US_ServantBell);
-                    NoiseMakerItemScript servantBellScript = US_ServantBell.spawnPrefab.AddComponent<NoiseMakerItemScript>();
-                    InitializeItem(servantBellScript, true, true, US_ServantBell);
-                    DawnLib.DefineItem(ScrapPackKeys.US_ServantBell, US_ServantBell, builder => builder.DefineScrap(scrapBuilder => scrapBuilder.SetWeights(weightBuilder => weightBuilder.SetGlobalWeight(20))));
-                }
-                catch { Debug.LogError("USUAL SCRAP - Servant Bell scrap pack item experienced an error while loading. Skipping..."); }
-                
             }
             */
             //========== SCRAP ITEMS ==========
@@ -198,7 +206,6 @@ namespace UsualScrap
                     itemList.Add(US_Ticket);
                     TicketScript ticketScript = US_Ticket.spawnPrefab.AddComponent<TicketScript>();
                     InitializeItem(ticketScript, true, true, US_Ticket);
-                    US_Ticket.itemIcon = null;
                     if (BoundConfig.TicketSpawnsAsScrap.Value)
                     {
                         string[] ticketMoonStrings = BoundConfig.TicketMoonSpawnWeights.Value.Split(',');
@@ -274,21 +281,21 @@ namespace UsualScrap
 
             try
             {
-                if (BoundConfig.ScissorsLoaded.Value)
+                if (BoundConfig.SizableScissorsLoaded.Value)
                 {
-                    Item US_Scissors = assetBundle.LoadAsset<Item>("Assets/UsualScrapContent/Items/ScissorsAssets/US_ScissorsItem.asset");
-                    itemList.Add(US_Scissors);
-                    ScissorsScript scissorsScript = US_Scissors.spawnPrefab.AddComponent<ScissorsScript>();
-                    InitializeItem(scissorsScript, true, true, US_Scissors);
-                    if (BoundConfig.ScissorsSpawnsAsScrap.Value)
+                    Item US_SizableScissors = assetBundle.LoadAsset<Item>("Assets/UsualScrapContent/Items/SizableScissorsAssets/US_SizableScissorsItem.asset");
+                    itemList.Add(US_SizableScissors);
+                    SizableScissorsScript sizablescissorsScript = US_SizableScissors.spawnPrefab.AddComponent<SizableScissorsScript>();
+                    InitializeItem(sizablescissorsScript, true, true, US_SizableScissors);
+                    if (BoundConfig.SizableScissorsSpawnsAsScrap.Value)
                     {
-                        string[] scissorsMoonStrings = BoundConfig.ScissorsMoonSpawnWeights.Value.Split(',');
+                        string[] sizableScissorsMoonStrings = BoundConfig.SizableScissorsMoonSpawnWeights.Value.Split(',');
 
-                        DawnLib.DefineItem(ScrapItemKeys.US_Scissors, US_Scissors, builder => builder.DefineScrap(scrapBuilder => { scrapBuilder.SetWeights(weightBuilder => { buildweights(weightBuilder, scissorsMoonStrings, BoundConfig.ScissorsGlobalSpawnWeight.Value, US_Scissors); }); }));
+                        DawnLib.DefineItem(ScrapItemKeys.US_SizableScissors, US_SizableScissors, builder => builder.DefineScrap(scrapBuilder => { scrapBuilder.SetWeights(weightBuilder => { buildweights(weightBuilder, sizableScissorsMoonStrings, BoundConfig.SizableScissorsGlobalSpawnWeight.Value, US_SizableScissors); }); }));
                     }
                     else
                     {
-                        Items.RegisterItem(US_Scissors);
+                        Items.RegisterItem(US_SizableScissors);
                     }
                 }
             }
@@ -545,32 +552,7 @@ namespace UsualScrap
             {
                 Debug.LogError("USUAL SCRAP - Crowbar experienced an error while loading. Skipping...");
             }
-            /*
-            try
-            {
-                if (BoundConfig.DoomsayerBellLoaded.Value)
-                {
-                    Item US_DoomsayerBell = assetBundle.LoadAsset<Item>("Assets/UsualScrapContent/Items/DoomsayerBellAssets/US_DoomsayerBellItem.asset");
-                    itemList.Add(US_DoomsayerBell);
-                    DoomsayerBellScript doomsayerBellScript = US_DoomsayerBell.spawnPrefab.AddComponent<DoomsayerBellScript>();
-                    InitializeItem(doomsayerBellScript, true, true, US_DoomsayerBell);
-                    if (BoundConfig.DoomsayerBellSpawnsAsScrap.Value)
-                    {
-                        string[] doomsayerBellMoonStrings = BoundConfig.DoomsayerBellMoonSpawnWeights.Value.Split(',');
 
-                        DawnLib.DefineItem(ScrapItemKeys.US_DoomsayerBell, US_DoomsayerBell, builder => builder.DefineScrap(scrapBuilder => { scrapBuilder.SetWeights(weightBuilder => { buildweights(weightBuilder, doomsayerBellMoonStrings, BoundConfig.DoomsayerBellGlobalSpawnWeight.Value, US_DoomsayerBell); }); }));
-                    }
-                    else
-                    {
-                        Items.RegisterItem(US_DoomsayerBell);
-                    }
-                }
-            }
-            catch
-            {
-                Debug.LogError("USUAL SCRAP - Doomsayer Bell experienced an error while loading. Skipping...");
-            }
-            */
             //========== STORE ITEMS ==========
 
             try

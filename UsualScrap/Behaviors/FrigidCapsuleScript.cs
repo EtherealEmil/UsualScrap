@@ -1,4 +1,5 @@
 ﻿using GameNetcodeStuff;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
@@ -44,6 +45,24 @@ namespace UsualScrap.Behaviors
 
             ambientSnowflakeParticles.Play();
             ambientSnowflakeParticlesPlaying = true;
+
+            StartCoroutine(Glow());
+        }
+
+        private System.Collections.IEnumerator Glow()
+        {
+            float maxintensity = light.intensity * .5f;
+            float minintensity = light.intensity * 1.5f;
+            while (true)
+            {
+                if (!light.enabled)
+                {
+                    yield return new WaitUntil(() => light.enabled);
+                }
+                float t = (MathF.Sin(Time.time * .5f) + 1f) / 2f;
+                light.intensity = minintensity + (maxintensity - minintensity) * t;
+                yield return null;
+            }
         }
 
         public override void GrabItem()

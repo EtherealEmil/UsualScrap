@@ -13,13 +13,6 @@ namespace UsualScrap.Behaviors
         bool healCoroutineRunning = false;
         bool replenishCoroutineRunning = false;
 
-        public override void SetControlTipsForItem()
-        {
-            base.SetControlTipsForItem();
-            //LOOK INTO THIS FOR HEALTHPOOL TRACKING!
-        }
-
-
         public void Awake()
         {
             particle = GetComponentInChildren<ParticleSystem>();
@@ -46,6 +39,26 @@ namespace UsualScrap.Behaviors
         {
             base.PocketItem();
             StopHealRoutineServerRpc();
+        }
+
+        public override void GrabItem()
+        {
+            base.GrabItem();
+            if (heldByPlayerOnServer)
+            {
+                this.itemProperties.toolTips[0] = $"Remaining Health - {Healthpool}";
+                SetControlTipsForItem();
+            }
+        }
+
+        public override void EquipItem()
+        {
+            base.EquipItem();
+            if (heldByPlayerOnServer)
+            {
+                this.itemProperties.toolTips[0] = $"Remaining Health - {Healthpool}";
+                SetControlTipsForItem();
+            }
         }
 
         public override void ItemActivate(bool used, bool buttonDown = true)
@@ -119,6 +132,11 @@ namespace UsualScrap.Behaviors
                 }
                 HealClientRpc(playerID);
                 SubtractHealpoolServerRpc();
+                if (heldByPlayerOnServer)
+                {
+                    this.itemProperties.toolTips[0] = $"Remaining Health - {Healthpool}";
+                    SetControlTipsForItem();
+                }
             }
             healCoroutineRunning = false;
         }
@@ -191,6 +209,11 @@ namespace UsualScrap.Behaviors
             {
                 yield return new WaitForSeconds(1.5f);
                 ReplenishKitServerRpc();
+                if (heldByPlayerOnServer)
+                {
+                    this.itemProperties.toolTips[0] = $"Remaining Health - {Healthpool}";
+                    SetControlTipsForItem();
+                }
                 if (healCoroutineRunning)
                 {
                     break;

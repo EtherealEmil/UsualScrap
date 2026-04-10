@@ -4,7 +4,7 @@
         <TargetFramework>netstandard2.1</TargetFramework>
         <AssemblyName>UsualScrap</AssemblyName>
         <Description>Adds many new unique items that expand on the available scrap items and interactions!</Description>
-        <Version>1.9.3</Version>
+        <Version>1.9.8</Version>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <LangVersion>latest</LangVersion>
     </PropertyGroup>

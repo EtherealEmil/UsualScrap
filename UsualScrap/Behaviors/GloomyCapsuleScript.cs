@@ -49,8 +49,26 @@ namespace UsualScrap.Behaviors
                 this.shipTeleporterSeed = new System.Random(StartOfRound.Instance.randomMapSeed + 17 + (int)GameNetworkManager.Instance.localPlayerController.playerClientId);
             }
             disabledInShip = (BoundConfig.CapsulesDisabledOnTheShip.Value);
+
+            StartCoroutine(Glow());
         }
-        
+
+        private System.Collections.IEnumerator Glow()
+        {
+            float maxintensity = light.intensity * 1.5f;
+            float minintensity = light.intensity * .5f;
+            while (true)
+            {
+                if (!light.enabled)
+                {
+                    yield return new WaitUntil(() => light.enabled);
+                }
+                float t = (MathF.Sin(Time.time * .5f) + 1f) / 2f;
+                light.intensity = minintensity + (maxintensity - minintensity) * t;
+                yield return null;
+            }
+        }
+
         public override void PocketItem()
         {
             base.PocketItem();

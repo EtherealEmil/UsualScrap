@@ -1,11 +1,12 @@
 ﻿using GameNetcodeStuff;
+using System;
 using UnityEngine;
 
 namespace UsualScrap.Behaviors.Effects
 {
-    internal class ProductivityAutoinjectorEffect : MonoBehaviour
+    public class ProductivityAutoinjectorEffect : MonoBehaviour
     {
-        int buffDuration = 180;
+        int buffDuration = 10;
         float speedStrength = 1f;
         PlayerControllerB playerUsedBy;
 
@@ -17,32 +18,32 @@ namespace UsualScrap.Behaviors.Effects
         private System.Collections.IEnumerator Boost()
         {
             playerUsedBy.carryWeight = 1f;
+            StartOfRound.Instance.SendChangedWeightEvent();
             playerUsedBy.jumpForce = playerUsedBy.jumpForce + speedStrength / 2;
             playerUsedBy.movementSpeed = playerUsedBy.movementSpeed + speedStrength;
             while (buffDuration > 0)
             {
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(.5f);
+                //print(playerUsedBy.carryWeight);
                 playerUsedBy.carryWeight = 1f;
+                StartOfRound.Instance.SendChangedWeightEvent();
                 buffDuration--;
                 if (playerUsedBy.isPlayerDead)
                 {
                     buffDuration = 0;
                 }
             }
-            playerUsedBy.carryWeight = 1f;
             playerUsedBy.jumpForce = playerUsedBy.jumpForce - speedStrength / 2;
             playerUsedBy.movementSpeed = playerUsedBy.movementSpeed - speedStrength;
-            float setWeight = 1f;
             foreach (GrabbableObject fl in playerUsedBy.ItemSlots)
             {
                 if (fl != null)
                 {
-                    print(fl.itemProperties.weight);
-                    print((fl.itemProperties.weight - 1) * 100);
-                    setWeight = setWeight + (fl.itemProperties.weight - 1);
+                    playerUsedBy.carryWeight =  Math.Clamp(playerUsedBy.carryWeight + (fl.itemProperties.weight - 1), 1,10);
+                    StartOfRound.Instance.SendChangedWeightEvent();
+                    //print($"{fl.itemProperties.weight} is the item carry weight");
                 }
             }
-            playerUsedBy.carryWeight = setWeight;
             Destroy(this);
         }
     }

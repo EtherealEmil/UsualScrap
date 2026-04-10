@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UsualScrap.Behaviors.Effects
 {
-    internal class RandomCandyEffect : MonoBehaviour
+    public class RandomCandyEffect : MonoBehaviour
     {
         int randomRoll = new System.Random().Next(1, 3);
         int Duration = 10;

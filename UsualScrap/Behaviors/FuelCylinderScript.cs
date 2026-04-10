@@ -3,6 +3,8 @@ using System;
 using System.Threading.Tasks;
 using Unity.Netcode;
 using UnityEngine;
+using Random = UnityEngine.Random;
+
 
 namespace UsualScrap.Behaviors
 {
@@ -15,23 +17,28 @@ namespace UsualScrap.Behaviors
         int activeDropsRemaining = 3;
         int inactiveDropsRemaining = 3;
         Coroutine coroutine;
+        bool pitchcoroutinerunning;
         ParticleSystem FireEffect;
+        ParticleSystem WildFireEffect;
         ParticleSystem SmokeEffect;
-        AudioSource flameSound;
+        AudioSource FireSound;
+
 
         public void Awake()
         {
             FireEffect = this.transform.Find("FireEffect").GetComponentInChildren<ParticleSystem>();
+            WildFireEffect = this.transform.Find("WildFireEffect").GetComponentInChildren<ParticleSystem>();
             SmokeEffect = this.transform.Find("SmokeEffect").GetComponentInChildren<ParticleSystem>();
             AudioSource[] Sounds = this.transform.Find("FuelCylinderSounds").gameObject.GetComponents<AudioSource>();
-            flameSound = Sounds[0];
+            FireSound = Sounds[0];
         }
         public override void GrabItem()
         {
             if (hasBeenGrabbed == false && !isInShipRoom && !activated)
             {
-                int chanceToActivate = new System.Random().Next(1, 11);
-                if (chanceToActivate is 1 or 2)
+                int chanceToActivate = new System.Random().Next(1, 9);
+                SmokeEffect.Play();
+                if (chanceToActivate is 1)
                 {
                     return;
                 }
@@ -53,7 +60,7 @@ namespace UsualScrap.Behaviors
             {
                 coroutineExplosionTimer = Timer;
             }
-            while (coroutineExplosionTimer > 0  && State == true)
+            while (coroutineExplosionTimer > 0 && State == true)
             {
                 yield return new WaitForSeconds(1f);
                 if (this.isInShipRoom || heldByPlayerOnServer && playerHeldBy.isInHangarShipRoom)
@@ -62,9 +69,9 @@ namespace UsualScrap.Behaviors
                 }
                 coroutineExplosionTimer--;
                 explosionTimer = coroutineExplosionTimer;
-                //print($"{coroutineExplosionTimer}");
+                print($"{coroutineExplosionTimer}");
             }
-            if (coroutineExplosionTimer <= 0) 
+            if (coroutineExplosionTimer <= 0)
             {
                 ExplodeServerRpc();
             }
@@ -133,8 +140,8 @@ namespace UsualScrap.Behaviors
                     }
                     else if (activeDropsRemaining > 0)
                     {
-                        Math.Round(explosionTimer = explosionTimer * .8f);
-                        UpdateTimerServerRpc();
+                        Math.Floor(explosionTimer = explosionTimer * .8f);
+                        UpdateTimerServerRpc(explosionTimer);
                     }
                 }
                 else if (!activated)
@@ -143,22 +150,25 @@ namespace UsualScrap.Behaviors
                     if (inactiveDropsRemaining <= 0)
                     {
                         ToggleStateServerRpc(true);
+                        activeDropsRemaining = 3;
                         inactiveDropsRemaining = 3;
                     }
                 }
             }
         }
         [ServerRpc(RequireOwnership = false)]
-        public void UpdateTimerServerRpc()
+        public void UpdateTimerServerRpc(float timer)
         {
             activated = true;
             if (coroutinerunning)
             {
                 StopCoroutine(coroutine);
                 coroutinerunning = false;
-
             }
-            coroutine = StartCoroutine(Countdown(true, explosionTimer));
+            if (!coroutinerunning)
+            {
+                coroutine = StartCoroutine(Countdown(true, timer));
+            }
         }
         [ServerRpc(RequireOwnership = false)]
         public void ToggleStateServerRpc(bool State)
@@ -181,6 +191,7 @@ namespace UsualScrap.Behaviors
             }
 
             ToggleStateClientRpc(State);
+            StartCoroutine(Pitch());
         }
         [ClientRpc]
         public void ToggleStateClientRpc(bool State)
@@ -191,23 +202,53 @@ namespace UsualScrap.Behaviors
                 hasBeenGrabbed = true;
                 ActivateEffects();
             }
-            else if ( State == false)
+            else if (State == false)
             {
                 DeactivateEffects();
             }
         }
         public async void ActivateEffects()
         {
-            SmokeEffect.Play();
             await Task.Delay(TimeSpan.FromSeconds(.4f));
             FireEffect.Play();
-            flameSound.Play();
+            FireSound.Play();
         }
         public void DeactivateEffects()
         {
             FireEffect.Stop();
-            flameSound.Stop();
+            WildFireEffect.Stop();
+            FireSound.Stop();
             SmokeEffect.Play();
+        }
+        private System.Collections.IEnumerator Pitch()
+        {
+            pitchcoroutinerunning = true;
+            float i = explosionTimer;
+            while (explosionTimer >= 3)
+            {
+                float e = 1 - (explosionTimer / i);
+                FireSound.pitch = Mathf.Lerp(1f, 1.5f, e);
+                FireSound.volume = Mathf.Lerp(.3f, .5f, e);
+
+                var fireEffectMain = FireEffect.main;
+                fireEffectMain.simulationSpeed = Mathf.Lerp(2f, 4f, e);
+
+                //print($"{explosionTimer} is the changing time");
+
+                yield return null;
+            }
+            //print("IT'S THE FINAL COUNTDOWN");
+            FireEffect.Stop();
+            while (explosionTimer is > 0 and < 3)
+            {
+                float e = 1 - (explosionTimer / i);
+                FireSound.pitch = Mathf.Lerp(1.5f, 2f, e) + Random.Range(-0.05f, 0.05f);
+                WildFireEffect.Play();
+                FireEffect.Stop();
+
+                yield return null;
+            }
+            pitchcoroutinerunning = false;
         }
     }
 }

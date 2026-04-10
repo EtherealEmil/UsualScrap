@@ -12,19 +12,41 @@ namespace UsualScrap.Behaviors
         public void Awake()
         {
             particle = GetComponentInChildren<ParticleSystem>();
+
         }
+
         public override int GetItemDataToSave()
         {
             base.GetItemDataToSave();
+            savedUses.Value = uses;
             return savedUses.Value;
         }
 
         public override void LoadItemSaveData(int saveData)
         {
             base.LoadItemSaveData(saveData);
-            savedUses.Value = saveData;
+            uses = saveData;
+            print(uses);
         }
-        
+
+        public override void GrabItem()
+        {
+            base.GrabItem();
+            if (heldByPlayerOnServer)
+            {
+                this.itemProperties.toolTips[0] = $"Remaining Uses - {uses}";
+                SetControlTipsForItem();
+            }
+        }
+        public override void EquipItem()
+        {
+            base.EquipItem();
+            if (heldByPlayerOnServer)
+            {
+                this.itemProperties.toolTips[0] = $"Remaining Uses - {uses}";
+                SetControlTipsForItem();
+            }
+        }
 
         public override void ItemActivate(bool used, bool buttonDown = true)
         {
@@ -32,6 +54,11 @@ namespace UsualScrap.Behaviors
             if (buttonDown && playerHeldBy.health < 100)
             {
                 HealServerRpc();
+                if (heldByPlayerOnServer)
+                {
+                    this.itemProperties.toolTips[0] = $"Remaining Uses - {uses}";
+                    SetControlTipsForItem();
+                }
             }
         }
         [ServerRpc(RequireOwnership = false)]
