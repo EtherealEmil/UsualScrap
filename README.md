@@ -1,9 +1,21 @@
 ### Works in the latest version V80! - 4/5/26
 
+## Dependencies
+1. LethalLib 
+2. BepInEx
+3. Csync
+4. Dawnlib
+5. Latest version of Lethal Company for latest mod versions
+
+---
+
 ![Preview](https://i.imgur.com/PO7dK7S.png)
 
-## Purchasable Equipment
+---
 
+<details>
+<summary>Purchasable Equipment</summary>
+&nbsp;&nbsp;
 <details>
 <summary>Handlamp</summary>
 
@@ -39,6 +51,8 @@ Compared to Bandages, the medical kit...
 
 - Can be used to heal teammates at 2x the healing rate
 
+</details>
+
 <details>
 <summary>Productivity Auto-Injector</summary>
 
@@ -48,10 +62,9 @@ The Auto-Injector is a single use item that applies the following buffs to the p
 
 - Jump Height boost
 
-- Negates the effects of carry weight
+- Negates the slow effects of carry weight
 
 </details>
-
 
 <details>
 <summary>Shift Controller</summary>
@@ -70,7 +83,6 @@ Shift controller connectivity mechanic:
  - The Shift Controller's connectivity is based on how far you are from the saved coordinates, the farther you are --> the lower the connectivity. With full connectivity the controller works as expected but when connectivity starts to get low the controller will have a chance to "glitch". When the controller glitches it will wipe your saved location and prevent you from using the controller for a short time.
 
 </details>
-
 
 <details>
 <summary>Toolbox</summary>
@@ -93,9 +105,13 @@ The defibrillator uses battery to revive deceased employees.
 - A battery cost is deducted when you release the use button at full charge regardless of whether a player was revived or not.
 
 </details>
+</details>
 
-## Discoverable Scrap
+---
 
+<details>
+<summary>Discoverable Scrap</summary>
+&nbsp;&nbsp;
 <details>
 <summary>Fuel Cylinder</summary>
 
@@ -108,6 +124,8 @@ When the Fuel cylinder is picked up it will have a high chance of activating. If
 - Each time the tank is dropped, its remaining time will be reduced by a percentage; On the third drop, the tank will explode immediately
 
 - After being brought to the ship the tank will enter an inactive state, stopping the timer. In the inactive state, Hitting it will still cause it to explode and it can be reactivated by dropping it a few times (Dropping it will only cause a explosion if it is active).
+
+- Has a small chance to not activate when picked up!
 
 Tips for survival - Take it first or take it last and know the way back to the ship, the last thing you want to do while carrying the cylinder is waste time trying to find your way back to the ship.
 
@@ -196,49 +214,40 @@ The Golden Ticket of Exchange is a extremely rare variant that does the same thi
 - Ticket are disabled while inside the company cruiser to avoid severely breaking the game.
 
 </details>
+</details>
 
-## Scrap Packs
+---
 
 <details>
 
+<summary>Scrap Packs</summary>
+&nbsp;&nbsp;
+<details>
 <summary>Mansion Scrap Pack</summary>
-
-Included scrap items - 
 
 - Servant Bell
 - Pocket Watch
+- Chess Piece
+- Puzzle Piece x
+- Hourglass x
 
 </details>
 
 <details>
-
 <summary>Facility Scrap Pack</summary>
-
-Included scrap items -
 
 - Traffic Cone
 - Mere Gear
+- Toy Rocketship x
+- Circuit Board x
+
+</details>
 
 </details>
 
 ---
 
 Any versions of this mod found on other sites were not posted and are not supported by me!
-
----
-
-## Dependencies
-1. LethalLib 
-2. BepInExPack
-3. Csync
-4. Dawnlib
-5. Latest version of Lethal Company for latest mod versions
-
----
-
-I highly recommend the mods below for a better playing experience.
-
-- ButteryFixes By ButteryStancakes
 
 ---
 

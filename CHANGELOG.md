@@ -10,17 +10,51 @@
 
 <details>
 
+<summary>Version 1.9.6</summary>
+
+Quick Fix
+
+- rewrote and re-enabled use saving for the bandages and defibrillator
+
+</details>
+
+
+<details>
+
+<summary>Version 1.9.5</summary>
+
+Quick Update
+
+- Sped up defib charge up.
+- Defib now has a secondary battery display attached to the top of it.
+- Moved handlamp pocket light above your head, like a personal ceiling light.
+- Changed glass chess pieces to gold, I didn't like how all glass pieces looked among other issues.
+- Fixed glass hiding item effects.
+- Other small random sound and effect changes.
+
+</details>
+
+<details>
+
 <summary>Version 1.9.4</summary>
 
-- Small scissors
-- Rapier
-- Sledgehammer
-- Toolkit animation
-- Effects for tickets
-- Scrap pack items
-- Config saving
-- Update spectate screen on revive
-- HUD indicators for functions (medical kit)
+Polish, effects, QOL.
+
+- Fixed and nested homepage formatting.
+- Fuel cylinder model and sound effects polished.
+- Medical item's models polished.
+- Medical kit now displays It's healpool, bandages displays It's uses, and defib displays It's uses (if enabled) using the top right tool tips, thank you for the suggestion and help in the discord! Tested in singleplayer, there is possibly some weirdness in multiplayer but shouldn't be anything gamebreaking if any.
+- Autoinjector code fixed.
+- First attempt updating the spectator screen when someone is revived using the defibrillator.
+- Use saving disabled temporarily.
+- Capsule's glow now subtly pulses.
+- Fixed ticket icon missing. Tickets now have visual and sound effect when used.
+- Added try before searching for certain assets to avoid random issues if not found for whatever reason.
+- Shift controller model and sound effects polished.
+- Sizable scissors renamed in code from scissors to make space for future second scissors item.
+- Add chess piece and glass chess piece to the mansion scrap pack.
+
+Next Update Goal - 2 new melee items, a few factory scrap pack items, toolkit animation, toolkit modded trap compatability.
 
 
 </details>
@@ -53,7 +87,7 @@ Finally back from my trips, pushed out my stale update for the new version of le
 
 Confirmed to load and work on version 80! Didn't test everything though so if you have issues please report issues on my github or on the lethal company modding discord usual scrap page! Thanks.
 
-Next update, I'm looking at updating the spectate screen when someone is revived, adding effects/animations to a few items, and hud indicators to a couple item's functions.
+Next Update Goal - I'm looking at updating the spectate screen when someone is revived, adding effects/animations to a few items, and hud indicators to a couple item's functions.
 
 </details>
 
