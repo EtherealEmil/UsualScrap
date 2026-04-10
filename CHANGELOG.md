@@ -10,20 +10,35 @@
 
 <details>
 
+<summary>Version 1.9.7</summary>
+
+Quick Fix x2
+
+- Defib code issue.
+
+
+</details>
+
+---
+
+<details>
+
 <summary>Version 1.9.6</summary>
 
 Quick Fix
 
-- rewrote and re-enabled use saving for the bandages and defibrillator
+- Rewrote and re-enabled use saving for the bandages and defibrillator.
+- Use saving also seems to have fixed a saving issue with the selfsortingstorage mod, hooray!
 
 </details>
 
+---
 
 <details>
 
 <summary>Version 1.9.5</summary>
 
-Quick Update
+Another update?
 
 - Sped up defib charge up.
 - Defib now has a secondary battery display attached to the top of it.
@@ -33,6 +48,8 @@ Quick Update
 - Other small random sound and effect changes.
 
 </details>
+
+---
 
 <details>
 

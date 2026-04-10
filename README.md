@@ -1,4 +1,4 @@
-### Works in the latest version V80! - 4/5/26
+### Works in the latest version V80+! - 4/10/26
 
 ## Dependencies
 1. LethalLib 
